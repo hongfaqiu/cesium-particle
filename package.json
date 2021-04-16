@@ -1,13 +1,26 @@
 {
   "name": "cesium-particle",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.1.1",
+  "description": "cesium particle system module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hongfaqiu/shp-write-multi.git"
+  },
+  "keywords": [
+    "cesium",
+    "particle",
+    "NetCDF"
+  ],
+  "files": [
+    "index.js",
+    "src",
+    "Util"
+  ],
   "author": "hongfaqiu",
   "license": "ISC",
   "devDependencies": {

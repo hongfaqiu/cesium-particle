@@ -20,7 +20,7 @@ npm install --save cesium-particle
 
 ```js
 import Particle3D from 'cesium-particle'
-import Cesium from 'cesium'
+import * as Cesium from 'cesium'
 
 // 默认的粒子系统配置
 const defaultParticleSystemOptions = {
