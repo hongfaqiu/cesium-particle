@@ -1,0 +1,21 @@
+{
+  "name": "cesium-particle",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "hongfaqiu",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "cesium": "^1.80.0",
+    "netcdfjs": "^1.0.0"
+  }
+}
