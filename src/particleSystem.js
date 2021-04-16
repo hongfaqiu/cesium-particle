@@ -1,6 +1,6 @@
 import {ParticlesRendering} from './ParticlesRendering'
 import { ParticlesComputing } from './ParticlesComputing'
-import Cesium from 'cesium';
+import * as Cesium from 'cesium/Cesium'
 
 class ParticleSystem {
     constructor(context, data, userInput, viewerParameters) {

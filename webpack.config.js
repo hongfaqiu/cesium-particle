@@ -7,4 +7,11 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   mode: 'development',
+  resolve: {
+    extensions: ['.js', '.json'],
+    alias: {
+      '@': resolve('src'),
+      cesium: path.resolve(__dirname, './node_modules/cesium/Source')
+    }
+  }
 };

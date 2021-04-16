@@ -1,4 +1,4 @@
-import Cesium from 'cesium';
+import * as Cesium from 'cesium/Cesium'
 
 var Util = (function () {
 	var loadText = function (filePath) {

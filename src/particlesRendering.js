@@ -1,7 +1,7 @@
 import {CustomPrimitive} from './customPrimitive'
 import {Util} from './Util'
 import {fileOptions} from './options'
-import Cesium from 'cesium';
+import * as Cesium from 'cesium/Cesium'
 class ParticlesRendering {
     constructor(context, data, userInput, viewerParameters, particlesComputing) {
         this.createRenderingTextures(context, data);

@@ -1,4 +1,4 @@
-import Cesium from 'cesium';
+import * as Cesium from 'cesium/Cesium'
 
 var demo = Cesium.defaultValue(demo, false);
 

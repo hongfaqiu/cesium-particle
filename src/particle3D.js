@@ -1,7 +1,7 @@
 import {ParticleSystem} from './ParticleSystem'
 import {DataProcess} from './DataProcess'
 import {Util} from './Util'
-import Cesium from 'cesium';
+import * as Cesium from 'cesium/Cesium'
 import {defaultParticleSystemOptions} from './options'
 
 export default class Particle3D {

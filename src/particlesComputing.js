@@ -2,7 +2,7 @@ import {CustomPrimitive} from './customPrimitive'
 import {DataProcess} from './DataProcess'
 import {Util} from './Util'
 import {fileOptions} from './options'
-import Cesium from 'cesium';
+import * as Cesium from 'cesium/Cesium'
 class ParticlesComputing {
     constructor(context, data, userInput, viewerParameters) {
         this.createWindTextures(context, data);

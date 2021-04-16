@@ -1,5 +1,5 @@
 import netcdfjs from 'netcdfjs'
-import Cesium from 'cesium';
+import * as Cesium from 'cesium/Cesium'
 var DataProcess = (function () {
   var data;
 
