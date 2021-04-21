@@ -1,7 +1,6 @@
-import Vortex from '@/generateData.js'
-import Particle3D from '@/index.js'
-import * as ceiusm_map from './map'
-import Panel from './gui'
+import { Particle3D, Vortex } from '@/index.js';
+import * as ceiusm_map from './map';
+import Panel from './gui';
 
 // initialization
 ceiusm_map.initMap('cesiumContainer');
@@ -49,8 +48,6 @@ generateDataBtn.onclick = function () {
   })
   if (parameter && viewer && !particleObj) {
     let jsonData = new Vortex(...parameter).getData();
-    console.log(parameter);
-    console.log(jsonData);
     particleObj = new Particle3D(viewer, jsonData, 'json', userInput);
     particleObj.start();
     statechangeBtn.disabled = false;

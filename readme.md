@@ -19,7 +19,7 @@ npm install --save cesium-particle
 ## 例子
 
 ```js
-import Particle3D from 'cesium-particle'
+import { Particle3D, Vortex } from 'cesium-particle'
 import * as Cesium from 'cesium'
 
 // 默认的粒子系统配置
@@ -34,12 +34,15 @@ const defaultParticleSystemOptions = {
   lineWidth: 4.0
 }
 var viewer = new Cesium.Viewer(cesiumContainer, viewerOption);
+var options = defaultParticleSystemOptions;
 // 加载.nc文件
 var file=new ActiveXObject("demo.nc"); 
-var options = defaultParticleSystemOptions;
+var particleObj = new Particle3D(viewer, file, 'nc', options); // 加载NetCDF3文件
+// 加载json数据
+var parameter = [ [120, 30, 100], 5, 2000, 0.5, 0.5, 2000]; // [['lon', 'lat', 'lev'], 'radiusX', 'radiusY', 'height', 'dx', 'dy', 'dz']
+var jsonData = new Vortex(...parameter).getData();
+var particleObj2 = new Particle3D(viewer, jsonData, 'json', options);
 
-
-var particleObj = new Particle3D(viewer, file, options);
 particleObj.start(); // 开始运行粒子系统
 
 options.fadeOpacity = 0.900;
@@ -51,9 +54,9 @@ particleObj.remove(); // 移除粒子系统
 
 ## API
 
-### ``new Particle3D(viewer, file, options(default))``
+### ``new Particle3D(viewer, file, type, options(default))``
 
-新建一个粒子系统对象，传入的参数包括(ceiusmviewer, .nc矢量场文件, 粒子系统配置（默认为默认设置）)
+新建一个粒子系统对象，传入的参数包括(ceiusmviewer, .nc矢量场文件, 传入的数据类型, 粒子系统配置（默认为默认设置）)
 
 配置属性详解:
 
