@@ -1,12 +1,11 @@
 import {ParticleSystem} from './ParticleSystem'
 import {DataProcess} from './DataProcess'
-import {Util} from './Util'
+import {Util} from './util'
 import * as Cesium from 'cesium/Cesium'
 import {defaultParticleSystemOptions} from './options'
 
 export default class Particle3D {
-  constructor(viewer, file , userInput = defaultParticleSystemOptions) {
-
+  constructor(viewer, input, type, userInput = defaultParticleSystemOptions) {
     var animate = null;
     const that = this;
     var resized = false;
@@ -40,7 +39,7 @@ export default class Particle3D {
     this.scene = this.viewer.scene;
     this.camera = this.viewer.camera;
     this.userInput = userInput;
-    this.file = file;
+    this.input = input;
     
     this.viewerParameters = {
       lonRange: new Cesium.Cartesian2(),
@@ -51,13 +50,12 @@ export default class Particle3D {
     this.globeBoundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.ZERO, 0.99 * 6378137.0);
     this.updateViewerParameters();
 
-    DataProcess.loadData(this.file).then(
+    DataProcess.loadData(this.input, type).then(
       (data) => {
         this.particleSystem = new ParticleSystem(this.scene.context, data,
           userInput, this.viewerParameters);
         this.addPrimitives();
       });
-
   }
 
   addPrimitives() {

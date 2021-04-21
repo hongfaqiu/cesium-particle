@@ -16,9 +16,10 @@ var DataProcess = (function () {
             return map;
           }, {});
         }
+        console.log(reader.result);
         var NetCDF = new netcdfjs(reader.result);
         data = {};
-
+        console.log(NetCDF);
         var dimensions = arrayToMap(NetCDF.dimensions);
         data.dimensions = {};
         data.dimensions.lon = dimensions['lon'].size;
@@ -60,9 +61,13 @@ var DataProcess = (function () {
     });
   }
 
-  var loadData = async function (ncFilePath) {
-    await loadNetCDF(ncFilePath);
-
+  var loadData = async function (input, type) {
+    if (type === 'json') {
+      data = input
+      return data;
+    }
+    await loadNetCDF(input);
+    console.log(data);
     return data;
   }
 

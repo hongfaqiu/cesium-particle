@@ -1,5 +1,5 @@
 import {CustomPrimitive} from './customPrimitive'
-import {Util} from './Util'
+import {Util} from './util'
 import {fileOptions} from './options'
 import * as Cesium from 'cesium/Cesium'
 class ParticlesRendering {

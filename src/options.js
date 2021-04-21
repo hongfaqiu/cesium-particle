@@ -1,11 +1,8 @@
-import * as Cesium from 'cesium/Cesium'
-
-var demo = Cesium.defaultValue(demo, false);
 
 const fileOptions = {
-    dataDirectory: demo ? 'https://raw.githubusercontent.com/RaymanNg/3D-Wind-Field/master/data/' : '../data/',
+    dataDirectory: '../data/',
     dataFile: "demo.nc",
-    glslDirectory: demo ? '../wind-3d/glsl/' : 'glsl/'
+    glslDirectory: 'glsl/'
 }
 
 const defaultParticleSystemOptions = {
@@ -18,4 +15,4 @@ const defaultParticleSystemOptions = {
     lineWidth: 4.0
 }
 
-export { demo, fileOptions, defaultParticleSystemOptions };
+export { fileOptions, defaultParticleSystemOptions };
