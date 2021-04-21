@@ -1,4 +1,4 @@
-import { Particle3D, Vortex } from '@/index.js';
+import { Particle3D, Vortex } from '../index';
 import * as ceiusm_map from './map';
 import Panel from './gui';
 

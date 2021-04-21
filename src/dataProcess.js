@@ -64,6 +64,7 @@ var DataProcess = (function () {
   var loadData = async function (input, type) {
     if (type === 'json') {
       data = input
+      console.log(data);
       return data;
     }
     await loadNetCDF(input);

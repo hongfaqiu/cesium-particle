@@ -92,3 +92,11 @@ defaultParticleSystemOptions = {
 ### ``remove()``
 
 从cesiumview中移除粒子系统
+
+## Demo
+
+### 运行说明
+
+```js
+npm run dev
+```
