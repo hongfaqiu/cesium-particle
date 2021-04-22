@@ -13,8 +13,8 @@ export class VortexPanel {
     gui.add(that.options, 'radiusX', 0.0, 30).name("x半径(度)");
     gui.add(that.options, 'radiusY', 0, 30).name("y半径(度)");
     gui.add(that.options, 'height', -10000, 10000).name("高度(米)");
-    gui.add(that.options, 'dx', 0.1, 5).name("x半径下降率(度)");
-    gui.add(that.options, 'dy', 0.1, 5).name("y半径下降率(度)");
+    gui.add(that.options, 'dx', 0.001, 5).name("x半径下降率(度)");
+    gui.add(that.options, 'dy', 0.001, 5).name("y半径下降率(度)");
     gui.add(that.options, 'dz', 1, 5).name("高度下降率(米)");
 
     let vortexPanelContainer = document.getElementById(container);
