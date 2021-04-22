@@ -1,16 +1,18 @@
 import { Particle3D, Vortex } from '../index';
 import * as ceiusm_map from './map';
-import Panel from './gui';
+import {VortexPanel, ControlPanel} from './gui';
 
 // initialization
 ceiusm_map.initMap('cesiumContainer');
-var panel = new Panel(userInput => {
+var vortexPanel = new VortexPanel("vortexPanelContainer");
+
+var controlPanel = new ControlPanel("panelContainer", userInput => {
   particleObj && particleObj.optionsChange(userInput);
 });
 
 var viewer = ceiusm_map.getViewer();
 
-var userInput = panel.getUserInput();
+var userInput = controlPanel.getUserInput();
 
 const fileInput = document.getElementById('fileInput');
 const loadBtn = document.getElementById('load');
@@ -19,12 +21,7 @@ const statechangeBtn = document.getElementById('statechange');
 const removeBtn = document.getElementById('remove');
 var particleObj = null, working = false;
 
-window.addEventListener('particleSystemOptionsChanged', function () {
-  if (particleObj) {
-    that.particleSystem.applyUserInput(that.panel.getUserInput());
-  }
-});
-
+// 加载nc文件按钮
 loadBtn.onclick = function () {
   if (fileInput.files[0] && viewer && !particleObj) {
     let file = fileInput.files[0];
@@ -39,13 +36,9 @@ loadBtn.onclick = function () {
   }
 };
 
+// 生成涡旋数据按钮
 generateDataBtn.onclick = function () {
-  let arr = [], parameter = [];
-  ['lon', 'lat', 'lev', 'radiusX', 'radiusY', 'height', 'dx', 'dy', 'dz'].map(id => {
-    arr.push(document.getElementById(id).value);
-    let [lon, lat, lev, ...val] = arr;
-    parameter = [[lon, lat, lev], ...val];
-  })
+  let parameter = vortexPanel.getUserInput();
   if (parameter && viewer && !particleObj) {
     let jsonData = new Vortex(...parameter).getData();
     particleObj = new Particle3D(viewer, jsonData, 'json', userInput);
@@ -79,6 +72,3 @@ removeBtn.onclick = function () {
     generateDataBtn.disabled = false;
   }
 }
-
-/* let particleObj = new Particle3D(viewer, jsonData, 'json', defaultParticleSystemOptions)
-particleObj.start(); */

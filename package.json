@@ -1,12 +1,11 @@
 {
   "name": "cesium-particle",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "cesium particle system module",
   "main": "lib/cesium-particle.js",
   "scripts": {
     "build": "webpack --config webpack.prod.config.js",
-    "dev": "webpack-dev-server",
-    "prepublishOnly": "NODE_ENV='publish' npm run build"
+    "dev": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -19,8 +18,7 @@
   ],
   "files": [
     "index.js",
-    "src",
-    "Util"
+    "src"
   ],
   "author": "hongfaqiu",
   "license": "ISC",
@@ -29,6 +27,7 @@
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.4",
+    "dat.gui": "^0.7.7",
     "html-webpack-plugin": "^5.3.1",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
@@ -39,7 +38,6 @@
   },
   "dependencies": {
     "cesium": "^1.65.0",
-    "dat.gui": "^0.7.7",
     "netcdfjs": "^1.0.0"
   }
 }

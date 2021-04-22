@@ -7,28 +7,16 @@ var viewer = null;
 export var initMap = function (cesiumContainer) {
   viewer = new Cesium.Viewer(cesiumContainer, {
     terrainProvider: Cesium.createWorldTerrain(),
-    // baseLayerPicker: false,   //图层选择器
+    baseLayerPicker: false,   //图层选择器
     animation: false,   //左下角仪表
     fullscreenButton: false,   //全屏按钮
     geocoder: false,   //右上角查询搜索
     infoBox: false,   //信息框
     homeButton: false,   //home按钮
-    sceneModePicker: true,  //3d 2d选择器
+    sceneModePicker: false,  //3d 2d选择器
     selectionIndicator: false,  //
     timeline: false,   //时间轴
     navigationHelpButton: false,  //右上角帮助按钮
-    contextOptions: {   //截图需要的
-      webgl:{
-        alpha: true,
-        depth:true,
-        stencil:true,
-        antialias:true,
-        premultipliedAlpha:true,
-        //通过canvas.toDataURL()实现截图需要将该项设置为true
-        preserveDrawingBuffer:true,
-        failIfMajorPerformanceCaveat:true
-      }
-    }
   })
   
   viewer.camera.setView({//镜头的经纬度、高度。镜头默认情况下，在指定经纬高度俯视（pitch=-90）地球

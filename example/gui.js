@@ -1,62 +1,60 @@
 import * as dat from 'dat.gui'
-
-const defaultParticleSystemOptions = {
-  particlesTextureSize: Math.ceil(Math.sqrt(100 * 100)),
-  maxParticles: 100 * 100,
-  particleHeight: 1000.0,
-  fadeOpacity: 0.950,
-  dropRate: 0.003,
-  dropRateBump: 0.01,
-  speedFactor: 0.5,
-  lineWidth: 4.0
-}
-
-export default class Panel {
-  constructor(optionsChange) {
-    this.maxParticles = defaultParticleSystemOptions.maxParticles;
-    this.particleHeight = defaultParticleSystemOptions.particleHeight;
-    this.fadeOpacity = defaultParticleSystemOptions.fadeOpacity;
-    this.dropRate = defaultParticleSystemOptions.dropRate;
-    this.dropRateBump = defaultParticleSystemOptions.dropRateBump;
-    this.speedFactor = defaultParticleSystemOptions.speedFactor;
-    this.lineWidth = defaultParticleSystemOptions.lineWidth;
+import { defaultVortexOptions, defaultParticleSystemOptions } from './options'
+export class VortexPanel {
+  constructor(container) {
+    this.options = defaultVortexOptions;
     
     const that = this;
-    var onParticleSystemOptionsChange = function () {
+
+    let gui = new dat.GUI({ autoPlace: false });
+    gui.add(that.options, 'lon', -180, 180, 0.1).name("中心经度");
+    gui.add(that.options, 'lat', -90, 90, 1).name("中心纬度");
+    gui.add(that.options, 'lev', -10000, 10000, 100).name("中心高度");
+    gui.add(that.options, 'radiusX', 0.0, 30).name("x半径(度)");
+    gui.add(that.options, 'radiusY', 0, 30).name("y半径(度)");
+    gui.add(that.options, 'height', -10000, 10000).name("高度(米)");
+    gui.add(that.options, 'dx', 0.1, 5).name("x半径下降率(度)");
+    gui.add(that.options, 'dy', 0.1, 5).name("y半径下降率(度)");
+    gui.add(that.options, 'dz', 1, 5).name("高度下降率(米)");
+
+    let vortexPanelContainer = document.getElementById(container);
+    gui.domElement.classList.add('vortexPanel');
+    vortexPanelContainer.appendChild(gui.domElement);
+  }
+
+  getUserInput() {
+    let { lon, lat, lev, radiusX, radiusY, height, dx, dy, dz } = this.options;
+    return [[lon, lat, lev], radiusX, radiusY, height, dx, dy, dz];
+  }
+}
+export class ControlPanel {
+  constructor(container, optionsChange) {
+    this.options = defaultParticleSystemOptions;
+    
+    const that = this;
+    let onParticleSystemOptionsChange = function () {
       optionsChange(that.getUserInput());
     }
 
+    let gui = new dat.GUI({ autoPlace: false });
+    gui.add(that.options, 'maxParticles', 1, 256 * 256, 1).name("最大粒子数").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'particleHeight', 1, 10000, 1).name("粒子高度").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'fadeOpacity', 0.90, 0.999, 0.001).name("拖尾透明度").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'dropRate', 0.0, 0.1).name("下降率").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'dropRateBump', 0, 0.2).name("下降颠簸率").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'speedFactor', 0.05, 8).name("粒子速度").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'lineWidth', 0.01, 16.0).name("线宽").onFinishChange(onParticleSystemOptionsChange);
 
-    window.onload = function () {
-      var gui = new dat.GUI({ autoPlace: false });
-      gui.add(that, 'maxParticles', 1, 256 * 256, 1).onFinishChange(onParticleSystemOptionsChange);
-      gui.add(that, 'particleHeight', 1, 10000, 1).onFinishChange(onParticleSystemOptionsChange);
-      gui.add(that, 'fadeOpacity', 0.90, 0.999, 0.001).onFinishChange(onParticleSystemOptionsChange);
-      gui.add(that, 'dropRate', 0.0, 0.1).onFinishChange(onParticleSystemOptionsChange);
-      gui.add(that, 'dropRateBump', 0, 0.2).onFinishChange(onParticleSystemOptionsChange);
-      gui.add(that, 'speedFactor', 0.05, 8).onFinishChange(onParticleSystemOptionsChange);
-      gui.add(that, 'lineWidth', 0.01, 16.0).onFinishChange(onParticleSystemOptionsChange);
-
-      var panelContainer = document.getElementById('panelContainer');
-      gui.domElement.classList.add('myPanel');
-      panelContainer.appendChild(gui.domElement);
-    };
+    let panelContainer = document.getElementById(container);
+    gui.domElement.classList.add('controlPanel');
+    panelContainer.appendChild(gui.domElement);
   }
   
   getUserInput() {
     // make sure maxParticles is exactly the square of particlesTextureSize
-    var particlesTextureSize = Math.ceil(Math.sqrt(this.maxParticles));
-    this.maxParticles = particlesTextureSize * particlesTextureSize;
+    let particlesTextureSize = Math.ceil(Math.sqrt(this.options.maxParticles));
+    this.options.maxParticles = particlesTextureSize * particlesTextureSize;
 
-    return {
-      particlesTextureSize: particlesTextureSize,
-      maxParticles: this.maxParticles,
-      particleHeight: this.particleHeight,
-      fadeOpacity: this.fadeOpacity,
-      dropRate: this.dropRate,
-      dropRateBump: this.dropRateBump,
-      speedFactor: this.speedFactor,
-      lineWidth: this.lineWidth
-    }
+    return this.options
   }
 }

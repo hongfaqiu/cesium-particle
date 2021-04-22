@@ -81,7 +81,6 @@ module.exports = {
     contentBase: './dist',      // 开发环境的服务目录
     historyApiFallback: true,
     inline: true,
-    open: true,
     port: 9000
   }
 };

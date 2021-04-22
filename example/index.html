@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <script src="https://cesiumjs.org/releases/1.56.1/Build/Cesium/Cesium.js"></script> -->
-  <!-- <link href="https://cesiumjs.org/releases/1.56.1/Build/Cesium/Widgets/widgets.css" rel="stylesheet"> -->
   <title>cesium-particle</title>
 </head>
 <body>
@@ -19,17 +17,7 @@
       </div>
       <div class="json">
         <h4>生成涡旋数据</h4>
-        <div class="parameter">
-          中心经度:<input type="text" id="lon" value="120">
-          中心纬度:<input type="text" id="lat" value="20">
-          中心高度:<input type="text" id="lev" value="100">
-          x半径(度):<input type="text" id="radiusX" value="10">
-          y半径(度):<input type="text" id="radiusY" value="10">
-          高度(米):<input type="text" id="height" value="2000">
-          x半径下降率(度):<input type="text" id="dx" value="1">
-          y半径下降率(度):<input type="text" id="dy" value="1">
-          高度下降率(高):<input type="text" id="dz" value="2000">
-        </div>
+        <div id="vortexPanelContainer"></div>
         <button id="generateData">生成数据</button>
       </div>
     </div>
@@ -65,6 +53,9 @@
     opacity: 0.75;
     color: white;
   }
+  #vortexPanelContainer {
+    padding-bottom: 30px;
+  }
   #panelContainer {
     border: 1px solid #fff;
     border-radius: 5px;
@@ -84,16 +75,6 @@
   #fileInput{
     margin: 20px 5px;
     display: block;
-  }
-  .parameter {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-  .json input {
-    margin: 5px;
-    width: 50px;
   }
   .buttons {
     margin-top: 15px;
@@ -142,6 +123,9 @@
     text-shadow: none;
     box-shadow: none;
     cursor: not-allowed;
+  }
+  .cesium-performanceDisplay-defaultContainer{
+    top: 10px;
   }
 </style>
 </html>

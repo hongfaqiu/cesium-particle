@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const cesiumSource = 'node_modules/cesium/Source';
 const NODE_ENV = process.env.NODE_ENV;
@@ -33,7 +34,13 @@ const prdWebpackConfig= {
       }
     ]
   },
-  plugins: []
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.join('./src', 'glsl'), to: 'glsl' }
+      ],
+    }),
+  ]
 };
 
 if (NODE_ENV !== 'publish') {
