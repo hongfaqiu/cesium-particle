@@ -20,7 +20,7 @@ export var initMap = function (cesiumContainer) {
   })
   
   viewer.camera.setView({//镜头的经纬度、高度。镜头默认情况下，在指定经纬高度俯视（pitch=-90）地球
-    destination: Cesium.Cartesian3.fromDegrees(110.60396458865515, 34.54408834959379, 25000000),//北京150000公里上空
+    destination: Cesium.Cartesian3.fromDegrees(110.60396458865515, 34.54408834959379, 15000000),//北京15000公里上空
     orientation: {
       heading: Cesium.Math.toRadians(0),
       pitch: Cesium.Math.toRadians(-90),

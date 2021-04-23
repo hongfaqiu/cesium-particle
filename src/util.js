@@ -48,7 +48,6 @@ var Util = (function () {
 			source.arrayBufferView = typedArray;
 			options.source = source;
 		}
-
 		var texture = new Cesium.Texture(options);
 		return texture;
 	}

@@ -44,14 +44,17 @@ export default class Particle3D {
     this.viewerParameters = {
       lonRange: new Cesium.Cartesian2(),
       latRange: new Cesium.Cartesian2(),
-      pixelSize: 0.0
+      pixelSize: 0.0,
+      lonDisplayRange: new Cesium.Cartesian2(),
+      latDisplayRange: new Cesium.Cartesian2()
     };
     // use a smaller earth radius to make sure distance to camera > 0
     this.globeBoundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.ZERO, 0.99 * 6378137.0);
-    this.updateViewerParameters();
-
+    
     DataProcess.loadData(this.input, type).then(
       (data) => {
+        this.data = data;
+        this.updateViewerParameters();
         this.particleSystem = new ParticleSystem(this.scene.context, data,
           userInput, this.viewerParameters);
         this.addPrimitives();
@@ -77,6 +80,11 @@ export default class Particle3D {
     this.viewerParameters.latRange.x = lonLatRange.lat.min;
     this.viewerParameters.latRange.y = lonLatRange.lat.max;
 
+    this.viewerParameters.lonDisplayRange.x = this.data.lon.min;
+    this.viewerParameters.lonDisplayRange.y = this.data.lon.max;
+    this.viewerParameters.latDisplayRange.x = this.data.lat.min;
+    this.viewerParameters.latDisplayRange.y = this.data.lat.max;
+
     var pixelSize = this.camera.getPixelSize(
       this.globeBoundingSphere,
       this.scene.drawingBufferWidth,
@@ -86,6 +94,7 @@ export default class Particle3D {
     if (pixelSize > 0) {
       this.viewerParameters.pixelSize = pixelSize;
     }
+    console.log(this.viewerParameters);
   }
 
   setupEventListeners() {

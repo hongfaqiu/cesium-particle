@@ -16,7 +16,7 @@ export class Vortex {
     }
     data.lon = this.generateDimensionData(numX, pos[0] - radiusX, dx)
     data.lat = this.generateDimensionData(numY, pos[1] - radiusY, dy)
-    data.lev = this.generateDimensionData(numZ, 1, 1)
+    data.lev = this.generateDimensionData(numZ, pos[2] - height + dz, dz)
 
     // The NetCDF file is in the "data" folder, it should contains below variables:
     // U (lev, lat, lon) @min @max

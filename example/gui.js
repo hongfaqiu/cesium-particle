@@ -12,10 +12,10 @@ export class VortexPanel {
     gui.add(that.options, 'lev', -10000, 10000, 100).name("中心高度");
     gui.add(that.options, 'radiusX', 0.0, 30).name("x半径(度)");
     gui.add(that.options, 'radiusY', 0, 30).name("y半径(度)");
-    gui.add(that.options, 'height', -10000, 10000).name("高度(米)");
-    gui.add(that.options, 'dx', 0.001, 5).name("x半径下降率(度)");
-    gui.add(that.options, 'dy', 0.001, 5).name("y半径下降率(度)");
-    gui.add(that.options, 'dz', 1, 5).name("高度下降率(米)");
+    gui.add(that.options, 'height', 1, 10000).name("高度(米)");
+    gui.add(that.options, 'dx', 0.001, that.options.radiusX).name("x半径下降率(度)");
+    gui.add(that.options, 'dy', 0.001, that.options.radiusY).name("y半径下降率(度)");
+    gui.add(that.options, 'dz', 1, 10000).name("高度下降率(米)");
 
     let vortexPanelContainer = document.getElementById(container);
     gui.domElement.classList.add('vortexPanel');
@@ -53,8 +53,8 @@ export class ControlPanel {
   getUserInput() {
     // make sure maxParticles is exactly the square of particlesTextureSize
     let particlesTextureSize = Math.ceil(Math.sqrt(this.options.maxParticles));
+    this.options.particlesTextureSize = particlesTextureSize;
     this.options.maxParticles = particlesTextureSize * particlesTextureSize;
-
     return this.options
   }
 }

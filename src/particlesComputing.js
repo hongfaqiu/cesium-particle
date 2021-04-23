@@ -31,7 +31,7 @@ class ParticlesComputing {
         };
     }
 
-    createParticlesTextures(context, userInput, viewerParameters) {
+  createParticlesTextures(context, userInput, viewerParameters) {
         var particlesTextureOptions = {
             context: context,
             width: userInput.particlesTextureSize,
@@ -45,7 +45,7 @@ class ParticlesComputing {
                 magnificationFilter: Cesium.TextureMagnificationFilter.NEAREST
             })
         };
-
+    console.log("particlesTextureOptions", particlesTextureOptions);
         var particlesArray = DataProcess.randomizeParticles(userInput.maxParticles, viewerParameters)
         var zeroArray = new Float32Array(4 * userInput.maxParticles).fill(0);
 
@@ -56,7 +56,7 @@ class ParticlesComputing {
             postProcessingPosition: Util.createTexture(particlesTextureOptions, particlesArray),
 
             particlesSpeed: Util.createTexture(particlesTextureOptions, zeroArray)
-        };
+      };
     }
 
     destroyParticlesTextures() {
@@ -73,7 +73,8 @@ class ParticlesComputing {
             (maximum.x - minimum.x) / (dimension.x - 1),
             (maximum.y - minimum.y) / (dimension.y - 1),
             dimension.z > 1 ? (maximum.z - minimum.z) / (dimension.z - 1) : 1.0
-        );
+      );
+      console.log("interval",interval);
         const uSpeedRange = new Cesium.Cartesian2(data.U.min, data.U.max);
         const vSpeedRange = new Cesium.Cartesian2(data.V.min, data.V.max);
 
@@ -168,6 +169,12 @@ class ParticlesComputing {
                     },
                     latRange: function () {
                         return viewerParameters.latRange;
+                    },
+                    lonDisplayRange: function () {
+                        return viewerParameters.lonDisplayRange
+                    },
+                    latDisplayRange: function () {
+                        return viewerParameters.latDisplayRange
                     },
                     randomCoefficient: function () {
                         var randomCoefficient = Math.random();
