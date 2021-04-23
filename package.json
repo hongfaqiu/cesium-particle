@@ -1,8 +1,8 @@
 {
   "name": "cesium-particle",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "cesium particle system module",
-  "main": "lib/cesium-particle.js",
+  "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.prod.config.js",
     "dev": "webpack-dev-server"

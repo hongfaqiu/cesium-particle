@@ -16,6 +16,28 @@ node 环境下使用npm工具安装模块
 npm install --save cesium-particle
 ```
 
+在``webpack.config.js``中添加对glsl文件的拷贝
+
+```js
+const cesiumSource = 'node_modules/cesium/Source';
+const cesiumWorkers = '../Build/Cesium/Workers';
+
+module.exports = {
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        // Copy Cesium Assets, Widgets, and Workers to a static directory
+        { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
+        { from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
+        { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' },
+        // 拷贝glsl文件至静态资源文件夹下
+        { from: path.join('node_modules/cesium-particle/src', 'glsl'), to: 'glsl' }
+      ],
+    }),
+  ]
+}
+```
+
 ## 例子
 
 ```js
@@ -39,7 +61,7 @@ var options = defaultParticleSystemOptions;
 var file=new ActiveXObject("demo.nc"); 
 var particleObj = new Particle3D(viewer, file, 'nc', options); // 加载NetCDF3文件
 // 加载json数据
-var parameter = [ [120, 30, 100], 5, 2000, 0.5, 0.5, 2000]; // [['lon', 'lat', 'lev'], 'radiusX', 'radiusY', 'height', 'dx', 'dy', 'dz']
+var parameter = [ [120, 30, 100], 5, 5, 2000, 0.1, 0.1, 2000]; // [['lon', 'lat', 'lev'], 'radiusX', 'radiusY', 'height', 'dx', 'dy', 'dz']
 var jsonData = new Vortex(...parameter).getData();
 var particleObj2 = new Particle3D(viewer, jsonData, 'json', options);
 
