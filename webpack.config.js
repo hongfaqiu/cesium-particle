@@ -9,9 +9,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const cesiumSource = 'node_modules/cesium/Source';
 const cesiumWorkers = '../Build/Cesium/Workers';
 
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
-}
 module.exports = {
   entry: './example/app.js',
   output: {

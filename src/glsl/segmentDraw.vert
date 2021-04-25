@@ -18,6 +18,7 @@ struct adjacentPoints {
     vec4 next;
 };
 
+varying float speedNormalization;
 vec3 convertCoordinate(vec3 lonLatLev) {
     // WGS84 (lon, lat, lev) -> ECEF (x, y, z)
     // read https://en.wikipedia.org/wiki/Geographic_coordinate_conversion#From_geodetic_to_ECEF_coordinates for detail
@@ -36,7 +37,7 @@ vec3 convertCoordinate(vec3 lonLatLev) {
     float sinLon = sin(longitude);
 
     float N_Phi = a / sqrt(1.0 - e2 * sinLat * sinLat);
-    float h = particleHeight; // it should be high enough otherwise the particle may not pass the terrain depth test
+    float h = particleHeight + lonLatLev.z; // it should be high enough otherwise the particle may not pass the terrain depth test
 
     vec3 cartesian = vec3(0.0);
     cartesian.x = (N_Phi + h) * cosLat * cosLon;

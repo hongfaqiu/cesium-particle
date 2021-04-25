@@ -92,8 +92,8 @@ defaultParticleSystemOptions = {
   maxParticles, // 最大粒子数
   particleHeight: 1000.0, // 粒子高度
   fadeOpacity: 0.996, // 拖尾透明度
-  dropRate: 0.003, // 下降率
-  dropRateBump: 0.01, // 下降颠簸率
+  dropRate: 0.003, // 粒子移动至下一个随机位置的时间
+  dropRateBump: 0.01, // 粒子移动至下一个随机位置相对于粒子当前速度的速度百分比
   speedFactor: 1.0, // 粒子速度
   lineWidth: 4.0 // 线宽
 }
