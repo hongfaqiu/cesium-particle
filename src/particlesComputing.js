@@ -73,8 +73,7 @@ class ParticlesComputing {
             (maximum.x - minimum.x) / (dimension.x - 1),
             (maximum.y - minimum.y) / (dimension.y - 1),
             dimension.z > 1 ? (maximum.z - minimum.z) / (dimension.z - 1) : 1.0
-      );
-      console.log("interval",interval);
+        );
         const uSpeedRange = new Cesium.Cartesian2(data.U.min, data.U.max);
         const vSpeedRange = new Cesium.Cartesian2(data.V.min, data.V.max);
 
