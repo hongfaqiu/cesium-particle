@@ -75,15 +75,10 @@ export default class Particle3D {
   updateViewerParameters() {
     var viewRectangle = this.camera.computeViewRectangle(this.scene.globe.ellipsoid);
     var lonLatRange = Util.viewRectangleToLonLatRange(viewRectangle);
-    this.viewerParameters.lonRange.x = lonLatRange.lon.min;
-    this.viewerParameters.lonRange.y = lonLatRange.lon.max;
-    this.viewerParameters.latRange.x = lonLatRange.lat.min;
-    this.viewerParameters.latRange.y = lonLatRange.lat.max;
-
-    this.viewerParameters.lonDisplayRange.x = this.data.lon.min;
-    this.viewerParameters.lonDisplayRange.y = this.data.lon.max;
-    this.viewerParameters.latDisplayRange.x = this.data.lat.min;
-    this.viewerParameters.latDisplayRange.y = this.data.lat.max;
+    this.viewerParameters.lonRange.x = Math.max(lonLatRange.lon.min, this.data.lon.min);
+    this.viewerParameters.lonRange.y = Math.min(lonLatRange.lon.max, this.data.lon.max);
+    this.viewerParameters.latRange.x = Math.max(lonLatRange.lat.min, this.data.lat.min);
+    this.viewerParameters.latRange.y = Math.min(lonLatRange.lat.max, this.data.lat.max);
 
     var pixelSize = this.camera.getPixelSize(
       this.globeBoundingSphere,
@@ -94,7 +89,6 @@ export default class Particle3D {
     if (pixelSize > 0) {
       this.viewerParameters.pixelSize = pixelSize;
     }
-    console.log(this.viewerParameters);
   }
 
   setupEventListeners() {

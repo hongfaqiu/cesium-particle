@@ -45,7 +45,6 @@ class ParticlesComputing {
                 magnificationFilter: Cesium.TextureMagnificationFilter.NEAREST
             })
         };
-    console.log("particlesTextureOptions", particlesTextureOptions);
         var particlesArray = DataProcess.randomizeParticles(userInput.maxParticles, viewerParameters)
         var zeroArray = new Float32Array(4 * userInput.maxParticles).fill(0);
 
@@ -168,12 +167,6 @@ class ParticlesComputing {
                     },
                     latRange: function () {
                         return viewerParameters.latRange;
-                    },
-                    lonDisplayRange: function () {
-                        return viewerParameters.lonDisplayRange
-                    },
-                    latDisplayRange: function () {
-                        return viewerParameters.latDisplayRange
                     },
                     randomCoefficient: function () {
                         var randomCoefficient = Math.random();

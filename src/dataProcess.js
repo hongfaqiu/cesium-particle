@@ -2,6 +2,7 @@ import netcdfjs from 'netcdfjs'
 import * as Cesium from 'cesium/Cesium'
 var DataProcess = (function () {
   var data;
+  var validIds = [];
 
   var loadNetCDF = function (file) {
     return new Promise(function (resolve) {
@@ -64,16 +65,58 @@ var DataProcess = (function () {
   var loadData = async function (input, type) {
     if (type === 'json') {
       data = input
+      validIds = getValidIds()
       console.log(data);
+      console.log(validIds)
       return data;
     }
     await loadNetCDF(input);
+    validIds = getValidIds()
     console.log(data);
     return data;
   }
 
+  var getValidIds = function(){
+    let newArr = [];
+    for (let i in data.U.array) {
+      if(data.U.array[i] && data.V.array[i]) newArr.push(i);
+    }
+    console.log(newArr)
+    return newArr;
+  }
+
+  // 先找一个随机的不为零的像素点,以此像素点经纬度范围生成随机位置
+  var getValidRange = function () {
+    const dimensions = [data.dimensions.lon, data.dimensions.lat, data.dimensions.lev];
+    const minimum = [data.lon.min, data.lat.min, data.lev.min];
+    const maximum = [data.lon.max, data.lat.max, data.lev.max];
+    const interval = [
+        (maximum[0]- minimum[0]) / (dimensions[0]- 1),
+        (maximum[1] - minimum[1]) / (dimensions[1] - 1),
+        dimensions[2] > 1 ? (maximum[2] - minimum[2]) / (dimensions[2] - 1) : 1.0
+    ];
+    let id = validIds[Math.floor(Math.random() * validIds.length)];
+
+    let z = Math.floor(id / (dimensions[0] * dimensions[1]));
+    let left = id % (dimensions[0] * dimensions[1]);
+    let y = Math.floor(left / dimensions[0]);
+    let x = left % dimensions[0];
+
+    let lon = Cesium.Math.randomBetween(minimum[0]+ x * interval[0], minimum[0]+ (x + 1) * interval[0])
+    let lat = Cesium.Math.randomBetween(minimum[1] + (y - 1) * interval[1], minimum[1] + y * interval[1])
+    let lev = Cesium.Math.randomBetween(minimum[2] + (z - 1) * interval[2], minimum[2] + z * interval[2])
+    return [lon, lat, lev]
+  }
+  
   var randomizeParticles = function (maxParticles, viewerParameters) {
     var array = new Float32Array(4 * maxParticles);
+    /* for (var i = 0; i < maxParticles; i++) {
+      let pos = getValidRange();
+      array[4 * i] = pos[0];
+      array[4 * i + 1] = pos[1];
+      array[4 * i + 2] = pos[2];
+      array[4 * i + 3] = 0.0;
+    } */
     for (var i = 0; i < maxParticles; i++) {
       array[4 * i] = Cesium.Math.randomBetween(viewerParameters.lonRange.x, viewerParameters.lonRange.y);
       array[4 * i + 1] = Cesium.Math.randomBetween(viewerParameters.latRange.x, viewerParameters.latRange.y);
