@@ -114,7 +114,7 @@ class ParticlesRendering {
         return geometry;
     }
 
-    createRenderingPrimitives(context, userInput, viewerParameters, particlesComputing) {
+  createRenderingPrimitives(context, userInput, viewerParameters, particlesComputing) {
         const that = this;
         this.primitives = {
             segments: new CustomPrimitive({

@@ -20,22 +20,24 @@ varying vec2 v_textureCoordinates;
 
 vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
     // ensure the range of longitude and latitude
-    lonLatLev.x = mod(lonLatLev.x, 360.0);
-    lonLatLev.y = clamp(lonLatLev.y, -90.0, 90.0);
+    lonLatLev.x = clamp(lonLatLev.x, minimum.x, maximum.x);
+    lonLatLev.y = clamp(lonLatLev.y,  minimum.y, maximum.y);
+    lonLatLev.z = clamp(lonLatLev.z,  minimum.z, maximum.z);
 
     vec3 index3D = vec3(0.0);
     index3D.x = (lonLatLev.x - minimum.x) / interval.x;
     index3D.y = (lonLatLev.y - minimum.y) / interval.y;
-    index3D.z = (lonLatLev.z - minimum.z) / interval.z;
+    index3D.z = floor((lonLatLev.z - minimum.z) / interval.z); // 将z轴方向的值映射到最近的低位面上
 
     // the st texture coordinate corresponding to (col, row) index
     // example
-    // data array is [0, 1, 2, 3, 4, 5], width = 3, height = 2
+    // data array is [0, 1, 2, 3, 4, 5, 7, 8, 9], width = 2, height = 2, level = 2
     // the content of texture will be
     // t 1.0
-    //    |  3 4 5
-    //    |
-    //    |  0 1 2
+    //    |  6 7
+    //    |  4 5
+    //    |  2 3
+    //    |  0 1
     //   0.0------1.0 s
 
     vec2 index2D = vec2(index3D.x, index3D.z * dimension.y + index3D.y);

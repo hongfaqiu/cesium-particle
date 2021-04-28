@@ -36,9 +36,9 @@ export class Vortex {
           let speedy = 0;
           let disX = x - center[0];
           let disY = y - center[1];
-          if (this.ifInEllipse(disX, disY, a, b)) {
+          if (this.ifInEllipse(disX, disY, a, b) && !this.ifInEllipse(disX, disY, a - stepX - 1, b - stepY - 1)) {
             // 上半部分涡旋速度方向取大圆，即可生成螺旋线
-            let speed = disY < 0 ? this.computeSpeed(disX, disY, a, b, maxSpeed) : this.computeSpeed(disX + 1, disY + 1, a , b, maxSpeed)
+            let speed = disY < 0 ? this.computeSpeed(disX, disY, center[0], center[1], maxSpeed * (1 - z / numZ)) : this.computeSpeed(disX + 1, disY + 1, center[0], center[1], maxSpeed * (1 - z / numZ))
             speedx = speed.x;
             speedy = speed.y;
           }
@@ -100,6 +100,9 @@ export class Vortex {
   }
 
   ifInEllipse(x, y, a, b) {
+    if (a <= 0 || b <= 0) {
+      return false;
+    }
     let bool = (1 - ((x * x) / (a * a) + (y * y) / (b * b))) >= 0
     return bool;
   }

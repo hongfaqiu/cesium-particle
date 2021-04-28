@@ -81,7 +81,6 @@ var DataProcess = (function () {
     for (let i in data.U.array) {
       if(data.U.array[i] && data.V.array[i]) newArr.push(i);
     }
-    console.log(newArr)
     return newArr;
   }
 
@@ -105,24 +104,25 @@ var DataProcess = (function () {
     let lon = Cesium.Math.randomBetween(minimum[0]+ x * interval[0], minimum[0]+ (x + 1) * interval[0])
     let lat = Cesium.Math.randomBetween(minimum[1] + (y - 1) * interval[1], minimum[1] + y * interval[1])
     let lev = Cesium.Math.randomBetween(minimum[2] + (z - 1) * interval[2], minimum[2] + z * interval[2])
+    // let lev = minimum[2]
     return [lon, lat, lev]
   }
   
   var randomizeParticles = function (maxParticles, viewerParameters) {
     var array = new Float32Array(4 * maxParticles);
-    /* for (var i = 0; i < maxParticles; i++) {
+    for (var i = 0; i < maxParticles; i++) {
       let pos = getValidRange();
       array[4 * i] = pos[0];
       array[4 * i + 1] = pos[1];
       array[4 * i + 2] = pos[2];
       array[4 * i + 3] = 0.0;
-    } */
-    for (var i = 0; i < maxParticles; i++) {
+    }
+    /* for (var i = 0; i < maxParticles; i++) {
       array[4 * i] = Cesium.Math.randomBetween(viewerParameters.lonRange.x, viewerParameters.lonRange.y);
       array[4 * i + 1] = Cesium.Math.randomBetween(viewerParameters.latRange.x, viewerParameters.latRange.y);
       array[4 * i + 2] = Cesium.Math.randomBetween(data.lev.min, data.lev.max);
       array[4 * i + 3] = 0.0;
-    }
+    } */
     return array;
   }
 
