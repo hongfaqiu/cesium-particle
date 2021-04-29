@@ -6,7 +6,7 @@ class ParticlesRendering {
     constructor(context, data, userInput, viewerParameters, particlesComputing) {
         this.createRenderingTextures(context, data);
         this.createRenderingFramebuffers(context);
-        this.createRenderingPrimitives(context, userInput, viewerParameters, particlesComputing);
+        this.createRenderingPrimitives(context, data, userInput, viewerParameters, particlesComputing);
     }
 
     createRenderingTextures(context, data) {
@@ -114,7 +114,7 @@ class ParticlesRendering {
         return geometry;
     }
 
-  createRenderingPrimitives(context, userInput, viewerParameters, particlesComputing) {
+  createRenderingPrimitives(context, data, userInput, viewerParameters, particlesComputing) {
         const that = this;
         this.primitives = {
             segments: new CustomPrimitive({
@@ -137,6 +137,12 @@ class ParticlesRendering {
                     },
                     aspect: function () {
                         return context.drawingBufferWidth / context.drawingBufferHeight;
+                    },
+                    H: function () {
+                      return data.H.array;
+                    },
+                    hRange: function () {
+                      return new Cesium.Cartesian2(data.H.min, data.H.max);
                     },
                     pixelSize: function () {
                         return viewerParameters.pixelSize;

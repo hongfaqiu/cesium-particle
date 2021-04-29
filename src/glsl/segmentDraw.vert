@@ -1,6 +1,7 @@
 attribute vec2 st;
 // it is not normal itself, but used to control lines drawing
 attribute vec3 normal; // (point to use, offset sign, not used component)
+uniform vec2 hRange;
 
 uniform sampler2D previousParticlesPosition;
 uniform sampler2D currentParticlesPosition;
@@ -18,6 +19,7 @@ struct adjacentPoints {
     vec4 next;
 };
 
+varying float heightNormalization;
 varying float speedNormalization;
 vec3 convertCoordinate(vec3 lonLatLev) {
     // WGS84 (lon, lat, lev) -> ECEF (x, y, z)
@@ -38,6 +40,8 @@ vec3 convertCoordinate(vec3 lonLatLev) {
 
     float N_Phi = a / sqrt(1.0 - e2 * sinLat * sinLat);
     float h = particleHeight + lonLatLev.z; // it should be high enough otherwise the particle may not pass the terrain depth test
+    
+    heightNormalization = (lonLatLev.z - hRange.x) / (hRange.y - hRange.x)
 
     vec3 cartesian = vec3(0.0);
     cartesian.x = (N_Phi + h) * cosLat * cosLon;

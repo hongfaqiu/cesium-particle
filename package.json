@@ -1,6 +1,6 @@
 {
   "name": "cesium-particle",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "cesium particle system module",
   "main": "index.js",
   "scripts": {

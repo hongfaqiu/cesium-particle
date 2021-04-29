@@ -25,7 +25,7 @@ export class Vortex {
     let stepY = (numY) / 2 / numZ;
     let a = 0, b = 0;
     let center = [numX / 2, numY / 2];
-    let arrU = [], arrV = [];
+    let arrU = [], arrV = [], arrW = [], arrH = [];
     let maxSpeed = 3;
     for (let z = 0; z < numZ; z++) {
       a += stepX;
@@ -34,16 +34,21 @@ export class Vortex {
         for (let x = 0; x < numX;x++) {
           let speedx = 0;
           let speedy = 0;
+          let speedz = 0;
           let disX = x - center[0];
           let disY = y - center[1];
+          let particleHeight = this.computeHeight(disX, disY, center[0], center[1], pos[2] - dz * z, dz);
           if (this.ifInEllipse(disX, disY, a, b) && !this.ifInEllipse(disX, disY, a - stepX - 1, b - stepY - 1)) {
             // 上半部分涡旋速度方向取大圆，即可生成螺旋线
             let speed = disY < 0 ? this.computeSpeed(disX, disY, center[0], center[1], maxSpeed * (1 - z / numZ)) : this.computeSpeed(disX + 1, disY + 1, center[0], center[1], maxSpeed * (1 - z / numZ))
             speedx = speed.x;
             speedy = speed.y;
+            speedz = speed.z;
           }
           arrU.push(speedx);
           arrV.push(speedy);
+          arrW.push(speedz);
+          arrH.push(particleHeight);
         }
       }
     }
@@ -56,6 +61,16 @@ export class Vortex {
       array: new Float32Array(arrV.flat()),
       max: Math.max(...arrV),
       min: Math.min(...arrV)
+    }
+    data.W = {
+      array: new Float32Array(arrW.flat()),
+      max: Math.max(...arrW),
+      min: Math.min(...arrW)
+    }
+    data.H = {
+      array: new Float32Array(arrH.flat()),
+      max: Math.max(...arrH),
+      min: Math.min(...arrH)
     }
     this.data = data;
   }
@@ -95,8 +110,14 @@ export class Vortex {
     let speed2 = (1 - ((x0 * x0 + y0 * y0) / (a * a + b * b))) * speed; // interpolate speed
     return {
       x: -k * yy * symbol / Math.sqrt(1 + k * k) * speed2,
-      y: 1 * xx * symbol / Math.sqrt(1 + k * k) * speed2
+      y: 0.5 * xx * symbol / Math.sqrt(1 + k * k) * speed2,
+      z: -speed2 / 5
     }
+  }
+
+  computeHeight(x0, y0, a, b, startz, dz) {
+    let height = startz - (1 - ((x0 * x0 + y0 * y0) / (a * a + b * b))) * dz; // 越靠近中心高度越小
+    return height
   }
 
   ifInEllipse(x, y, a, b) {

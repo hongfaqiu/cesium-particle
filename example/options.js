@@ -7,7 +7,7 @@ const defaultVortexOptions = {
   height: 10000,
   dx: 0.1,
   dy: 0.1,
-  dz: 2000,
+  dz: 3000,
 }
 
 const defaultParticleSystemOptions = {
