@@ -1,9 +1,22 @@
 import netcdfjs from 'netcdfjs'
 import * as Cesium from 'cesium/Cesium'
+import defaultColorTable from './colorTable'
 var DataProcess = (function () {
   var data;
   var validIds = [];
 
+  var loadColorTable = function (colorTable) {
+    let colorNum = colorTable.length;
+    let arr = [];
+    colorTable.map(color => {
+      arr = arr.concat(color);
+    })
+    data.colorTable = {
+      colorNum,
+      array: new Float32Array(arr.flat())
+    };
+  }
+  
   var loadNetCDF = function (file) {
     return new Promise(function (resolve) {
       const reader = new FileReader();
@@ -56,6 +69,12 @@ var DataProcess = (function () {
         data.V.min = vAttributes['min'].value;
         data.V.max = vAttributes['max'].value;
 
+        data.H = {
+          array: new Float32Array(data.U.array.length),
+          min: 0,
+          max: 0
+        }
+
         data.W = {
           array: new Float32Array(data.U.array.length),
           min: 0,
@@ -68,16 +87,17 @@ var DataProcess = (function () {
     });
   }
 
-  var loadData = async function (input, type) {
+  var loadData = async function (input, type, colorTable) {
     if (type === 'json') {
       data = input
-      validIds = getValidIds()
-      console.log(data);
-      return data;
     }
-    await loadNetCDF(input);
+    else {
+      await loadNetCDF(input);
+    }
     validIds = getValidIds()
     console.log(data);
+    loadColorTable(colorTable);
+
     return data;
   }
 
@@ -115,19 +135,19 @@ var DataProcess = (function () {
   
   var randomizeParticles = function (maxParticles, viewerParameters) {
     var array = new Float32Array(4 * maxParticles);
-   /*  for (var i = 0; i < maxParticles; i++) {
+    for (var i = 0; i < maxParticles; i++) {
       let pos = getValidRange();
       array[4 * i] = pos[0];
       array[4 * i + 1] = pos[1];
       array[4 * i + 2] = pos[2];
       array[4 * i + 3] = 0.0;
-    } */
-    for (var i = 0; i < maxParticles; i++) {
+    }
+    /* for (var i = 0; i < maxParticles; i++) {
       array[4 * i] = Cesium.Math.randomBetween(viewerParameters.lonRange.x, viewerParameters.lonRange.y);
       array[4 * i + 1] = Cesium.Math.randomBetween(viewerParameters.latRange.x, viewerParameters.latRange.y);
       array[4 * i + 2] = Cesium.Math.randomBetween(data.lev.min, data.lev.max);
       array[4 * i + 3] = 0.0;
-    }
+    } */
     return array;
   }
 
