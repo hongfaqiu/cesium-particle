@@ -1,6 +1,7 @@
 import { Particle3D, Vortex } from '../index';
 import * as ceiusm_map from './map';
 import {VortexPanel, ControlPanel} from './gui';
+import { colorTable } from './options';
 
 // initialization
 ceiusm_map.initMap('cesiumContainer');
@@ -25,7 +26,10 @@ var particleObj = null, working = false;
 loadBtn.onclick = function () {
   if (fileInput.files[0] && viewer && !particleObj) {
     let file = fileInput.files[0];
-    particleObj = new Particle3D(viewer, file, 'nc', userInput);
+    particleObj = new Particle3D(viewer, {
+      input: file,
+      colorTable: colorTable
+    });
     particleObj.start();
     statechangeBtn.disabled = false;
     removeBtn.disabled = false;
@@ -41,7 +45,11 @@ generateDataBtn.onclick = function () {
   let parameter = vortexPanel.getUserInput();
   if (parameter && viewer && !particleObj) {
     let jsonData = new Vortex(...parameter).getData();
-    particleObj = new Particle3D(viewer, jsonData, 'json', userInput);
+    particleObj = new Particle3D(viewer, {
+      input: jsonData,
+      type: 'json',
+      colorTable: colorTable
+    });
     particleObj.start();
     statechangeBtn.disabled = false;
     removeBtn.disabled = false;

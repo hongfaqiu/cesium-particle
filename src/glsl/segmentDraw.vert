@@ -2,10 +2,14 @@ attribute vec2 st;
 // it is not normal itself, but used to control lines drawing
 attribute vec3 normal; // (point to use, offset sign, not used component)
 uniform vec2 hRange;
+uniform vec2 uSpeedRange; // (min, max);
+uniform vec2 vSpeedRange;
+uniform vec2 wSpeedRange;
 
 uniform sampler2D previousParticlesPosition;
 uniform sampler2D currentParticlesPosition;
 uniform sampler2D postProcessingPosition;
+uniform sampler2D particlesSpeed;
 
 uniform float particleHeight;
 
@@ -40,9 +44,6 @@ vec3 convertCoordinate(vec3 lonLatLev) {
 
     float N_Phi = a / sqrt(1.0 - e2 * sinLat * sinLat);
     float h = particleHeight + lonLatLev.z; // it should be high enough otherwise the particle may not pass the terrain depth test
-    
-    heightNormalization = (lonLatLev.z - hRange.x) / (hRange.y - hRange.x)
-
     vec3 cartesian = vec3(0.0);
     cartesian.x = (N_Phi + h) * cosLat * cosLon;
     cartesian.y = (N_Phi + h) * cosLat * sinLon;
@@ -107,6 +108,20 @@ vec4 calculateOffsetOnMiterDirection(adjacentPoints projectedCoordinates, float 
     return offset;
 }
 
+float calculateWindNorm(vec3 speed) {
+    vec3 percent = vec3(0.0);
+    percent.x = (speed.x - uSpeedRange.x) / (uSpeedRange.y - uSpeedRange.x);
+    percent.y = (speed.y - vSpeedRange.x) / (vSpeedRange.y - vSpeedRange.x);
+    if(wSpeedRange.y == wSpeedRange.x){
+      percent.z = 0.0;
+    } else {
+      percent.z = (speed.z - wSpeedRange.x) / (wSpeedRange.y - wSpeedRange.x);
+    }
+    float norm = length(percent);
+
+    return norm;
+}
+
 void main() {
     vec2 particleIndex = st;
 
@@ -150,4 +165,11 @@ void main() {
             }
         }
     }
+    if(hRange.y == hRange.x){
+      heightNormalization = 1.0;
+    } else {
+      heightNormalization = (currentPosition.z - hRange.x) / (hRange.y - hRange.x);
+    }
+    
+    speedNormalization = length(texture2D(particlesSpeed, particleIndex).rgb);
 }

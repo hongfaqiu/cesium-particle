@@ -2,10 +2,12 @@ import {ParticleSystem} from './ParticleSystem'
 import {DataProcess} from './DataProcess'
 import {Util} from './util'
 import * as Cesium from 'cesium/Cesium'
-import {defaultParticleSystemOptions} from './options'
+import { defaultParticleSystemOptions, defaultColorTable } from './options'
+
 
 export default class Particle3D {
-  constructor(viewer, input, type, userInput = defaultParticleSystemOptions) {
+  constructor(viewer, {input, type = 'nc', userInput = defaultParticleSystemOptions, colorTable = defaultColorTable}) {
+    console.log("colorTable",colorTable)
     var animate = null;
     const that = this;
     var resized = false;
@@ -51,12 +53,12 @@ export default class Particle3D {
     // use a smaller earth radius to make sure distance to camera > 0
     this.globeBoundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.ZERO, 0.99 * 6378137.0);
     
-    DataProcess.loadData(this.input, type).then(
+    DataProcess.loadData(this.input, type, colorTable).then(
       (data) => {
         this.data = data;
         this.updateViewerParameters();
         this.particleSystem = new ParticleSystem(this.scene.context, data,
-          userInput, this.viewerParameters);
+          this.userInput, this.viewerParameters);
         this.addPrimitives();
       });
   }

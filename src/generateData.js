@@ -26,7 +26,7 @@ export class Vortex {
     let a = 0, b = 0;
     let center = [numX / 2, numY / 2];
     let arrU = [], arrV = [], arrW = [], arrH = [];
-    let maxSpeed = 3;
+    let maxSpeed = 10;
     for (let z = 0; z < numZ; z++) {
       a += stepX;
       b += stepY;
@@ -111,7 +111,7 @@ export class Vortex {
     return {
       x: -k * yy * symbol / Math.sqrt(1 + k * k) * speed2,
       y: 0.5 * xx * symbol / Math.sqrt(1 + k * k) * speed2,
-      z: -speed2 / 5
+      z: 0
     }
   }
 

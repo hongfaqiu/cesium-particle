@@ -24,6 +24,18 @@ class ParticlesRendering {
             pixelFormat: Cesium.PixelFormat.DEPTH_COMPONENT,
             pixelDatatype: Cesium.PixelDatatype.UNSIGNED_INT
         };
+        
+        const colorTableTextureOptions = {
+          context: context,
+          width: data.colorTable.colorNum,
+          height: 1,
+          pixelFormat: Cesium.PixelFormat.RGB,
+          pixelDatatype: Cesium.PixelDatatype.FLOAT,
+          sampler: new Cesium.Sampler({
+              minificationFilter: Cesium.TextureMinificationFilter.LINEAR,
+              magnificationFilter: Cesium.TextureMagnificationFilter.LINEAR
+          })
+        };
 
         this.textures = {
             segmentsColor: Util.createTexture(colorTextureOptions),
@@ -34,6 +46,7 @@ class ParticlesRendering {
 
             nextTrailsColor: Util.createTexture(colorTextureOptions),
             nextTrailsDepth: Util.createTexture(depthTextureOptions),
+            colorTable: Util.createTexture(colorTableTextureOptions, data.colorTable.array)
         };
     }
 
@@ -135,6 +148,12 @@ class ParticlesRendering {
                     postProcessingPosition: function () {
                         return particlesComputing.particlesTextures.postProcessingPosition;
                     },
+                    particlesSpeed: function () {
+                      return particlesComputing.particlesTextures.particlesSpeed;
+                    },
+                    colorTable: function () {
+                        return that.textures.colorTable;
+                    },
                     aspect: function () {
                         return context.drawingBufferWidth / context.drawingBufferHeight;
                     },
@@ -143,6 +162,15 @@ class ParticlesRendering {
                     },
                     hRange: function () {
                       return new Cesium.Cartesian2(data.H.min, data.H.max);
+                    },
+                    uSpeedRange: function () {
+                      return new Cesium.Cartesian2(data.U.min, data.U.max);
+                    },
+                    vSpeedRange: function () {
+                        return new Cesium.Cartesian2(data.V.min, data.V.max);
+                    },
+                    wSpeedRange: function () {
+                        return new Cesium.Cartesian2(data.W.min, data.W.max);
                     },
                     pixelSize: function () {
                         return viewerParameters.pixelSize;

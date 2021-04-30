@@ -1,6 +1,8 @@
 varying float heightNormalization;
+uniform sampler2D colorTable;
+
+varying float speedNormalization;
 
 void main() {
-    const vec4 white = vec4(0.0, 0.0, heightNormalization, 1.0);
-    gl_FragColor = white;
+    gl_FragColor = texture2D(colorTable, vec2(speedNormalization, 0.0));
 }
