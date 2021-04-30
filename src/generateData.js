@@ -111,7 +111,7 @@ export class Vortex {
     return {
       x: -k * yy * symbol / Math.sqrt(1 + k * k) * speed2,
       y: 0.5 * xx * symbol / Math.sqrt(1 + k * k) * speed2,
-      z: -speed2 / 5
+      z: 0
     }
   }
 
