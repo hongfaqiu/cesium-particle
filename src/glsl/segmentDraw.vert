@@ -165,11 +165,7 @@ void main() {
             }
         }
     }
-    if(hRange.y == hRange.x){
-      heightNormalization = 1.0;
-    } else {
-      heightNormalization = (currentPosition.z - hRange.x) / (hRange.y - hRange.x);
-    }
+    heightNormalization = (currentPosition.z - hRange.x) / (hRange.y - hRange.x);
     
-    speedNormalization = length(texture2D(particlesSpeed, particleIndex).rgb);
+    speedNormalization = length(texture2D(particlesSpeed, particleIndex).a);
 }

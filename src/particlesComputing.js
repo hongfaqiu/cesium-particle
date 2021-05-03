@@ -28,7 +28,8 @@ class ParticlesComputing {
         this.windTextures = {
             U: Util.createTexture(windTextureOptions, data.U.array),
             V: Util.createTexture(windTextureOptions, data.V.array),
-            W: Util.createTexture(windTextureOptions, data.W.array)
+            W: Util.createTexture(windTextureOptions, data.W.array),
+            H: Util.createTexture(windTextureOptions, data.H.array)
         };
     }
 
@@ -175,6 +176,27 @@ class ParticlesComputing {
                     },
                     latRange: function () {
                         return viewerParameters.latRange;
+                    },
+                    dimension: function () {
+                      return dimension;
+                    },
+                    minimum: function () {
+                        return minimum;
+                    },
+                    maximum: function () {
+                        return maximum;
+                    },
+                    interval: function () {
+                        return interval;
+                    },
+                    U: function () {
+                      return that.windTextures.U;
+                    },
+                    V: function () {
+                        return that.windTextures.V;
+                    },
+                    H: function () {
+                      return that.windTextures.H;
                     },
                     randomCoefficient: function () {
                         var randomCoefficient = Math.random();

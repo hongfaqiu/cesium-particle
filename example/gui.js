@@ -37,7 +37,7 @@ export class ControlPanel {
     }
 
     let gui = new dat.GUI({ autoPlace: false });
-    gui.add(that.options, 'maxParticles', 1, 256 * 256, 1).name("最大粒子数").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'maxParticles', 1, 1000 * 1000, 1).name("最大粒子数").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'particleHeight', 1, 10000, 1).name("粒子高度").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'fadeOpacity', 0.90, 0.999, 0.001).name("拖尾透明度").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'dropRate', 0.0, 0.1).name("下降率").onFinishChange(onParticleSystemOptionsChange);

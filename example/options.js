@@ -1,13 +1,13 @@
 const defaultVortexOptions = {
-  lon: 121,
+  lon: 130,
   lat: 24,
-  lev: 10000,
+  lev: 1000000,
   radiusX: 2,
   radiusY: 2,
-  height: 10000,
+  height: 1000000,
   dx: 0.1,
   dy: 0.1,
-  dz: 3000,
+  dz: 1000000,
 }
 const colorTable = [
   [0.015686,

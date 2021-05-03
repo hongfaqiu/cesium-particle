@@ -148,5 +148,6 @@ defaultColorTable = [[1.0, 1.0, 1.0]]; // 默认的颜色配置
 ### 运行说明
 
 ```js
+npm install / cnpm install
 npm run dev
 ```

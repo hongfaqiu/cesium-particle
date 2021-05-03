@@ -130,6 +130,8 @@ var DataProcess = (function () {
     let lat = Cesium.Math.randomBetween(minimum[1] + (y - 1) * interval[1], minimum[1] + y * interval[1])
     // let lev = Cesium.Math.randomBetween(minimum[2] + (z - 1) * interval[2], minimum[2] + z * interval[2])
     let lev = data.H.array[id] || 0;
+   /*  const middle = [(maximum[0] + minimum[0]) / 2, (maximum[1] + minimum[1]) / 2]
+    console.log(lon - middle[0], lat - middle[1], lev); */
     return [lon, lat, lev]
   }
   
