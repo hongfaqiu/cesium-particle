@@ -6,7 +6,8 @@ import { defaultParticleSystemOptions, defaultColorTable } from './options'
 
 
 export default class Particle3D {
-  constructor(viewer, {input, type = 'nc', userInput = defaultParticleSystemOptions, colorTable = defaultColorTable}) {
+  constructor(viewer, {
+    input, type = 'nc', userInput = defaultParticleSystemOptions, colorTable = defaultColorTable, colour = 'height'}) {
     console.log("colorTable",colorTable)
     var animate = null;
     const that = this;
@@ -42,7 +43,8 @@ export default class Particle3D {
     this.camera = this.viewer.camera;
     this.userInput = userInput;
     this.input = input;
-    
+    this.colour = colour;
+
     this.viewerParameters = {
       lonRange: new Cesium.Cartesian2(),
       latRange: new Cesium.Cartesian2(),
@@ -58,7 +60,7 @@ export default class Particle3D {
         this.data = data;
         this.updateViewerParameters();
         this.particleSystem = new ParticleSystem(this.scene.context, data,
-          this.userInput, this.viewerParameters);
+          this.userInput, this.viewerParameters, this.colour);
         this.addPrimitives();
       });
   }

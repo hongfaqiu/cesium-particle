@@ -3,10 +3,12 @@ import {Util} from './util'
 import {fileOptions} from './options'
 import * as Cesium from 'cesium/Cesium'
 class ParticlesRendering {
-    constructor(context, data, userInput, viewerParameters, particlesComputing) {
+    constructor(context, data, userInput, viewerParameters, particlesComputing, colour) {
         this.createRenderingTextures(context, data);
         this.createRenderingFramebuffers(context);
         this.createRenderingPrimitives(context, data, userInput, viewerParameters, particlesComputing);
+        this.colour = colour === 'height' ? true : false;
+        console.log(this.colour)
     }
 
     createRenderingTextures(context, data) {
@@ -180,6 +182,9 @@ class ParticlesRendering {
                     },
                     particleHeight: function () {
                         return userInput.particleHeight;
+                    },
+                    colour: function () {
+                      return that.colour;
                     }
                 },
                 vertexShaderSource: new Cesium.ShaderSource({

@@ -1,5 +1,7 @@
 # 基于cesium的gpu加速粒子系统
 
+![npm](https://img.shields.io/npm/v/cesium-particle) ![npm](https://img.shields.io/npm/dt/cesium-particle) ![NPM](https://img.shields.io/npm/l/cesium-particle)
+
 ## 说明
 
 本模块改编自[RaymanNg大佬的风场demo](https://github.com/RaymanNg/3D-Wind-Field)。
@@ -74,7 +76,8 @@ var colorTable = [
 var file=new ActiveXObject("demo.nc"); 
  // 从NetCDF3文件生成粒子系统对象
 var particleObj = new Particle3D(viewer, {
-  input: file
+  input: file,
+  colour: 'speed' // 颜色变化跟随速度,可选值: 'speed' or 'height'(defalut)
 });
 
 // 第二种
@@ -100,9 +103,9 @@ particleObj.remove(); // 移除粒子系统
 
 ## API
 
-### ``new Particle3D(viewer, {input, type = 'nc', userInput = defaultParticleSystemOptions, colorTable = defaultColorTable})``
+### ``new Particle3D(viewer, {input, type = 'nc', userInput = defaultParticleSystemOptions, colorTable = defaultColorTable, colour = 'height'})``
 
-新建一个粒子系统对象，传入的参数包括(ceiusmviewer, {.nc矢量场文件或json对象, 传入的数据类型, 粒子系统配置项(默认为默认设置), 粒子颜色色带})
+新建一个粒子系统对象，传入的参数包括(ceiusmviewer, {.nc矢量场文件或json对象, 传入的数据类型, 粒子系统配置项(默认为默认设置), 粒子颜色色带, 上色的属性})
 
 配置属性详解:
 
@@ -123,7 +126,7 @@ defaultParticleSystemOptions = {
   lineWidth: 4.0 // 线宽
 }
 
-// colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式，对应粒子速度从慢到快
+// colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式，对应粒子高度从高到低（下一个版本提供速度/高度切换参数）
 defaultColorTable = [[1.0, 1.0, 1.0]]; // 默认的颜色配置
 ```
 

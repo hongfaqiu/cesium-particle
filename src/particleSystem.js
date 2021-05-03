@@ -3,11 +3,12 @@ import { ParticlesComputing } from './ParticlesComputing'
 import * as Cesium from 'cesium/Cesium'
 
 class ParticleSystem {
-    constructor(context, data, userInput, viewerParameters) {
+    constructor(context, data, userInput, viewerParameters, colour) {
         this.context = context;
         this.data = data;
         this.userInput = userInput;
         this.viewerParameters = viewerParameters;
+        this.colour = colour;
 
         this.particlesComputing = new ParticlesComputing(
             this.context, this.data,
@@ -16,7 +17,8 @@ class ParticleSystem {
         this.particlesRendering = new ParticlesRendering(
             this.context, this.data,
             this.userInput, this.viewerParameters,
-            this.particlesComputing
+            this.particlesComputing,
+            this.colour
         );
     }
 
