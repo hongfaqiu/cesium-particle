@@ -27,7 +27,7 @@ vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
     vec3 index3D = vec3(0.0);
     index3D.x = (lonLatLev.x - minimum.x) / interval.x;
     index3D.y = (lonLatLev.y - minimum.y) / interval.y;
-    index3D.z = floor((lonLatLev.z - minimum.z) / interval.z); // 将z轴方向的值映射到最近的低位面上
+    index3D.z = ceil((lonLatLev.z - minimum.z) / interval.z); 
 
     // the st texture coordinate corresponding to (col, row) index
     // example
@@ -70,16 +70,6 @@ vec3 generateRandomParticle(vec2 seed, float lev) {
     // ensure the longitude is in [0, 360]
     float randomLon = mod(rand(seed, lonRange), 360.0);
     float randomLat = rand(-seed, latRange);
-/* 
-    for( int i = 0; i < 10; i++){
-      bool flag = particleNoSpeed(vec3(randomLon, randomLat, lev));
-      if(flag){
-        randomLon = mod(rand(seed, lonRange), 360.0);
-        randomLat = rand(-seed, latRange);
-      } else {
-        break;
-      }
-    } */
     
     float height = getTextureValue(H, vec3(randomLon, randomLat, lev)).r;
 

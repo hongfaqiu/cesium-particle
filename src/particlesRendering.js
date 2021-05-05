@@ -8,7 +8,6 @@ class ParticlesRendering {
         this.createRenderingFramebuffers(context);
         this.createRenderingPrimitives(context, data, userInput, viewerParameters, particlesComputing);
         this.colour = colour === 'height' ? true : false;
-        console.log(this.colour)
     }
 
     createRenderingTextures(context, data) {

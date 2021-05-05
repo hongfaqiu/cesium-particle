@@ -29,7 +29,7 @@ vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
     vec3 index3D = vec3(0.0);
     index3D.x = (lonLatLev.x - minimum.x) / interval.x;
     index3D.y = (lonLatLev.y - minimum.y) / interval.y;
-    index3D.z = floor((lonLatLev.z - minimum.z) / interval.z); // 将z轴方向的值映射到最近的低位面上
+    index3D.z = ceil((lonLatLev.z - minimum.z) / interval.z); // 将z轴方向的值映射到最近的位面上
 
     // the st texture coordinate corresponding to (col, row) index
     // example

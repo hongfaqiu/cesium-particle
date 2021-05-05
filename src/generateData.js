@@ -38,7 +38,7 @@ export class Vortex {
           let disX = x - center[0];
           let disY = y - center[1];
           let particleHeight = this.computeHeight(disX, disY, center[0], center[1], pos[2] - dz * z, dz);
-          if (!this.ifInEllipse(disX, disY, a - stepX - 1, b - stepY - 1)) {
+          if (this.ifInEllipse(disX, disY, a, b) ) {
             // 上半部分涡旋速度方向取大圆，即可生成螺旋线
             let speed = disY < 0 ? this.computeSpeed(disX, disY, center[0], center[1], maxSpeed * (1 - z / numZ)) : this.computeSpeed(disX + 1, disY + 1, center[0], center[1], maxSpeed * (1 - z / numZ))
             speedx = speed.x;

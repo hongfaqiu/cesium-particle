@@ -5,8 +5,8 @@ const defaultVortexOptions = {
   radiusX: 2,
   radiusY: 2,
   height: 1000000,
-  dx: 0.1,
-  dy: 0.1,
+  dx: 0.02,
+  dy: 0.02,
   dz: 1000000,
 }
 const colorTable = [
@@ -61,8 +61,8 @@ const colorTable = [
 ]
 
 const defaultParticleSystemOptions = {
-  particlesTextureSize: Math.ceil(Math.sqrt(64 * 64)),
-  maxParticles: 64 * 64,
+  particlesTextureSize: Math.ceil(Math.sqrt(500 * 500)),
+  maxParticles: 500 * 500,
   particleHeight: 1000.0,
   fadeOpacity: 0.950, // how fast the particle trails fade on each frame
   dropRate: 0.003, // how often the particles move to a random place

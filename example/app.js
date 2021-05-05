@@ -27,7 +27,8 @@ loadBtn.onclick = function () {
   if (fileInput.files[0] && viewer && !particleObj) {
     let file = fileInput.files[0];
     particleObj = new Particle3D(viewer, {
-      input: file
+      input: file,
+      userInput
     });
     particleObj.start();
     statechangeBtn.disabled = false;
@@ -46,6 +47,7 @@ generateDataBtn.onclick = function () {
     let jsonData = new Vortex(...parameter).getData();
     particleObj = new Particle3D(viewer, {
       input: jsonData,
+      userInput,
       type: 'json',
       colorTable: colorTable
     });

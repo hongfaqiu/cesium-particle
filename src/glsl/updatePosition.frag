@@ -8,6 +8,9 @@ void main() {
     vec3 lonLatLev = texture2D(currentParticlesPosition, v_textureCoordinates).rgb;
     vec3 speed = texture2D(particlesSpeed, v_textureCoordinates).rgb;
     vec3 nextParticle = lonLatLev + speed;
-
-    gl_FragColor = vec4(nextParticle, 0.0);
+    if(length(speed.rgb) > 0.0) {
+      gl_FragColor = vec4(nextParticle, 0.0);
+    } else {
+      gl_FragColor = vec4(0.0);
+    }
 }
