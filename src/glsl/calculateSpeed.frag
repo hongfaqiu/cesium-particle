@@ -125,14 +125,31 @@ vec3 calculateSpeedByRungeKutta2(vec3 lonLatLev) {
     return speed;
 }
 
+vec2 getRange(vec2 range) {
+  float x1 = 0.0 - range.x;
+  float x2 = range.y - 0.0;
+  if(x1 < 0.0 || x2 < 0.0){
+    return vec2(abs(x1), abs(x2));
+  } else {
+    return vec2(0.0, abs(max(x1, x2)));
+  }
+}
+
 float calculateWindNorm(vec3 speed) {
     vec3 percent = vec3(0.0);
-    percent.x = (speed.x - uSpeedRange.x) / (uSpeedRange.y - uSpeedRange.x);
-    percent.y = (speed.y - vSpeedRange.x) / (vSpeedRange.y - vSpeedRange.x);
+    vec2 uRange = getRange(uSpeedRange);
+    vec2 vRange = getRange(vSpeedRange);
+    vec2 wRange = getRange(wSpeedRange);
+    if(length(speed.xyz) == 0.0){
+      return 0.0;
+    }
+
+    percent.x = (abs(speed.x) - uRange.x) / (uRange.y - uRange.x);
+    percent.y = (abs(speed.y) - vRange.x) / (vRange.y - vRange.x);
     if(wSpeedRange.y == wSpeedRange.x){
       percent.z = 0.0;
     } else {
-      percent.z = (speed.z - wSpeedRange.x) / (wSpeedRange.y - wSpeedRange.x);
+      percent.z = (abs(speed.z) - wRange.x) / (wRange.y - wRange.x);
     }
     float norm = length(percent);
 
@@ -142,9 +159,11 @@ float calculateWindNorm(vec3 speed) {
 void main() {
     // texture coordinate must be normalized
     vec3 lonLatLev = texture2D(currentParticlesPosition, v_textureCoordinates).rgb;
+    vec3 speedOrigin = linearInterpolation(lonLatLev);
     vec3 speed = calculateSpeedByRungeKutta2(lonLatLev);
     vec3 speedInLonLat = convertSpeedUnitToLonLat(lonLatLev, speed);
 
     vec4 particleSpeed = vec4(speedInLonLat, calculateWindNorm(speed / speedScaleFactor));
-    gl_FragColor = particleSpeed;
+    // gl_FragColor = particleSpeed;
+    gl_FragColor = vec4(speedInLonLat, calculateWindNorm(speedOrigin));
 }

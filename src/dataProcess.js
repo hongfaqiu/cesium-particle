@@ -1,6 +1,5 @@
 import netcdfjs from 'netcdfjs'
 import * as Cesium from 'cesium/Cesium'
-import defaultColorTable from './colorTable'
 var DataProcess = (function () {
   var data;
   var validIds = [];

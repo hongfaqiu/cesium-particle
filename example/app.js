@@ -28,7 +28,9 @@ loadBtn.onclick = function () {
     let file = fileInput.files[0];
     particleObj = new Particle3D(viewer, {
       input: file,
-      userInput
+      userInput,
+      colour: 'speed',
+      colorTable: colorTable
     });
     particleObj.start();
     statechangeBtn.disabled = false;

@@ -167,5 +167,5 @@ void main() {
     }
     heightNormalization = (currentPosition.z - hRange.x) / (hRange.y - hRange.x);
     
-    speedNormalization = length(texture2D(particlesSpeed, particleIndex).rgb);
+    speedNormalization = texture2D(particlesSpeed, particleIndex).a;
 }
