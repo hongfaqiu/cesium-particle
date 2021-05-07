@@ -1,7 +1,7 @@
 import * as Cesium from 'cesium/Cesium'
 import 'cesium/Widgets/widgets.css';
 
-Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzNzM4ZDQ5OS01YTJhLTRiOWYtYWZkNy0yNzk4OTZmN2M1ODUiLCJpZCI6NDY4OCwiaWF0IjoxNjA4MDEwMDE2fQ.OzrbigaF6oOBqjeaIq_owqbb9we71vn3zH3ZMqtBLuI';
+Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4OGQwZTM2MC00NjkzLTRkZTgtYTU5MS0xZTA1NTljYWQyN2UiLCJpZCI6NTUwODUsImlhdCI6MTYyMDM5NjQ3NH0.lu_JBwyngYucPsvbCZt-xzmzgfwEKwcRXiYs5uV8uTM';
 var viewer = null;
 
 export var initMap = function (cesiumContainer) {

@@ -29,7 +29,8 @@ vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
     vec3 index3D = vec3(0.0);
     index3D.x = (lonLatLev.x - minimum.x) / interval.x;
     index3D.y = (lonLatLev.y - minimum.y) / interval.y;
-    index3D.z = ceil((lonLatLev.z - minimum.z) / interval.z); // 将z轴方向的值映射到最近的位面上
+    // map the z-axis value to the nearest bit plane to ensure that the result is an integer
+    index3D.z = ceil((lonLatLev.z - minimum.z) / interval.z); 
 
     // the st texture coordinate corresponding to (col, row) index
     // example
@@ -165,5 +166,5 @@ void main() {
 
     vec4 particleSpeed = vec4(speedInLonLat, calculateWindNorm(speed / speedScaleFactor));
     // gl_FragColor = particleSpeed;
-    gl_FragColor = vec4(speedInLonLat, calculateWindNorm(speedOrigin));
+    gl_FragColor = vec4(speedInLonLat, calculateWindNorm(speedOrigin / speedFactor));
 }
