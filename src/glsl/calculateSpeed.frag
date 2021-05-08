@@ -166,5 +166,5 @@ void main() {
 
     vec4 particleSpeed = vec4(speedInLonLat, calculateWindNorm(speed / speedScaleFactor));
     // gl_FragColor = particleSpeed;
-    gl_FragColor = vec4(speedInLonLat, calculateWindNorm(speedOrigin / speedFactor));
+    gl_FragColor = vec4(speedInLonLat, calculateWindNorm(speedOrigin));
 }

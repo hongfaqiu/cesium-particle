@@ -29,17 +29,6 @@ vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
     index3D.y = (lonLatLev.y - minimum.y) / interval.y;
     index3D.z = ceil((lonLatLev.z - minimum.z) / interval.z); 
 
-    // the st texture coordinate corresponding to (col, row) index
-    // example
-    // data array is [0, 1, 2, 3, 4, 5, 7, 8, 9], width = 2, height = 2, level = 2
-    // the content of texture will be
-    // t 1.0
-    //    |  6 7
-    //    |  4 5
-    //    |  2 3
-    //    |  0 1
-    //   0.0------1.0 s
-
     vec2 index2D = vec2(index3D.x, index3D.z * dimension.y + index3D.y);
     vec2 normalizedIndex2D = vec2(index2D.x / dimension.x, index2D.y / (dimension.y * dimension.z));
     return normalizedIndex2D;

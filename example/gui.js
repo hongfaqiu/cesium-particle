@@ -40,8 +40,8 @@ export class ControlPanel {
     gui.add(that.options, 'maxParticles', 1, 1000 * 1000, 1).name("最大粒子数").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'particleHeight', 1, 10000, 1).name("粒子高度").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'fadeOpacity', 0.90, 0.999, 0.001).name("拖尾透明度").onFinishChange(onParticleSystemOptionsChange);
-    gui.add(that.options, 'dropRate', 0.0, 0.1).name("下降率").onFinishChange(onParticleSystemOptionsChange);
-    gui.add(that.options, 'dropRateBump', 0, 0.2).name("下降颠簸率").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'dropRate', 0.0, 0.1).name("重置率").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'dropRateBump', 0, 0.2).name("重置&速度关联率").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'speedFactor', 0.05, 8).name("粒子速度").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'lineWidth', 0.01, 16.0).name("线宽").onFinishChange(onParticleSystemOptionsChange);
 
