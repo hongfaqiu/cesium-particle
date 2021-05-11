@@ -1,9 +1,5 @@
-node_modules
-example
-src
-.babelrc
-app.js
-index.html
+/node_modules
+/example
+/data
 package-lock.json
 webpack.config.js
-webpack.prd.js

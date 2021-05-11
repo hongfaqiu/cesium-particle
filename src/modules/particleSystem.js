@@ -1,5 +1,5 @@
-import {ParticlesRendering} from './ParticlesRendering'
-import { ParticlesComputing } from './ParticlesComputing'
+import {ParticlesRendering} from './particlesRendering'
+import { ParticlesComputing } from './particlesComputing'
 import * as Cesium from 'cesium/Cesium'
 
 class ParticleSystem {

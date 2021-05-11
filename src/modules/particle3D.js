@@ -1,11 +1,11 @@
-import {ParticleSystem} from './ParticleSystem'
-import {DataProcess} from './DataProcess'
+import {ParticleSystem} from './particleSystem'
+import {DataProcess} from './dataProcess'
 import {Util} from './util'
 import * as Cesium from 'cesium/Cesium'
 import { defaultParticleSystemOptions, defaultColorTable } from './options'
 
 
-export default class Particle3D {
+class Particle3D {
   constructor(viewer, {
     input, type = 'nc', userInput = defaultParticleSystemOptions, colorTable = defaultColorTable, colour = 'height'}) {
     console.log("colorTable",colorTable)
@@ -135,3 +135,5 @@ export default class Particle3D {
     this.scene.primitives.removeAll();
   }
 }
+
+export { Particle3D };

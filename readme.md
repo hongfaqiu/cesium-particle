@@ -18,28 +18,6 @@ node 环境下使用npm工具安装模块
 npm install --save cesium-particle
 ```
 
-在``webpack.config.js``中添加对glsl文件的拷贝
-
-```js
-const cesiumSource = 'node_modules/cesium/Source';
-const cesiumWorkers = '../Build/Cesium/Workers';
-
-module.exports = {
-  plugins: [
-    new CopyWebpackPlugin({
-      patterns: [
-        // Copy Cesium Assets, Widgets, and Workers to a static directory
-        { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
-        { from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
-        { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' },
-        // 拷贝glsl文件至静态资源文件夹下
-        { from: path.join('node_modules/cesium-particle/src', 'glsl'), to: 'glsl' }
-      ],
-    }),
-  ]
-}
-```
-
 ## 例子
 
 ```js

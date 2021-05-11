@@ -1,12 +1,6 @@
 import * as Cesium from 'cesium/Cesium'
 
 var Util = (function () {
-	var loadText = function (filePath) {
-		var request = new XMLHttpRequest();
-		request.open('GET', filePath, false);
-    request.send();
-		return request.responseText;
-	}
 
 	var getFullscreenQuad = function () {
 		var fullscreenQuad = new Cesium.Geometry({
@@ -127,7 +121,6 @@ var Util = (function () {
 	}
 
 	return {
-		loadText: loadText,
 		getFullscreenQuad: getFullscreenQuad,
 		createTexture: createTexture,
 		createFramebuffer: createFramebuffer,

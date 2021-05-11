@@ -1,8 +1,12 @@
-import {CustomPrimitive} from './customPrimitive'
-import {DataProcess} from './DataProcess'
-import {Util} from './util'
-import {fileOptions} from './options'
-import * as Cesium from 'cesium/Cesium'
+import { CustomPrimitive } from './customPrimitive';
+import { DataProcess } from './dataProcess';
+import { Util } from './util';
+import * as Cesium from 'cesium/Cesium';
+
+const CalculateSpeedShader = require('../glsl/calculateSpeed.frag');
+const UpdatePositionShader = require('../glsl/updatePosition.frag');
+const PostProcessingPositionShader = require('../glsl/postProcessingPosition.frag');
+
 class ParticlesComputing {
     constructor(context, data, userInput, viewerParameters) {
         this.createWindTextures(context, data);
@@ -126,7 +130,7 @@ class ParticlesComputing {
                     }
                 },
                 fragmentShaderSource: new Cesium.ShaderSource({
-                    sources: [Util.loadText(fileOptions.glslDirectory + 'calculateSpeed.frag')]
+                    sources: [CalculateSpeedShader]
                 }),
                 outputTexture: this.particlesTextures.particlesSpeed,
                 preExecute: function () {
@@ -153,7 +157,7 @@ class ParticlesComputing {
                     }
                 },
                 fragmentShaderSource: new Cesium.ShaderSource({
-                    sources: [Util.loadText(fileOptions.glslDirectory + 'updatePosition.frag')]
+                    sources: [UpdatePositionShader]
                 }),
                 outputTexture: this.particlesTextures.nextParticlesPosition,
                 preExecute: function () {
@@ -210,7 +214,7 @@ class ParticlesComputing {
                     }
                 },
                 fragmentShaderSource: new Cesium.ShaderSource({
-                    sources: [Util.loadText(fileOptions.glslDirectory + 'postProcessingPosition.frag')]
+                    sources: [PostProcessingPositionShader]
                 }),
                 outputTexture: this.particlesTextures.postProcessingPosition,
                 preExecute: function () {

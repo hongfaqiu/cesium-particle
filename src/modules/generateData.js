@@ -1,4 +1,4 @@
-export class Vortex {
+class Vortex {
   constructor(pos, radiusX, radiusY, height, dx, dy, dz) {
     this.data = {}
     this.generateData(pos, radiusX, radiusY, height, dx, dy, dz);
@@ -129,3 +129,5 @@ export class Vortex {
     return bool;
   }
 }
+
+export { Vortex };

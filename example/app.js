@@ -1,4 +1,4 @@
-import { Particle3D, Vortex } from '../index';
+import { Particle3D, Vortex } from '../src/index';
 import * as ceiusm_map from './map';
 import {VortexPanel, ControlPanel} from './gui';
 import { colorTable } from './options';

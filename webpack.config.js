@@ -50,6 +50,10 @@ module.exports = {
           limit: 8192,
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.(frag|vert)$/,
+        loader: 'webpack-glsl-loader'
       }
     ]
   },
@@ -64,7 +68,6 @@ module.exports = {
         { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
         { from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
         { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' },
-        { from: path.join('./src', 'glsl'), to: 'glsl' }
       ],
     }),
     new webpack.DefinePlugin({

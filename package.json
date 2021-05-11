@@ -1,11 +1,12 @@
 {
   "name": "cesium-particle",
-  "version": "0.3.1",
+  "version": "0.4.0-alpha.0",
   "description": "cesium particle system module",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "dev": "webpack-dev-server",
     "build": "webpack --config webpack.prod.config.js",
-    "dev": "webpack-dev-server"
+    "build-example": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -17,27 +18,27 @@
     "NetCDF"
   ],
   "files": [
-    "index.js",
-    "src"
+    "src",
+    "readme.md"
   ],
   "author": "hongfaqiu",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.13.16",
     "babel-loader": "^8.2.2",
+    "cesium": "^1.65.0",
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.4",
     "dat.gui": "^0.7.7",
     "html-webpack-plugin": "^5.3.1",
+    "netcdfjs": "^1.0.0",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.33.2",
     "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-glsl-loader": "^1.0.1"
   },
-  "dependencies": {
-    "cesium": "^1.65.0",
-    "netcdfjs": "^1.0.0"
-  }
+  "dependencies": {}
 }

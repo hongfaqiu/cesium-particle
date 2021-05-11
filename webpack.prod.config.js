@@ -1,13 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const cesiumSource = 'node_modules/cesium/Source';
 const NODE_ENV = process.env.NODE_ENV;
 const prdWebpackConfig= {
   mode: 'production',
-  entry: path.resolve(__dirname, 'index.js'),
+  entry: path.resolve(__dirname, 'src/index.js'),
   output: {
     path: path.join(__dirname, 'lib'),
     filename: "cesium-particle.js",
@@ -31,16 +30,13 @@ const prdWebpackConfig= {
         test: /(\.js)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.(frag|vert)$/,
+        loader: 'webpack-glsl-loader'
       }
     ]
-  },
-  plugins: [
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: path.join('./src', 'glsl'), to: 'glsl' }
-      ],
-    }),
-  ]
+  }
 };
 
 if (NODE_ENV !== 'publish') {

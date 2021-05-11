@@ -1,10 +1,3 @@
-
-const fileOptions = {
-    dataDirectory: '../data/',
-    dataFile: "demo.nc",
-    glslDirectory: 'glsl/'
-}
-
 const defaultColorTable = [
   [[1.0, 1.0, 1.0]]
 ]
@@ -20,4 +13,4 @@ const defaultParticleSystemOptions = {
     lineWidth: 4.0
 }
 
-export { fileOptions, defaultColorTable, defaultParticleSystemOptions };
+export { defaultColorTable, defaultParticleSystemOptions };
