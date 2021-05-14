@@ -133,3 +133,34 @@ defaultColorTable = [[1.0, 1.0, 1.0]]; // 默认的颜色配置
 npm install / cnpm install
 npm run dev
 ```
+
+## Q&A
+
+### 更改glsl文件之后未生效
+
+在开发环境中调试glsl文件,需要在.src/modules/particlescomputing.js 和 particlesRendering.js 中修改glsl文件入口：
+
+```js
+import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../../packages/shader';
+```
+
+在webpack.config.js中添加glsl-loader
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(frag|vert)$/,
+        loader: 'webpack-glsl-loader'
+      }
+    ]
+  }
+}
+```
+
+或者使用打包命令，打包glsl文件为js:
+
+```js
+npm run buld-glsl
+```

@@ -1,16 +1,8 @@
-import {
-  CustomPrimitive
-} from './customPrimitive'
-import {
-  Util
-} from './util'
+import { CustomPrimitive } from './customPrimitive'
+import { Util } from './util'
 import * as Cesium from 'cesium/Cesium'
 
-const segmentDrawVert = require('../glsl/segmentDraw.vert');
-const fullscreenVert = require('../glsl/fullscreen.vert');
-const screenDrawFrag = require('../glsl/screenDraw.frag');
-const segmentDrawFrag = require('../glsl/segmentDraw.frag');
-const trailDrawFrag = require('../glsl/trailDraw.frag');
+import { segmentDrawVert, fullscreenVert, screenDrawFrag, segmentDrawFrag, trailDrawFrag } from '../shader/shader.min.js';
 
 class ParticlesRendering {
   constructor(context, data, userInput, viewerParameters, particlesComputing, colour) {

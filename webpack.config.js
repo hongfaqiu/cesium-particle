@@ -50,10 +50,6 @@ module.exports = {
           limit: 8192,
           name: '[name].[ext]?[hash]'
         }
-      },
-      {
-        test: /\.(frag|vert)$/,
-        loader: 'webpack-glsl-loader'
       }
     ]
   },
@@ -76,7 +72,6 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(), // 热更新插件
   ],
-  devtool: 'inline-source-map', // map文件追踪错误提示
   devServer: {
     contentBase: './dist',      // 开发环境的服务目录
     historyApiFallback: true,

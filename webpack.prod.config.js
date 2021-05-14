@@ -8,9 +8,10 @@ const prdWebpackConfig= {
   mode: 'production',
   entry: path.resolve(__dirname, 'src/index.js'),
   output: {
-    path: path.join(__dirname, 'lib'),
-    filename: "cesium-particle.js",
-    libraryTarget: 'commonjs2'  //模块输出方式
+    path: path.join(__dirname, 'build'),
+    filename: 'cesium-particle.min.js',
+    libraryTarget: 'umd',  //模块输出方式
+    umdNamedDefine: true
   },
   resolve: {
     extensions: ['.js', '.json'],
@@ -21,9 +22,9 @@ const prdWebpackConfig= {
       fs: false
     }
   },
-  externals: {
-    cesium: 'cesium' //打包时候排除cesium
-  },
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ],
   module: {
     rules: [
       {
@@ -38,9 +39,5 @@ const prdWebpackConfig= {
     ]
   }
 };
-
-if (NODE_ENV !== 'publish') {
-  prdWebpackConfig.plugins.push(new BundleAnalyzerPlugin())
-}
 
 module.exports = prdWebpackConfig;

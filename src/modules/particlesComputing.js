@@ -2,10 +2,7 @@ import { CustomPrimitive } from './customPrimitive';
 import { DataProcess } from './dataProcess';
 import { Util } from './util';
 import * as Cesium from 'cesium/Cesium';
-
-const CalculateSpeedShader = require('../glsl/calculateSpeed.frag');
-const UpdatePositionShader = require('../glsl/updatePosition.frag');
-const PostProcessingPositionShader = require('../glsl/postProcessingPosition.frag');
+import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../shader/shader.min.js';
 
 class ParticlesComputing {
     constructor(context, data, userInput, viewerParameters) {
