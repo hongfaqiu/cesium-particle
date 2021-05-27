@@ -22,16 +22,29 @@ const statechangeBtn = document.getElementById('statechange');
 const removeBtn = document.getElementById('remove');
 var particleObj = null, working = false;
 
-// 加载nc文件按钮
+// 加载demo.nc文件按钮
 loadBtn.onclick = function () {
   if (fileInput.files[0] && viewer && !particleObj) {
     let file = fileInput.files[0];
     particleObj = new Particle3D(viewer, {
       input: file,
       userInput,
-      colour: 'speed',
+      fields: {
+        lev: 'lev'
+      },
       colorTable: colorTable
     });
+    //加载uv3z.nc 或者325china.nc文件
+    /* particleObj = new Particle3D(viewer, {
+      input: file,
+      userInput,
+      colour: 'speed',
+      fields: {
+        U: 'water_u',
+        V: 'water_v'
+      },
+      colorTable: colorTable
+    }); */
     particleObj.start();
     statechangeBtn.disabled = false;
     removeBtn.disabled = false;
@@ -50,6 +63,7 @@ generateDataBtn.onclick = function () {
     particleObj = new Particle3D(viewer, {
       input: jsonData,
       userInput,
+      colour: 'height',
       type: 'json',
       colorTable: colorTable
     });

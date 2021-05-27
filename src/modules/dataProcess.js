@@ -1,5 +1,7 @@
 import netcdfjs from 'netcdfjs'
 import * as Cesium from 'cesium/Cesium'
+import { defaultFields } from './options'
+
 var DataProcess = (function () {
   var data;
   var validIds = [];
@@ -16,8 +18,17 @@ var DataProcess = (function () {
     };
   }
   
-  var loadNetCDF = function (file) {
+  var loadNetCDF = function (file, userFields) {
+
+    let fields = defaultFields;
+    for (let key in fields) {
+      if (userFields[key]) {
+        fields[key] = userFields[key];
+      }
+    }
+
     return new Promise(function (resolve) {
+      // const { U, V, W, H, lon, lat, lev } = fields;
       const reader = new FileReader();
       // 用readAsText读取文件文件内容
       reader.readAsArrayBuffer(file);
@@ -29,55 +40,93 @@ var DataProcess = (function () {
             return map;
           }, {});
         }
-        console.log(reader.result);
         var NetCDF = new netcdfjs(reader.result);
-        data = {};
-        console.log(NetCDF);
-        var dimensions = arrayToMap(NetCDF.dimensions);
-        data.dimensions = {};
-        data.dimensions.lon = dimensions['lon'].size;
-        data.dimensions.lat = dimensions['lat'].size;
-        data.dimensions.lev = dimensions['lev'].size;
+        data = {
 
-        var variables = arrayToMap(NetCDF.variables);
-        var uAttributes = arrayToMap(variables['U'].attributes);
-        var vAttributes = arrayToMap(variables['V'].attributes);
+        };
 
-        data.lon = {};
-        data.lon.array = new Float32Array(NetCDF.getDataVariable('lon').flat());
-        data.lon.min = Math.min(...data.lon.array);
-        data.lon.max = Math.max(...data.lon.array);
-
-        data.lat = {};
-        data.lat.array = new Float32Array(NetCDF.getDataVariable('lat').flat());
-        data.lat.min = Math.min(...data.lat.array);
-        data.lat.max = Math.max(...data.lat.array);
-
-        data.lev = {};
-        data.lev.array = new Float32Array(NetCDF.getDataVariable('lev').flat());
-        data.lev.min = Math.min(...data.lev.array);
-        data.lev.max = Math.max(...data.lev.array);
-
-        data.U = {};
-        data.U.array = new Float32Array(NetCDF.getDataVariable('U').flat());
-        data.U.min = uAttributes['min'].value;
-        data.U.max = uAttributes['max'].value;
-
-        data.V = {};
-        data.V.array = new Float32Array(NetCDF.getDataVariable('V').flat());
-        data.V.min = vAttributes['min'].value;
-        data.V.max = vAttributes['max'].value;
-
-        data.H = {
-          array: new Float32Array(data.U.array.length),
-          min: 0,
-          max: 0
+        for (let key in fields) {
+          let arr = [];
+          let variables = NetCDF.header.variables.map(item => item.name);
+          if (fields[key] && variables.indexOf(fields[key]) === -1) {
+            arr.push(fields[key]);
+          }
+          if (arr.length) {
+            console.error("NetCDF file no such attribute: " + arr + '\n all variables are: ' + variables);
+          }
         }
 
-        data.W = {
-          array: new Float32Array(data.U.array.length),
-          min: 0,
-          max: 0
+        var dimensions = arrayToMap(NetCDF.dimensions);
+        data.dimensions = {
+          lon: 1,
+          lat: 1,
+          lev: 1
+        };
+        ['lon', 'lat', 'lev'].map(key => {
+          try {
+            if (fields[key]) {
+              data.dimensions[key] = dimensions[fields[key]].size;
+              data[key] = {};
+              data[key].array = new Float32Array(NetCDF.getDataVariable(key).flat());
+              data[key].min = Math.min(...data[key].array);
+              data[key].max = Math.max(...data[key].array);
+            }
+          } catch {
+            throw error("NetCDF file no such attribute: " + fields[key]);
+          }
+        });
+
+        ["U", "V", "W", "H"].map(key => {
+          try {
+            if (fields[key]) {
+              var variables = arrayToMap(NetCDF.variables);
+              var attributes = arrayToMap(variables[fields[key]].attributes);
+              data[key] = {};
+              data[key].array = new Float32Array(NetCDF.getDataVariable(fields[key]).flat());
+              data[key].min = attributes['min'].value;
+              data[key].max = attributes['max'].value;
+            }
+          } catch {
+            throw error("NetCDF file no such attribute: " + fields[key]);
+          }
+        })
+
+        if (!data.lev) {
+          data.lev = {
+            array: [0].flat(),
+            min: 0,
+            max: 0
+          }
+        }
+
+        if (!fields['W']) {
+          data.W = {
+            array: new Float32Array(data.U.array.length),
+            min: 0,
+            max: 0
+          }
+        }
+
+        if (!fields['H']) {
+          data.H = {
+            array: new Float32Array(data.U.array.length),
+            min: 0,
+            max: 0
+          }
+          if (fields['lev']) {
+            const { lon, lat, lev } = data.dimensions;
+            let arr = [];
+            for (let i = 0; i < lev; i++) {
+              for (let j = 0; j < lat; j++) {
+                for (let k = 0; k < lon; k++) {
+                  let index = i * (lon * lat) + j * lon + k;
+                  data.H.array[index] = data.lev.array[i];
+                }
+              }
+            }
+            data.H.min = Math.min(...data.lev.array);
+            data.H.max = Math.max(...data.lev.array);
+          }
         }
 
         resolve(data);
@@ -86,15 +135,15 @@ var DataProcess = (function () {
     });
   }
 
-  var loadData = async function (input, type, colorTable) {
+  var loadData = async function (input, type, fields, colorTable) {
+    
     if (type === 'json') {
       data = input
     }
     else {
-      await loadNetCDF(input);
+      await loadNetCDF(input, fields);
     }
     validIds = getValidIds()
-    console.log(data);
     loadColorTable(colorTable);
 
     return data;

@@ -22,7 +22,7 @@ npm install --save cesium-particle
 
 ```js
 import { Particle3D, Vortex } from 'cesium-particle'
-import * as Cesium from 'cesium'
+import * as Cesium from 'cesium/Cesium';
 
 // cesiumViewer对象
 var viewer = new Cesium.Viewer(cesiumContainer, viewerOption);
@@ -50,12 +50,25 @@ var colorTable = [
   ]
 
 // 第一种
-// 加载.nc文件
+// 加载demo.nc文件
 var file=new ActiveXObject("demo.nc"); 
  // 从NetCDF3文件生成粒子系统对象
 var particleObj = new Particle3D(viewer, {
   input: file,
-  colour: 'speed' // 颜色变化跟随速度,可选值: 'speed' or 'height'(defalut)
+  fields: {
+    lev: 'lev'
+  }
+});
+
+// 加载uv3z.nc、325china.nc或其他自定义文件
+var file=new ActiveXObject("uv3z.nc"); 
+ // 从NetCDF3文件生成粒子系统对象
+var particleObj = new Particle3D(viewer, {
+  input: file,
+  fields: {
+    U: 'water_u',
+    V: 'water_v'
+  }
 });
 
 // 第二种
@@ -67,7 +80,8 @@ var particleObj2 = new Particle3D(viewer, {
     input: jsonData,
     type: 'json', // 必填
     userInput: systemOptions,
-    colorTable: colorTable
+    colorTable: colorTable,
+    colour: 'height' // 颜色变化跟随速度,可选值: 'speed'(defalut) or 'height'
   });
 
 particleObj.start(); // 开始运行粒子系统
@@ -81,9 +95,9 @@ particleObj.remove(); // 移除粒子系统
 
 ## API
 
-### ``new Particle3D(viewer, {input, type = 'nc', userInput = defaultParticleSystemOptions, colorTable = defaultColorTable, colour = 'height'})``
+### ``new Particle3D(viewer, {input, type = 'nc', fields = defaultFields, userInput = defaultParticleSystemOptions, colorTable = defaultColorTable, colour = 'height'})``
 
-新建一个粒子系统对象，传入的参数包括(ceiusmviewer, {.nc矢量场文件或json对象, 传入的数据类型, 粒子系统配置项(默认为默认设置), 粒子颜色色带, 上色的属性})
+新建一个粒子系统对象，传入的参数包括(ceiusmviewer, {.nc矢量场文件或json对象, 传入的数据类型, nc文件字段规定, 粒子系统配置项(默认为默认设置), 粒子颜色色带, 上色的属性})
 
 配置属性详解:
 
@@ -103,6 +117,17 @@ defaultParticleSystemOptions = {
                       // 最终的粒子重置率particleDropRate = dropRate + dropRateBump * speedNorm;
   speedFactor: 1.0, // 粒子速度
   lineWidth: 4.0 // 线宽
+}
+
+// 默认的nc文件variables字段
+defaultFields = {
+  U: 'U', // 横向速度
+  V: 'V', // 纵向速度
+  W: '', // 垂直速度
+  H: '', // 高度属性
+  lon: 'lon', // 经度
+  lat: 'lat', // 纬度
+  lev: '', // 层
 }
 
 // colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式，对应粒子高度从高到低（下一个版本提供速度/高度切换参数）

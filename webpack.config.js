@@ -50,6 +50,10 @@ module.exports = {
           limit: 8192,
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.(frag|vert)$/,
+        loader: 'webpack-glsl-loader'
       }
     ]
   },

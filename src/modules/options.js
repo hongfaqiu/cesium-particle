@@ -1,3 +1,13 @@
+const defaultFields = {
+  U: 'U',
+  V: 'V',
+  W: '',
+  H: '',
+  lon: 'lon',
+  lat: 'lat',
+  lev: '',
+}
+
 const defaultColorTable = [
   [[1.0, 1.0, 1.0]]
 ]
@@ -13,4 +23,4 @@ const defaultParticleSystemOptions = {
     lineWidth: 4.0
 }
 
-export { defaultColorTable, defaultParticleSystemOptions };
+export { defaultFields, defaultColorTable, defaultParticleSystemOptions };
