@@ -1,6 +1,6 @@
 # 基于cesium的gpu加速粒子系统
 
-![npm](https://img.shields.io/npm/v/cesium-particle) ![npm](https://img.shields.io/npm/dt/cesium-particle) ![NPM](https://img.shields.io/npm/l/cesium-particle)
+![npm](https://img.shields.io/npm/v/cesium-particle) ![npm](https://img.shields.io/npm/dt/cesium-particle) ![GitHub](https://img.shields.io/github/license/hongfaqiu/cesium-particle)
 
 ## 说明
 
@@ -61,9 +61,9 @@ var particleObj = new Particle3D(viewer, {
 });
 
 // 加载uv3z.nc、325china.nc或其他自定义文件
-var file=new ActiveXObject("uv3z.nc"); 
+var file2=new ActiveXObject("uv3z.nc"); 
  // 从NetCDF3文件生成粒子系统对象
-var particleObj = new Particle3D(viewer, {
+var particleObj2 = new Particle3D(viewer, {
   input: file,
   fields: {
     U: 'water_u',
@@ -95,13 +95,35 @@ particleObj.remove(); // 移除粒子系统
 
 ## API
 
-### ``new Particle3D(viewer, {input, type = 'nc', fields = defaultFields, userInput = defaultParticleSystemOptions, colorTable = defaultColorTable, colour = 'height'})``
+### ``new Particle3D(viewer, {input, type, fields, userInput, colorTable, colour})``
 
-新建一个粒子系统对象，传入的参数包括(ceiusmviewer, {.nc矢量场文件或json对象, 传入的数据类型, nc文件字段规定, 粒子系统配置项(默认为默认设置), 粒子颜色色带, 上色的属性})
+新建一个粒子系统对象，传入的参数包括(ceiusmViewer, {.nc矢量场文件或json对象, 传入的数据类型, nc文件字段规定, 粒子系统配置项, 粒子颜色色带, 上色的属性})
 
-配置属性详解:
+``配置属性详解:``
+
+| Name       | Type          | Necessarily | Enumeration         | Default                      |
+| ---------- | ------------- | ----------- | ------------------- | ---------------------------- |
+| input      | File / Object | true        |                     |                              |
+| type       | String        |             | 'nc' or 'json'      | 'nc'                         |
+| fields     | Object        |             |                     | defalutFields                |
+| userInput  | Object        |             |                     | defaultParticleSystemOptions |
+| colorTable | Array         |             |                     | defaultColorTable            |
+| colour     | String        |             | 'speed' or 'height' | 'speed'                      |
+
+``默认配置详解:``
 
 ```js
+// 默认的nc文件variables字段
+defaultFields = {
+  U: 'U', // 横向速度
+  V: 'V', // 纵向速度
+  W: '', // 垂直速度
+  H: '', // 高度属性
+  lon: 'lon', // 经度
+  lat: 'lat', // 纬度
+  lev: '', // 层
+}
+
 let maxParticles = 64 * 64 ; // 必须为平方, 否则会报错
 let particlesTextureSize = Math.ceil(Math.sqrt(maxParticles));
 maxParticles = particlesTextureSize * particlesTextureSize;
@@ -119,24 +141,14 @@ defaultParticleSystemOptions = {
   lineWidth: 4.0 // 线宽
 }
 
-// 默认的nc文件variables字段
-defaultFields = {
-  U: 'U', // 横向速度
-  V: 'V', // 纵向速度
-  W: '', // 垂直速度
-  H: '', // 高度属性
-  lon: 'lon', // 经度
-  lat: 'lat', // 纬度
-  lev: '', // 层
-}
-
-// colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式，对应粒子高度从高到低（下一个版本提供速度/高度切换参数）
-defaultColorTable = [[1.0, 1.0, 1.0]]; // 默认的颜色配置
+// 默认的颜色配置
+// colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式，对应粒子高度从高到低
+defaultColorTable = [[1.0, 1.0, 1.0]]; 
 ```
 
 ### ``start()``
 
-粒子系统开始运行，以requestAnimationFrame()的形式进行刷新，在窗口移动、大小变更、地球缩放、视点相机移动时粒子系统会暂停，停止操作后继续运行
+粒子系统开始运行，在窗口移动、大小变更、地球缩放、视点相机移动时粒子系统会暂停，停止操作后继续运行
 
 ### ``optinsChange(options)``
 
