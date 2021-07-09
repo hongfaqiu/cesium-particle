@@ -171,6 +171,12 @@ npm install / cnpm install
 npm run dev
 ```
 
+## 运行图片
+
+| ![10w风场粒子](https://user-images.githubusercontent.com/62411296/125084621-51948380-e0fc-11eb-8883-a8e265470402.png) | ![25w海流粒子](https://user-images.githubusercontent.com/62411296/125084661-5ce7af00-e0fc-11eb-982b-46d42627318a.png) |
+| ------- | ------- |
+| ![中国海海流](https://user-images.githubusercontent.com/62411296/125084828-86a0d600-e0fc-11eb-877e-b79865b82cfe.png) | ![25万个粒子的的涡旋](https://user-images.githubusercontent.com/62411296/125084984-acc67600-e0fc-11eb-81c4-8c265cae62f4.png)|
+
 ## Q&A
 
 ### 更改glsl文件之后未生效
