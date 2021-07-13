@@ -1,8 +1,8 @@
-import {ParticlesRendering} from './particlesRendering'
-import { ParticlesComputing } from './particlesComputing'
+import ParticlesRendering from './particlesRendering'
+import ParticlesComputing from './particlesComputing'
 import * as Cesium from 'cesium/Cesium'
 
-class ParticleSystem {
+export default class ParticleSystem {
     constructor(context, data, userInput, viewerParameters, colour) {
         this.context = context;
         this.data = data;
@@ -96,4 +96,3 @@ class ParticleSystem {
         this.refreshParticles(false);
     }
 }
-export {ParticleSystem}

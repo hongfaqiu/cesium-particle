@@ -5,11 +5,12 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const NODE_ENV = process.env.NODE_ENV === 'prd' ? 'prd' : 'dev'
 
 const cesiumSource = 'node_modules/cesium/Source';
 const cesiumWorkers = '../Build/Cesium/Workers';
 
-module.exports = {
+let config = {
   entry: './example/app.js',
   output: {
     filename: 'main.js',
@@ -65,14 +66,14 @@ module.exports = {
     // Copy Cesium Assets, Widgets, and Workers to a static directory
     new CopyWebpackPlugin({
       patterns: [
-        { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
-        { from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
-        { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' },
+        { from: path.join(cesiumSource, cesiumWorkers), to: 'cesium/Workers' },
+        { from: path.join(cesiumSource, 'Assets'), to: 'cesium/Assets' },
+        { from: path.join(cesiumSource, 'Widgets'), to: 'cesium/Widgets' },
       ],
     }),
     new webpack.DefinePlugin({
         //Cesium载入静态的资源的相对路径
-        CESIUM_BASE_URL: JSON.stringify('')
+        CESIUM_BASE_URL: JSON.stringify('cesium/')
     }),
     new webpack.HotModuleReplacementPlugin(), // 热更新插件
   ],
@@ -83,3 +84,14 @@ module.exports = {
     port: 9000
   }
 };
+
+if (NODE_ENV === 'dev') {
+  config = Object.assign(config, {
+    optimization: {
+      minimize: false
+    },
+    devtool: "source-map"
+  })
+}
+
+module.exports = config;

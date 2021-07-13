@@ -1,6 +1,6 @@
 import * as Cesium from 'cesium/Cesium'
 
-var Util = (function () {
+export default (function () {
 
 	var getFullscreenQuad = function () {
 		var fullscreenQuad = new Cesium.Geometry({
@@ -128,5 +128,3 @@ var Util = (function () {
 		viewRectangleToLonLatRange: viewRectangleToLonLatRange
 	};
 })();
-
-export {Util}

@@ -1,10 +1,10 @@
-import { CustomPrimitive } from './customPrimitive'
-import { Util } from './util'
+import CustomPrimitive from './customPrimitive'
+import Util from './util'
 import * as Cesium from 'cesium/Cesium'
 
-import { segmentDrawVert, fullscreenVert, screenDrawFrag, segmentDrawFrag, trailDrawFrag } from '../shader/shader.min.js';
+import { segmentDrawVert, fullscreenVert, screenDrawFrag, segmentDrawFrag, trailDrawFrag } from '../../packages/shader';
 
-class ParticlesRendering {
+export default class ParticlesRendering {
   constructor(context, data, userInput, viewerParameters, particlesComputing, colour) {
     this.colour = colour === 'height' ? true : false;
     this.createRenderingTextures(context, data);
@@ -304,8 +304,4 @@ class ParticlesRendering {
       })
     };
   }
-}
-
-export {
-  ParticlesRendering
 }

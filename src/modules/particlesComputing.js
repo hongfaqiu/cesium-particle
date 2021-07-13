@@ -1,10 +1,10 @@
-import { CustomPrimitive } from './customPrimitive';
-import { DataProcess } from './dataProcess';
-import { Util } from './util';
+import CustomPrimitive from './customPrimitive';
+import DataProcess from './dataProcess';
+import Util from './util';
 import * as Cesium from 'cesium/Cesium';
-import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../shader/shader.min.js';
+import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../../packages/shader';
 
-class ParticlesComputing {
+export default class ParticlesComputing {
     constructor(context, data, userInput, viewerParameters) {
         this.createWindTextures(context, data);
         this.createParticlesTextures(context, userInput, viewerParameters);
@@ -223,4 +223,3 @@ class ParticlesComputing {
     }
 
 }
-export {ParticlesComputing}

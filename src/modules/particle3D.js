@@ -1,11 +1,10 @@
-import {ParticleSystem} from './particleSystem'
-import {DataProcess} from './dataProcess'
-import {Util} from './util'
+import ParticleSystem from './particleSystem'
+import DataProcess from './dataProcess'
+import Util from './util'
 import * as Cesium from 'cesium/Cesium'
 import { defaultFields, defaultParticleSystemOptions, defaultColorTable } from './options'
 
-
-class Particle3D {
+export default class Particle3D {
   constructor(viewer, {
     input, type = 'nc', fields = defaultFields, userInput = defaultParticleSystemOptions, colorTable = defaultColorTable, colour = 'speed'}) {
     var animate = null;
@@ -123,16 +122,24 @@ class Particle3D {
     }
     animate();
   }
+
   stop() {
     this.scene.primitives.show = false;
     this.viewer.scene.requestRender();
     this.removeEventListeners();
     window.cancelAnimationFrame(this.animate);
   }
+
+  pause() {
+    console.log("暂停");
+  }
+
+  continue() {
+    console.log("继续");
+  }
+
   remove() {
     this.stop();
     this.scene.primitives.removeAll();
   }
 }
-
-export { Particle3D };

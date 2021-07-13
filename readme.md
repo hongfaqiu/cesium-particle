@@ -1,4 +1,4 @@
-# 基于cesium的gpu加速粒子系统
+# 基于cesium的矢量场可视化gpu加速粒子系统
 
 ![npm](https://img.shields.io/npm/v/cesium-particle) ![npm](https://img.shields.io/npm/dt/cesium-particle) ![GitHub](https://img.shields.io/github/license/hongfaqiu/cesium-particle)
 
@@ -16,6 +16,10 @@ node 环境下使用npm工具安装模块
 
 ```js
 npm install --save cesium-particle
+
+or
+
+yarn add cesium-particle
 ```
 
 ## 例子
@@ -51,7 +55,7 @@ var colorTable = [
 
 // 第一种
 // 加载demo.nc文件
-var file=new ActiveXObject("demo.nc"); 
+var file = File("demo.nc"); // 读取文件
  // 从NetCDF3文件生成粒子系统对象
 var particleObj = new Particle3D(viewer, {
   input: file,
@@ -61,8 +65,8 @@ var particleObj = new Particle3D(viewer, {
 });
 
 // 加载uv3z.nc、325china.nc或其他自定义文件
-var file2=new ActiveXObject("uv3z.nc"); 
- // 从NetCDF3文件生成粒子系统对象
+var file2 = File("uv3z.nc"); 
+ // 需定义字段名
 var particleObj2 = new Particle3D(viewer, {
   input: file,
   fields: {
@@ -70,6 +74,7 @@ var particleObj2 = new Particle3D(viewer, {
     V: 'water_v'
   }
 });
+
 
 // 第二种
 // 构建涡旋模型对象
@@ -167,7 +172,7 @@ defaultColorTable = [[1.0, 1.0, 1.0]];
 ### 运行说明
 
 ```js
-npm install / cnpm install
+yarn / npm install
 npm run dev
 ```
 

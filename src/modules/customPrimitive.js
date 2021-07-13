@@ -1,5 +1,5 @@
 import * as Cesium from 'cesium/Cesium'
-class CustomPrimitive {
+export default class CustomPrimitive {
     constructor(options) {
         this.commandType = options.commandType;
 
@@ -116,5 +116,3 @@ class CustomPrimitive {
         return Cesium.destroyObject(this);
     }
 }
-
-export {CustomPrimitive}

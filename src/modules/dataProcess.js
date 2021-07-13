@@ -2,7 +2,7 @@ import netcdfjs from 'netcdfjs'
 import * as Cesium from 'cesium/Cesium'
 import { defaultFields } from './options'
 
-var DataProcess = (function () {
+export default (function () {
   var data;
   var validIds = [];
 
@@ -205,6 +205,3 @@ var DataProcess = (function () {
   };
 
 })();
-export {
-  DataProcess
-}

@@ -1,12 +1,13 @@
 {
   "name": "cesium-particle",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "cesium particle system module",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "cross-env NODE_ENV=dev webpack-dev-server",
     "build-glsl": "webpack --config webpack.glsl.config.js",
-    "build-example": "webpack --config webpack.config.js"
+    "build-example": "cross-env NODE_ENV=prd webpack --config webpack.config.js",
+    "prepublish": "build-glsl"
   },
   "repository": {
     "type": "git",
@@ -22,12 +23,13 @@
     "readme.md"
   ],
   "author": "hongfaqiu",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.13.16",
     "babel-loader": "^8.2.2",
-    "cesium": "^1.81.0",
+    "cesium": "^1.83.0",
     "copy-webpack-plugin": "^8.1.1",
+    "cross-env": "^7.0.3",
     "css-loader": "^5.2.4",
     "dat.gui": "^0.7.7",
     "html-webpack-plugin": "^5.3.1",
