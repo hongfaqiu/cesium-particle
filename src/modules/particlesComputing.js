@@ -2,7 +2,7 @@ import CustomPrimitive from './customPrimitive';
 import DataProcess from './dataProcess';
 import Util from './util';
 import * as Cesium from 'cesium/Cesium';
-import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../../packages/shader';
+import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../shader/shader.min.js';
 
 export default class ParticlesComputing {
     constructor(context, data, userInput, viewerParameters) {

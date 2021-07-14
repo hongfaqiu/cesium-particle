@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=dev webpack-dev-server",
     "build-glsl": "webpack --config webpack.glsl.config.js",
     "build-example": "cross-env NODE_ENV=prd webpack --config webpack.config.js",
-    "prepublish": "build-glsl"
+    "prepublish": "npm run build-glsl"
   },
   "repository": {
     "type": "git",
