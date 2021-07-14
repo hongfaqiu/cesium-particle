@@ -132,11 +132,13 @@ export default class ParticlesComputing {
                 outputTexture: this.particlesTextures.particlesSpeed,
                 preExecute: function () {
                     // swap textures before binding
-                    var temp;
-                    temp = that.particlesTextures.previousParticlesPosition;
-                    that.particlesTextures.previousParticlesPosition = that.particlesTextures.currentParticlesPosition;
-                    that.particlesTextures.currentParticlesPosition = that.particlesTextures.postProcessingPosition;
-                    that.particlesTextures.postProcessingPosition = temp;
+                    if (userInput?.dynamic) {
+                      var temp;
+                      temp = that.particlesTextures.previousParticlesPosition;
+                      that.particlesTextures.previousParticlesPosition = that.particlesTextures.currentParticlesPosition;
+                      that.particlesTextures.currentParticlesPosition = that.particlesTextures.postProcessingPosition;
+                      that.particlesTextures.postProcessingPosition = temp;
+                    }
 
                     // keep the outputTexture up to date
                     that.primitives.calculateSpeed.commandToExecute.outputTexture = that.particlesTextures.particlesSpeed;

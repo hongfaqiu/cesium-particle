@@ -20,7 +20,8 @@ const defaultParticleSystemOptions = {
     dropRate: 0.003,
     dropRateBump: 0.01,
     speedFactor: 1.0,
-    lineWidth: 4.0
+    lineWidth: 4.0,
+    dynamic: true
 }
 
 export { defaultFields, defaultColorTable, defaultParticleSystemOptions };

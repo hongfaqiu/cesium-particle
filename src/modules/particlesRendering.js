@@ -254,10 +254,13 @@ export default class ParticlesRendering {
         autoClear: true,
         preExecute: function () {
           // swap framebuffers before binding
-          var temp;
-          temp = that.framebuffers.currentTrails;
-          that.framebuffers.currentTrails = that.framebuffers.nextTrails;
-          that.framebuffers.nextTrails = temp;
+          if (userInput.dynamic) {
+            
+            var temp;
+            temp = that.framebuffers.currentTrails;
+            that.framebuffers.currentTrails = that.framebuffers.nextTrails;
+            that.framebuffers.nextTrails = temp;
+          }
 
           // keep the framebuffers up to date
           that.primitives.trails.commandToExecute.framebuffer = that.framebuffers.nextTrails;

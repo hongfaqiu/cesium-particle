@@ -1,6 +1,6 @@
 import { Particle3D, Vortex } from '../src/index';
 import * as ceiusm_map from './map';
-import { VortexPanel, ControlPanel } from './gui';
+import {VortexPanel, ControlPanel} from './gui';
 import { colorTable } from './options';
 
 // initialization
@@ -19,9 +19,8 @@ const fileInput = document.getElementById('fileInput');
 const loadBtn = document.getElementById('load');
 const generateDataBtn = document.getElementById('generateData');
 const statechangeBtn = document.getElementById('statechange');
-const pauseBtn = document.getElementById('pause');
 const removeBtn = document.getElementById('remove');
-var particleObj = null, working = false, pause = false;
+var particleObj = null, working = false;
 
 // 加载demo.nc文件按钮
 loadBtn.onclick = function () {
@@ -48,7 +47,6 @@ loadBtn.onclick = function () {
     }); */
     particleObj.start();
     statechangeBtn.disabled = false;
-    pauseBtn.disabled = false;
     removeBtn.disabled = false;
     loadBtn.disabled = true;
     generateDataBtn.disabled = true;
@@ -71,7 +69,6 @@ generateDataBtn.onclick = function () {
     });
     particleObj.start();
     statechangeBtn.disabled = false;
-    pauseBtn.disabled = false;
     removeBtn.disabled = false;
     loadBtn.disabled = true;
     generateDataBtn.disabled = true;
@@ -88,23 +85,13 @@ statechangeBtn.onclick = function () {
   }
 }
 
-pauseBtn.onclick = function () {
-  if (particleObj) {
-    pause ? particleObj.continue() : particleObj.pause();
-    !pause ? pauseBtn.innerText = '继续' : pauseBtn.innerText = '暂停';
-    pause = !pause;
-  }
-}
-
 removeBtn.onclick = function () {
   if (particleObj) {
     particleObj.remove();
     working = false;
     statechangeBtn.innerText = '显示'
-    pauseBtn.innerText = '暂停'
     particleObj = null;
     statechangeBtn.disabled = true;
-    pauseBtn.disabled = true;
     removeBtn.disabled = true;
     loadBtn.disabled = false;
     generateDataBtn.disabled = false;

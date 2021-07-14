@@ -58,11 +58,13 @@ export default class ParticleSystem {
         });
     }
 
-    refreshParticles(maxParticlesChanged) {
+    refreshParticles(maxParticlesChanged, dynamic = true) {
+      if (dynamic) {
         this.clearFramebuffers();
 
         this.particlesComputing.destroyParticlesTextures();
         this.particlesComputing.createParticlesTextures(this.context, this.userInput, this.viewerParameters);
+      }
 
         if (maxParticlesChanged) {
             var geometry = this.particlesRendering.createSegmentsGeometry(this.userInput);
@@ -86,13 +88,22 @@ export default class ParticleSystem {
         Object.keys(userInput).forEach((key) => {
             this.userInput[key] = userInput[key];
         });
-        this.refreshParticles(maxParticlesChanged);
+        this.refreshParticles(maxParticlesChanged, userInput.dynamic);
     }
 
     applyViewerParameters(viewerParameters) {
         Object.keys(viewerParameters).forEach((key) => {
             this.viewerParameters[key] = viewerParameters[key];
         });
-        this.refreshParticles(false);
+        
+      this.refreshParticles(false);
+      if (!this.userInput.dynamic) {
+        this.userInput.dynamic = true;
+        this.applyUserInput(this.userInput)
+        setTimeout(() => {
+          this.userInput.dynamic = false;
+          this.applyUserInput(this.userInput)
+        }, 500);
+      }
     }
 }

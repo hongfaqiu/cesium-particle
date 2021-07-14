@@ -108,6 +108,7 @@ export default class Particle3D {
   }
 
   optionsChange(userInput) {
+    this.userInput = userInput;
     this.particleSystem.applyUserInput(userInput);
   }
 
@@ -128,14 +129,6 @@ export default class Particle3D {
     this.viewer.scene.requestRender();
     this.removeEventListeners();
     window.cancelAnimationFrame(this.animate);
-  }
-
-  pause() {
-    console.log("暂停");
-  }
-
-  continue() {
-    console.log("继续");
   }
 
   remove() {

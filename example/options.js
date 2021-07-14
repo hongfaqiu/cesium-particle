@@ -68,7 +68,8 @@ const defaultParticleSystemOptions = {
   dropRate: 0.003, // how often the particles move to a random place
   dropRateBump: 0.01, // drop rate increase relative to individual particle speed
   speedFactor: 0.5, // how fast the particles move
-  lineWidth: 4.0
+  lineWidth: 4.0,
+  dynamic: true
 }
 
 export { defaultVortexOptions, colorTable, defaultParticleSystemOptions }

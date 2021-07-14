@@ -40,7 +40,8 @@ var systemOptions = {
   dropRate: 0.003,
   dropRateBump: 0.01,
   speedFactor: 1.0,
-  lineWidth: 4.0
+  lineWidth: 4.0,
+  dynamic: true
 }
 
 // 粒子颜色色带
@@ -143,7 +144,8 @@ defaultParticleSystemOptions = {
   dropRateBump: 0.01, // 随速度增加的粒子重置率百分比，速度越快越密集，
                       // 最终的粒子重置率particleDropRate = dropRate + dropRateBump * speedNorm;
   speedFactor: 1.0, // 粒子速度
-  lineWidth: 4.0 // 线宽
+  lineWidth: 4.0, // 线宽
+  dynamic: true // 是否动态运行
 }
 
 // 默认的颜色配置
