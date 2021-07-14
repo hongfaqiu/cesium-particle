@@ -72,4 +72,14 @@ const defaultParticleSystemOptions = {
   dynamic: true
 }
 
-export { defaultVortexOptions, colorTable, defaultParticleSystemOptions }
+const defaultFields = {
+  U: 'U',
+  V: 'V',
+  W: '',
+  H: '',
+  lon: 'lon',
+  lat: 'lat',
+  lev: '',
+}
+
+export { defaultVortexOptions, colorTable, defaultParticleSystemOptions, defaultFields }

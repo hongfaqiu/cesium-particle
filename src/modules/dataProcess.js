@@ -41,13 +41,11 @@ export default (function () {
           }, {});
         }
         var NetCDF = new netcdfjs(reader.result);
-        data = {
+        data = {};
 
-        };
-
+        let variables = NetCDF.header.variables.map(item => item.name);
         for (let key in fields) {
           let arr = [];
-          let variables = NetCDF.header.variables.map(item => item.name);
           if (fields[key] && variables.indexOf(fields[key]) === -1) {
             arr.push(fields[key]);
           }
@@ -72,7 +70,7 @@ export default (function () {
               data[key].max = Math.max(...data[key].array);
             }
           } catch {
-            throw error("NetCDF file no such attribute: " + fields[key]);
+            throw new Error("NetCDF file no such attribute: " + fields[key]);
           }
         });
 
@@ -87,7 +85,7 @@ export default (function () {
               data[key].max = attributes['max'].value;
             }
           } catch {
-            throw error("NetCDF file no such attribute: " + fields[key]);
+            throw new Error("NetCDF file no such attribute: " + fields[key]);
           }
         })
 

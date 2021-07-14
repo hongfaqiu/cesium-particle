@@ -1,12 +1,13 @@
-import { Particle3D, Vortex } from '../src/index';
+import { Particle3D, Vortex, getFileVariables } from '../src/index';
 import * as ceiusm_map from './map';
-import {VortexPanel, ControlPanel} from './gui';
+import { FieldsPanel, VortexPanel, ControlPanel } from './gui';
 import { colorTable } from './options';
 
 // initialization
 ceiusm_map.initMap('cesiumContainer');
-var vortexPanel = new VortexPanel("vortexPanelContainer");
 
+var fieldsPanel = new FieldsPanel("fieldsPanelContainer");
+var vortexPanel = new VortexPanel("vortexPanelContainer");
 var controlPanel = new ControlPanel("panelContainer", userInput => {
   particleObj && particleObj.optionsChange(userInput);
 });
@@ -22,29 +23,26 @@ const statechangeBtn = document.getElementById('statechange');
 const removeBtn = document.getElementById('remove');
 var particleObj = null, working = false;
 
+fileInput.onchange = function () {
+  let file = fileInput.files[0];
+  file && getFileVariables(file).then(res => {
+    let list=document.getElementById("fieldsPanelContainer");
+    list.removeChild(list.childNodes[0]);
+    fieldsPanel = new FieldsPanel("fieldsPanelContainer", res);
+  })
+}
+
 // 加载demo.nc文件按钮
 loadBtn.onclick = function () {
   if (fileInput.files[0] && viewer && !particleObj) {
     let file = fileInput.files[0];
+    let fields = fieldsPanel.getUserInput();
     particleObj = new Particle3D(viewer, {
       input: file,
       userInput,
-      fields: {
-        lev: 'lev'
-      },
+      fields,
       colorTable: colorTable
     });
-    //加载uv3z.nc 或者325china.nc文件
-    /* particleObj = new Particle3D(viewer, {
-      input: file,
-      userInput,
-      colour: 'speed',
-      fields: {
-        U: 'water_u',
-        V: 'water_v'
-      },
-      colorTable: colorTable
-    }); */
     particleObj.start();
     statechangeBtn.disabled = false;
     removeBtn.disabled = false;

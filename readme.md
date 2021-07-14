@@ -169,6 +169,19 @@ defaultColorTable = [[1.0, 1.0, 1.0]];
 
 从cesiumview中移除粒子系统
 
+### ``getFileVariables()``
+
+读取NetCDF文件字段，用于加载不同的矢量场文件，参见demo
+
+```js
+import { getFileVariables } from 'cesium-particle';
+
+let file = File("uv3z.nc")
+getFileVariables(file).then(res => {
+  ... // ["water_u", "water_v", "depth", "time", "lat", "lon", "time_run"]
+})
+```
+
 ## Demo
 
 ### 运行说明

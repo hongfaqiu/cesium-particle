@@ -1,12 +1,37 @@
 import * as dat from 'dat.gui'
-import { defaultVortexOptions, defaultParticleSystemOptions } from './options'
+import { defaultVortexOptions, defaultParticleSystemOptions, defaultFields } from './options'
+
+export class FieldsPanel {
+  constructor(container, fields = ['U', 'V', 'W', 'H', 'lon', 'lat', 'lev']) {
+    this.options = defaultFields;
+    
+    const that = this;
+
+    let gui = new dat.GUI({ autoPlace: false, closed: true });
+    gui.add(that.options, 'U', fields).name("横向速度U");
+    gui.add(that.options, 'V', fields).name("纵向速度V");
+    gui.add(that.options, 'W', fields).name("垂向速度W");
+    gui.add(that.options, 'H', fields).name("高度值H");
+    gui.add(that.options, 'lon', fields).name("经度lon");
+    gui.add(that.options, 'lat', fields).name("纬度lat");
+    gui.add(that.options, 'lev', fields).name("高度lev");
+
+    let FieldsPanelContainer = document.getElementById(container);
+    gui.domElement.classList.add('fieldsPanel');
+    FieldsPanelContainer.appendChild(gui.domElement);
+  }
+
+  getUserInput() {
+    return this.options;
+  }
+}
 export class VortexPanel {
   constructor(container) {
     this.options = defaultVortexOptions;
     
     const that = this;
 
-    let gui = new dat.GUI({ autoPlace: false });
+    let gui = new dat.GUI({ autoPlace: false, closed: true });
     gui.add(that.options, 'lon', -180, 180, 0.1).name("中心经度");
     gui.add(that.options, 'lat', -90, 90, 1).name("中心纬度");
     gui.add(that.options, 'lev', -10000, 10000, 100).name("中心高度");
