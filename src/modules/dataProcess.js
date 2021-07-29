@@ -27,7 +27,7 @@ export default (function () {
       }
     }
 
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
       // const { U, V, W, H, lon, lat, lev } = fields;
       const reader = new FileReader();
       // 用readAsText读取文件文件内容
@@ -50,7 +50,8 @@ export default (function () {
             arr.push(fields[key]);
           }
           if (arr.length) {
-            console.error("NetCDF file no such attribute: " + arr + '\n all variables are: ' + variables);
+            reject("NetCDF file no such attribute: " + arr + '\n all variables are: ' + variables);
+            return;
           }
         }
 
@@ -70,7 +71,8 @@ export default (function () {
               data[key].max = Math.max(...data[key].array);
             }
           } catch {
-            throw new Error("NetCDF file no such attribute: " + fields[key]);
+            reject("NetCDF file no such attribute: " + fields[key]);
+            return;
           }
         });
 
@@ -85,7 +87,8 @@ export default (function () {
               data[key].max = attributes['max'].value;
             }
           } catch {
-            throw new Error("NetCDF file no such attribute: " + fields[key]);
+            reject("NetCDF file no such attribute: " + fields[key]);
+            return;
           }
         })
 
@@ -139,7 +142,11 @@ export default (function () {
       data = input
     }
     else {
-      await loadNetCDF(input, fields);
+      try {
+        await loadNetCDF(input, fields);
+      } catch (e) {
+        throw(e)
+      }
     }
     validIds = getValidIds()
     loadColorTable(colorTable);
@@ -188,12 +195,6 @@ export default (function () {
       array[4 * i + 2] = pos[2];
       array[4 * i + 3] = 0.0;
     }
-    /* for (var i = 0; i < maxParticles; i++) {
-      array[4 * i] = Cesium.Math.randomBetween(viewerParameters.lonRange.x, viewerParameters.lonRange.y);
-      array[4 * i + 1] = Cesium.Math.randomBetween(viewerParameters.latRange.x, viewerParameters.latRange.y);
-      array[4 * i + 2] = Cesium.Math.randomBetween(data.lev.min, data.lev.max);
-      array[4 * i + 3] = 0.0;
-    } */
     return array;
   }
 

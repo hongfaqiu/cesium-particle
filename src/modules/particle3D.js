@@ -42,6 +42,9 @@ export default class Particle3D {
     this.userInput = userInput;
     this.input = input;
     this.colour = colour;
+    this.type = type;
+    this.fields = fields;
+    this.colorTable = colorTable;
 
     this.viewerParameters = {
       lonRange: new Cesium.Cartesian2(),
@@ -50,17 +53,24 @@ export default class Particle3D {
       lonDisplayRange: new Cesium.Cartesian2(),
       latDisplayRange: new Cesium.Cartesian2()
     };
+    this.ok = false;
     // use a smaller earth radius to make sure distance to camera > 0
     this.globeBoundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.ZERO, 0.99 * 6378137.0);
-    
-    DataProcess.loadData(this.input, type, fields, colorTable).then(
-      (data) => {
-        this.data = data;
-        this.updateViewerParameters();
-        this.particleSystem = new ParticleSystem(this.scene.context, data,
-          this.userInput, this.viewerParameters, this.colour);
-        this.addPrimitives();
-      });
+  }
+
+  async init() {
+    try {
+      let data = await DataProcess.loadData(this.input, this.type, this.fields, this.colorTable)
+      this.data = data;
+      this.updateViewerParameters();
+      this.particleSystem = new ParticleSystem(this.scene.context, data,
+        this.userInput, this.viewerParameters, this.colour);
+      this.addPrimitives();
+      this.ok = true;
+    } catch (e) {
+      console.error(e)
+      throw (e);
+    }
   }
 
   addPrimitives() {
@@ -108,11 +118,15 @@ export default class Particle3D {
   }
 
   optionsChange(userInput) {
-    this.userInput = userInput;
-    this.particleSystem.applyUserInput(userInput);
+    if (this.ok) {
+      this.particleSystem.applyUserInput(userInput);
+    }
   }
 
   start() {
+    if (!this.ok) {
+      this.init();
+    }
     const that = this;
     that.scene.primitives.show = true;
     this.setupEventListeners();
@@ -134,5 +148,6 @@ export default class Particle3D {
   remove() {
     this.stop();
     this.scene.primitives.removeAll();
+    this.ok = false;
   }
 }

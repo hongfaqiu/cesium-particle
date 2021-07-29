@@ -28,7 +28,7 @@ export var initMap = function (cesiumContainer) {
     },
   });
   let imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
-      url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
   })
   viewer._cesiumWidget._creditContainer.style.display = "none";
   viewer.imageryLayers.addImageryProvider(imageryProvider);

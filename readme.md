@@ -89,8 +89,10 @@ var particleObj2 = new Particle3D(viewer, {
     colorTable: colorTable,
     colour: 'height' // 颜色变化跟随速度,可选值: 'speed'(defalut) or 'height'
   });
-
-particleObj.start(); // 开始运行粒子系统
+  
+particleObj.init().then(res => {
+  particleObj.start(); // 开始运行粒子系统
+})
 
 systemOptions.fadeOpacity = 0.900;
 particleObj.optionsChange(systemOptions); // 更新粒子系统配置
@@ -153,6 +155,10 @@ defaultParticleSystemOptions = {
 defaultColorTable = [[1.0, 1.0, 1.0]]; 
 ```
 
+### ``init()``
+
+粒子系统初始化（异步），若未初始化，直接调用start()，将自动初始化
+
 ### ``start()``
 
 粒子系统开始运行，在窗口移动、大小变更、地球缩放、视点相机移动时粒子系统会暂停，停止操作后继续运行
@@ -184,6 +190,8 @@ getFileVariables(file).then(res => {
 
 ## Demo
 
+[github page](https://hongfaqiu.github.io/cesium-particle-demo/)
+
 ### 运行说明
 
 ```js
@@ -191,7 +199,7 @@ yarn / npm install
 npm run dev
 ```
 
-## 运行图片
+### 运行图片
 
 | ![10w风场粒子](https://user-images.githubusercontent.com/62411296/125084621-51948380-e0fc-11eb-8883-a8e265470402.png) | ![25w海流粒子](https://user-images.githubusercontent.com/62411296/125084661-5ce7af00-e0fc-11eb-982b-46d42627318a.png) |
 | ------- | ------- |
