@@ -1,10 +1,10 @@
 {
   "name": "cesium-particle",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "cesium particle system module",
   "main": "src/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev webpack-dev-server",
+    "start": "cross-env NODE_ENV=dev webpack-dev-server",
     "build-glsl": "webpack --config webpack.glsl.config.js",
     "build-example": "cross-env NODE_ENV=prd webpack --config webpack.config.js",
     "prepublish": "npm run build-glsl"

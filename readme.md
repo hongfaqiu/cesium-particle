@@ -196,7 +196,7 @@ getFileVariables(file).then(res => {
 
 ```js
 yarn / npm install
-npm run dev
+npm start
 ```
 
 ### 运行图片

@@ -44,7 +44,7 @@ loadBtn.onclick = function () {
       colorTable: colorTable
     });
     particleObj.init().then(res => {
-      particleObj.start();
+      particleObj.show();
       statechangeBtn.disabled = false;
       removeBtn.disabled = false;
       loadBtn.disabled = true;
@@ -71,7 +71,7 @@ generateDataBtn.onclick = function () {
       type: 'json',
       colorTable: colorTable
     });
-    particleObj.start();
+    particleObj.show();
     statechangeBtn.disabled = false;
     removeBtn.disabled = false;
     loadBtn.disabled = true;
@@ -83,7 +83,7 @@ generateDataBtn.onclick = function () {
 
 statechangeBtn.onclick = function () {
   if (particleObj) {
-    !working ? particleObj.start() : particleObj.stop();
+    !working ? particleObj.show() : particleObj.hide();
     !working ? statechangeBtn.innerText = '隐藏' : statechangeBtn.innerText = '显示';
     working = !working;
   }

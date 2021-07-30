@@ -128,9 +128,7 @@ export default class Particle3D {
   }
 
   optionsChange(userInput) {
-    if (this.ok) {
-      this.particleSystem.applyUserInput(userInput);
-    }
+    this.particleSystem.applyUserInput(userInput);
   }
 
   show() {
