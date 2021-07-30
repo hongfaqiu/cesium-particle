@@ -45,6 +45,7 @@ export default class Particle3D {
     this.type = type;
     this.fields = fields;
     this.colorTable = colorTable;
+    this.primitives = [];
 
     this.viewerParameters = {
       lonRange: new Cesium.Cartesian2(),
@@ -53,7 +54,6 @@ export default class Particle3D {
       lonDisplayRange: new Cesium.Cartesian2(),
       latDisplayRange: new Cesium.Cartesian2()
     };
-    this.ok = false;
     // use a smaller earth radius to make sure distance to camera > 0
     this.globeBoundingSphere = new Cesium.BoundingSphere(Cesium.Cartesian3.ZERO, 0.99 * 6378137.0);
   }
@@ -66,7 +66,6 @@ export default class Particle3D {
       this.particleSystem = new ParticleSystem(this.scene.context, data,
         this.userInput, this.viewerParameters, this.colour);
       this.addPrimitives();
-      this.ok = true;
     } catch (e) {
       console.error(e)
       throw (e);
@@ -75,13 +74,24 @@ export default class Particle3D {
 
   addPrimitives() {
     // the order of primitives.add() should respect the dependency of primitives
-    this.scene.primitives.add(this.particleSystem.particlesComputing.primitives.calculateSpeed);
+    this.primitives = [
+      this.particleSystem.particlesComputing.primitives.calculateSpeed,
+      this.particleSystem.particlesComputing.primitives.updatePosition,
+      this.particleSystem.particlesComputing.primitives.postProcessingPosition,
+      this.particleSystem.particlesRendering.primitives.segments,
+      this.particleSystem.particlesRendering.primitives.trails,
+      this.particleSystem.particlesRendering.primitives.screen,
+    ]
+    for (let primitive of this.primitives) {
+      this.scene.primitives.add(primitive);
+    }
+   /*  this.scene.primitives.add(this.particleSystem.particlesComputing.primitives.calculateSpeed);
     this.scene.primitives.add(this.particleSystem.particlesComputing.primitives.updatePosition);
     this.scene.primitives.add(this.particleSystem.particlesComputing.primitives.postProcessingPosition);
 
     this.scene.primitives.add(this.particleSystem.particlesRendering.primitives.segments);
     this.scene.primitives.add(this.particleSystem.particlesRendering.primitives.trails);
-    this.scene.primitives.add(this.particleSystem.particlesRendering.primitives.screen);
+    this.scene.primitives.add(this.particleSystem.particlesRendering.primitives.screen); */
   }
 
   updateViewerParameters() {
@@ -123,13 +133,12 @@ export default class Particle3D {
     }
   }
 
-  start() {
-    if (!this.ok) {
-      this.init();
+  show() {
+    let that = this;
+    for (let primitive of that.primitives) {
+      primitive.show = true;
     }
-    const that = this;
-    that.scene.primitives.show = true;
-    this.setupEventListeners();
+    that.setupEventListeners();
     var animate = function () {
       that.viewer.resize();
       that.viewer.scene.requestRender();
@@ -138,16 +147,19 @@ export default class Particle3D {
     animate();
   }
 
-  stop() {
-    this.scene.primitives.show = false;
+  hide() {
+    for (let primitive of this.primitives) {
+      primitive.show = false;
+    }
     this.viewer.scene.requestRender();
     this.removeEventListeners();
     window.cancelAnimationFrame(this.animate);
   }
 
   remove() {
-    this.stop();
-    this.scene.primitives.removeAll();
-    this.ok = false;
+    this.hide();
+    for (let primitive of this.primitives) {
+      this.scene.primitives.remove(primitive);
+    }
   }
 }

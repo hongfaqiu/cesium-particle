@@ -91,13 +91,13 @@ var particleObj2 = new Particle3D(viewer, {
   });
   
 particleObj.init().then(res => {
-  particleObj.start(); // 开始运行粒子系统
+  particleObj.show(); // 开始运行粒子系统
 })
 
 systemOptions.fadeOpacity = 0.900;
 particleObj.optionsChange(systemOptions); // 更新粒子系统配置
 
-particleObj.stop(); // 停止粒子系统
+particleObj.hide(); // 停止粒子系统
 particleObj.remove(); // 移除粒子系统
 ```
 
@@ -157,19 +157,19 @@ defaultColorTable = [[1.0, 1.0, 1.0]];
 
 ### ``init()``
 
-粒子系统初始化（异步），若未初始化，直接调用start()，将自动初始化
+粒子系统初始化（异步）
 
-### ``start()``
+### ``show()``
 
 粒子系统开始运行，在窗口移动、大小变更、地球缩放、视点相机移动时粒子系统会暂停，停止操作后继续运行
+
+### ``hide()``
+
+暂停运行粒子系统
 
 ### ``optinsChange(options)``
 
 传入粒子系统配置参数，更新粒子运行状态
-
-### ``stop()``
-
-暂停运行粒子系统
 
 ### ``remove()``
 
