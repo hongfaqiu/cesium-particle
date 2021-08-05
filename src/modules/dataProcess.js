@@ -17,6 +17,19 @@ export default (function () {
       array: new Float32Array(arr.flat())
     };
   }
+
+  const getMaxMin = function (arr) {
+    let min = arr[1], max = arr[1];
+    for (let item of arr) {
+      if (item < min) {
+        min = item;
+      }
+      if (item > max) {
+        max = item;
+      }
+    }
+    return {min, max}
+  }
   
   var loadNetCDF = function (file, userFields) {
 
@@ -65,13 +78,14 @@ export default (function () {
           try {
             if (fields[key]) {
               data.dimensions[key] = dimensions[fields[key]].size;
+              let array = NetCDF.getDataVariable(fields[key]).flat()
               data[key] = {};
-              data[key].array = new Float32Array(NetCDF.getDataVariable(key).flat());
-              data[key].min = Math.min(...data[key].array);
-              data[key].max = Math.max(...data[key].array);
+              data[key].array = new Float32Array(array);
+              data[key].min = getMaxMin(array).min;
+              data[key].max = getMaxMin(array).max;
             }
-          } catch {
-            reject("NetCDF file no such attribute: " + fields[key]);
+          } catch(e) {
+            reject(e);
             return;
           }
         });
@@ -79,15 +93,16 @@ export default (function () {
         ["U", "V", "W", "H"].map(key => {
           try {
             if (fields[key]) {
-              var variables = arrayToMap(NetCDF.variables);
-              var attributes = arrayToMap(variables[fields[key]].attributes);
+              let variables = arrayToMap(NetCDF.variables);
+              let attributes = arrayToMap(variables[fields[key]].attributes);
+              let array = NetCDF.getDataVariable(fields[key]).flat()
               data[key] = {};
-              data[key].array = new Float32Array(NetCDF.getDataVariable(fields[key]).flat());
-              data[key].min = attributes['min'].value;
-              data[key].max = attributes['max'].value;
+              data[key].array = new Float32Array(array);
+              data[key].min = attributes['min'] ? attributes['min'].value : getMaxMin(array).min;
+              data[key].max = attributes['max'] ? attributes['max'].value : getMaxMin(array).max;
             }
-          } catch {
-            reject("NetCDF file no such attribute: " + fields[key]);
+          } catch(e) {
+            reject(e);
             return;
           }
         })

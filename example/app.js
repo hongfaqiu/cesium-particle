@@ -1,4 +1,4 @@
-import { Particle3D, Vortex, getFileVariables } from '../src/index';
+import { Particle3D, Vortex, getFileFields } from '../src/index';
 import * as ceiusm_map from './map';
 import { FieldsPanel, VortexPanel, ControlPanel } from './gui';
 import { colorTable } from './options';
@@ -25,7 +25,7 @@ var particleObj = null, working = false;
 
 fileInput.onchange = function () {
   let file = fileInput.files[0];
-  file && getFileVariables(file).then(res => {
+  file && getFileFields(file).then(res => {
     let list=document.getElementById("fieldsPanelContainer");
     list.removeChild(list.childNodes[0]);
     fieldsPanel = new FieldsPanel("fieldsPanelContainer", res);

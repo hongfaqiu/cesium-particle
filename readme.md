@@ -12,14 +12,14 @@
 
 ## 使用说明
 
-node 环境下使用npm工具安装模块
+node 环境下安装模块
 
 ```js
-npm install --save cesium-particle
+yarn add cesium-particle
 
 or
 
-yarn add cesium-particle
+npm install --save cesium-particle
 ```
 
 ## 例子
@@ -151,7 +151,8 @@ defaultParticleSystemOptions = {
 }
 
 // 默认的颜色配置
-// colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式，对应粒子高度从高到低
+// colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式，
+// 例：[[255, 0, 0], [0, 255, 0]]，对应粒子colour字段值从低到高
 defaultColorTable = [[1.0, 1.0, 1.0]]; 
 ```
 
@@ -175,16 +176,21 @@ defaultColorTable = [[1.0, 1.0, 1.0]];
 
 从cesiumview中移除粒子系统
 
-### ``getFileVariables()``
+### ``getFileFields()``
 
 读取NetCDF文件字段，用于加载不同的矢量场文件，参见demo
 
 ```js
-import { getFileVariables } from 'cesium-particle';
+import { getFileFields } from 'cesium-particle';
 
 let file = File("uv3z.nc")
-getFileVariables(file).then(res => {
-  ... // ["water_u", "water_v", "depth", "time", "lat", "lon", "time_run"]
+getFileFields(file).then(res => {
+  ... 
+  /*res: {
+    variables: ["water_u", "water_v", "depth", "time", "lat", "lon", "time_run"],
+    dimensions: ["depth", "time", "lat", "lon"],
+    raw: Object
+  } */
 })
 ```
 
@@ -235,3 +241,20 @@ module.exports = {
 ```js
 npm run buld-glsl
 ```
+
+### 怎样加载自己的.nc文件
+
+.nc文件最好为NetCDF version 3形式
+文件中必须至少包含以下属性：
+
+- 横向速度矩阵 U (lev, lat, lon)
+- 纵向速度矩阵 V (lev, lat, lon)
+- 经度维度 lon
+- 纬度维度 lat
+
+可使用`getFileFields()`方法可以读取.nc文件中的属性字段名、维度字段名
+并配合构造函数`new Particle3D()`中传入的`fields`字段，尝试加载到地球上。
+
+### 加载后出现奇怪的雪花
+
+这是代码问题，暂时可通过减少粒子数量、降低粒子速度、减小线宽来降低影响

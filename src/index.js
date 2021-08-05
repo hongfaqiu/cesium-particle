@@ -2,7 +2,7 @@ import Particle3D from './modules/particle3D';
 import Vortex from './modules/generateData';
 import netcdfjs from 'netcdfjs'
 
-const getFileVariables = file => {
+const getFileFields = file => {
   return new Promise((resolve, reject) => {
     try {
       const reader = new FileReader();
@@ -10,13 +10,15 @@ const getFileVariables = file => {
       reader.readAsArrayBuffer(file);
       reader.onload = function () {
         var NetCDF = new netcdfjs(reader.result);
+        console.log(NetCDF);
         let variables = NetCDF.header.variables.map(item => item.name);
-        resolve(variables);
+        let dimensions = NetCDF.header.dimensions.map(item => item.name);
+        resolve({variables, dimensions, raw: NetCDF});
       }
-    } catch {
-      reject(Error("can't read file as NetCDF"));
+    } catch(e) {
+      reject(e);
     }
   })
 } 
 
-export { Particle3D, Vortex, getFileVariables };
+export { Particle3D, Vortex, getFileFields };
