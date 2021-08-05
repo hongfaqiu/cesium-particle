@@ -71,13 +71,19 @@ generateDataBtn.onclick = function () {
       type: 'json',
       colorTable: colorTable
     });
-    particleObj.show();
-    statechangeBtn.disabled = false;
-    removeBtn.disabled = false;
-    loadBtn.disabled = true;
-    generateDataBtn.disabled = true;
-    statechangeBtn.innerText = '隐藏';
-    working = true;
+    particleObj.init().then(res => {
+      particleObj.show();
+      statechangeBtn.disabled = false;
+      removeBtn.disabled = false;
+      loadBtn.disabled = true;
+      generateDataBtn.disabled = true;
+      statechangeBtn.innerText = '隐藏';
+      working = true;
+    }).catch(e => {
+      particleObj.remove();
+      particleObj = undefined;
+      window.alert(e);
+    })
   }
 };
 

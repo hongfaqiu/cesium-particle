@@ -102,8 +102,8 @@ vec4 calculateOffsetOnMiterDirection(adjacentPoints projectedCoordinates, float 
         offset = vec4(offsetSign * miter * miterLength, 0.0, 0.0);
         offset.x = offset.x / aspect;
     } else {
-        offset = calculateOffsetOnNormalDirection(PointB, PointC, offsetSign);
     }
+        offset = calculateOffsetOnNormalDirection(PointB, PointC, offsetSign);
 
     return offset;
 }
@@ -154,7 +154,9 @@ void main() {
         gl_Position = projectedCoordinates.previous + offset;
     } else {
         if (pointToUse == 0) {
-            offset = pixelSize * calculateOffsetOnMiterDirection(projectedCoordinates, offsetSign);
+            offset = pixelSize * calculateOffsetOnNormalDirection(projectedCoordinates.current, projectedCoordinates.next, offsetSign);
+            // 暂时移除miterjoint，因为这会导致出现异常片元
+            // offset = pixelSize * calculateOffsetOnMiterDirection(projectedCoordinates, offsetSign);
             gl_Position = projectedCoordinates.current + offset;
         } else {
             if (pointToUse == 1) {

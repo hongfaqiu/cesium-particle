@@ -10,7 +10,6 @@ const getFileFields = file => {
       reader.readAsArrayBuffer(file);
       reader.onload = function () {
         var NetCDF = new netcdfjs(reader.result);
-        console.log(NetCDF);
         let variables = NetCDF.header.variables.map(item => item.name);
         let dimensions = NetCDF.header.dimensions.map(item => item.name);
         resolve({variables, dimensions, raw: NetCDF});

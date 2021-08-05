@@ -61,14 +61,12 @@ export default class Particle3D {
   async init() {
     try {
       let data = await DataProcess.loadData(this.input, this.type, this.fields, this.colorTable)
-      console.log("data",data)
       this.data = data;
       this.updateViewerParameters();
       this.particleSystem = new ParticleSystem(this.scene.context, data,
         this.userInput, this.viewerParameters, this.colour);
       this.addPrimitives();
     } catch (e) {
-      console.error(e)
       throw (e);
     }
   }

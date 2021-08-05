@@ -67,7 +67,7 @@ export class ControlPanel {
     gui.add(that.options, 'fadeOpacity', 0.50, 1.00, 0.001).name("拖尾透明度").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'dropRate', 0.0, 0.1).name("重置率").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'dropRateBump', 0, 0.2).name("重置&速度关联率").onFinishChange(onParticleSystemOptionsChange);
-    gui.add(that.options, 'speedFactor', 0.05, 8).name("粒子速度").onFinishChange(onParticleSystemOptionsChange);
+    gui.add(that.options, 'speedFactor', 0.01, 8).name("粒子速度").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'lineWidth', 0.01, 16.0).name("线宽").onFinishChange(onParticleSystemOptionsChange);
     gui.add(that.options, 'dynamic').name("动态运行").onFinishChange(onParticleSystemOptionsChange);
 
