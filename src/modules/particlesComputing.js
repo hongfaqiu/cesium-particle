@@ -76,6 +76,8 @@ export default class ParticlesComputing {
             (maximum.y - minimum.y) / (dimension.y - 1),
             dimension.z > 1 ? (maximum.z - minimum.z) / (dimension.z - 1) : 1.0
         );
+        const lonRange = new Cesium.Cartesian2(data.lon.min, data.lon.max);
+        const latRange = new Cesium.Cartesian2(data.lat.min, data.lat.max);
         const uSpeedRange = new Cesium.Cartesian2(data.U.min, data.U.max);
         const vSpeedRange = new Cesium.Cartesian2(data.V.min, data.V.max);
         const wSpeedRange = new Cesium.Cartesian2(data.W.min, data.W.max);
@@ -174,11 +176,17 @@ export default class ParticlesComputing {
                     particlesSpeed: function () {
                         return that.particlesTextures.particlesSpeed;
                     },
-                    lonRange: function () {
+                    viewerLonRange: function () {
                         return viewerParameters.lonRange;
                     },
-                    latRange: function () {
+                    viewerLatRange: function () {
                         return viewerParameters.latRange;
+                    },
+                    lonRange: function () {
+                        return lonRange;
+                    },
+                    latRange: function () {
+                        return latRange;
                     },
                     dimension: function () {
                       return dimension;

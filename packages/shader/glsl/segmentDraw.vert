@@ -75,39 +75,6 @@ vec4 calculateOffsetOnNormalDirection(vec4 pointA, vec4 pointB, float offsetSign
     return offset;
 }
 
-vec4 calculateOffsetOnMiterDirection(adjacentPoints projectedCoordinates, float offsetSign) {
-    vec2 aspectVec2 = vec2(aspect, 1.0);
-
-    vec4 PointA = projectedCoordinates.previous;
-    vec4 PointB = projectedCoordinates.current;
-    vec4 PointC = projectedCoordinates.next;
-
-    vec2 pointA_XY = (PointA.xy / PointA.w) * aspectVec2;
-    vec2 pointB_XY = (PointB.xy / PointB.w) * aspectVec2;
-    vec2 pointC_XY = (PointC.xy / PointC.w) * aspectVec2;
-
-    vec2 AB = normalize(pointB_XY - pointA_XY);
-    vec2 BC = normalize(pointC_XY - pointB_XY);
-
-    vec2 normalA = vec2(-AB.y, AB.x);
-    vec2 tangent = normalize(AB + BC);
-    vec2 miter = vec2(-tangent.y, tangent.x);
-
-    float offsetLength = lineWidth / 2.0;
-    float projection = dot(miter, normalA);
-    vec4 offset = vec4(0.0);
-    // avoid to use values that are too small
-    if (projection > 0.1) {
-        float miterLength = offsetLength / projection;
-        offset = vec4(offsetSign * miter * miterLength, 0.0, 0.0);
-        offset.x = offset.x / aspect;
-    } else {
-    }
-        offset = calculateOffsetOnNormalDirection(PointB, PointC, offsetSign);
-
-    return offset;
-}
-
 float calculateWindNorm(vec3 speed) {
     vec3 percent = vec3(0.0);
     percent.x = (speed.x - uSpeedRange.x) / (uSpeedRange.y - uSpeedRange.x);
@@ -152,21 +119,11 @@ void main() {
     if (pointToUse == -1) {
         offset = pixelSize * calculateOffsetOnNormalDirection(projectedCoordinates.previous, projectedCoordinates.current, offsetSign);
         gl_Position = projectedCoordinates.previous + offset;
-    } else {
-        if (pointToUse == 0) {
-            offset = pixelSize * calculateOffsetOnNormalDirection(projectedCoordinates.current, projectedCoordinates.next, offsetSign);
-            // 暂时移除miterjoint，因为这会导致出现异常片元
-            // offset = pixelSize * calculateOffsetOnMiterDirection(projectedCoordinates, offsetSign);
-            gl_Position = projectedCoordinates.current + offset;
-        } else {
-            if (pointToUse == 1) {
-                offset = pixelSize * calculateOffsetOnNormalDirection(projectedCoordinates.current, projectedCoordinates.next, offsetSign);
-                gl_Position = projectedCoordinates.next + offset;
-            } else {
-
-            }
-        }
+    } else  if (pointToUse == 1) {
+        offset = pixelSize * calculateOffsetOnNormalDirection(projectedCoordinates.current, projectedCoordinates.next, offsetSign);
+        gl_Position = projectedCoordinates.next + offset;
     }
+
     heightNormalization = (currentPosition.z - hRange.x) / (hRange.y - hRange.x);
     
     speedNormalization = texture2D(particlesSpeed, particleIndex).a;

@@ -11,6 +11,8 @@ uniform vec3 interval; // interval of each dimension
 // range (min, max)
 uniform vec2 lonRange;
 uniform vec2 latRange;
+uniform vec2 viewerLonRange;
+uniform vec2 viewerLatRange;
 
 uniform float randomCoefficient; // use to improve the pseudo-random generator
 uniform float dropRate; // drop rate is a chance a particle will restart at random position to avoid degeneration
@@ -66,7 +68,7 @@ vec3 generateRandomParticle(vec2 seed, float lev) {
 }
 
 bool particleOutbound(vec3 particle) {
-    return particle.y < latRange.x || particle.y > latRange.y || particle.x < lonRange.x || particle.x > lonRange.y;
+    return particle.y < viewerLatRange.x || particle.y > viewerLatRange.y || particle.x < viewerLonRange.x || particle.x > viewerLonRange.y;
 }
 
 void main() {

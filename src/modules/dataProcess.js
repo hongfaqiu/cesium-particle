@@ -4,7 +4,6 @@ import { defaultFields } from './options'
 
 export default (function () {
   var data;
-  var validIds = [];
 
   var loadColorTable = function (colorTable) {
     let colorNum = colorTable.length;
@@ -163,21 +162,13 @@ export default (function () {
         throw(e)
       }
     }
-    validIds = getValidIds()
+
     loadColorTable(colorTable);
 
     return data;
   }
 
-  var getValidIds = function(){
-    let newArr = [];
-    for (let i in data.U.array) {
-      if(data.U.array[i] && data.V.array[i]) newArr.push(i);
-    }
-    return newArr;
-  }
-
-  // 先找一个随机的不为零的像素点,以此像素点经纬度范围生成随机位置
+  // 先找一个随机的像素点,以此像素点经纬度范围生成随机位置
   var getValidRange = function () {
     const dimensions = [data.dimensions.lon, data.dimensions.lat, data.dimensions.lev];
     const minimum = [data.lon.min, data.lat.min, data.lev.min];
@@ -187,7 +178,7 @@ export default (function () {
         (maximum[1] - minimum[1]) / (dimensions[1] - 1),
         dimensions[2] > 1 ? (maximum[2] - minimum[2]) / (dimensions[2] - 1) : 1.0
     ];
-    let id = validIds[Math.floor(Math.random() * validIds.length)];
+    let id = Math.floor(Math.random() * data.U.array.length);
 
     let z = Math.floor(id / (dimensions[0] * dimensions[1]));
     let left = id % (dimensions[0] * dimensions[1]);

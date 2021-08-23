@@ -1,10 +1,10 @@
 import { Particle3D, Vortex, getFileFields } from '../src/index';
-import * as ceiusm_map from './map';
+import * as cesium_map from './map';
 import { FieldsPanel, VortexPanel, ControlPanel } from './gui';
 import { colorTable } from './options';
 
 // initialization
-ceiusm_map.initMap('cesiumContainer');
+cesium_map.initMap('cesiumContainer');
 
 var fieldsPanel = new FieldsPanel("fieldsPanelContainer");
 var vortexPanel = new VortexPanel("vortexPanelContainer");
@@ -12,7 +12,7 @@ var controlPanel = new ControlPanel("panelContainer", userInput => {
   particleObj && particleObj.optionsChange(userInput);
 });
 
-var viewer = ceiusm_map.getViewer();
+var viewer = cesium_map.getViewer();
 
 var userInput = controlPanel.getUserInput();
 

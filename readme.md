@@ -12,15 +12,44 @@
 
 ## 使用说明
 
-node 环境下安装模块
+<table>
+<tbody valign=top align=left>
+<tr><th>
+Browsers
+</th><td width=100%>
+Load <code>cesium-particle</code> directly from <a href="https://cdn.skypack.dev">cdn.skypack.dev</a>
+        
+```html
+<script type="module">
+import { Particle3D } from "https://cdn.skypack.dev/cesium-particle";
+</script>
+```
+
+</td></tr>
+<tr><th>
+Node 12+
+</th><td>
+
+Install with <code>npm install cesium-particle</code>, or <code>yarn add cesium-particle</code>
 
 ```js
-yarn add cesium-particle
-
-or
-
-npm install --save cesium-particle
+import  { Particle3D } from "cesium-particle";
 ```
+
+</td></tr>
+<tr><th>
+Node 10 and below
+</th><td>
+
+Install with <code>npm install cesium-particle</code>, or <code>yarn add cesium-particle</code>
+
+```js
+const  { Particle3D } = require("cesium-particle");
+```
+
+</td></tr>
+</tbody>
+</table>
 
 ## 例子
 
@@ -151,8 +180,8 @@ defaultParticleSystemOptions = {
 }
 
 // 默认的颜色配置
-// colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式，
-// 例：[[255, 0, 0], [0, 255, 0]]，对应粒子colour字段值从低到高
+// colorTalbe默认为白色，传入的数组为``[[r, g , b], [r, g, b], ...]``格式
+// 例：[[234 / 255, 0, 0], [0, 123 / 255, 0]]，对应粒子colour字段值从低到高
 defaultColorTable = [[1.0, 1.0, 1.0]]; 
 ```
 
@@ -239,12 +268,13 @@ module.exports = {
 或者使用打包命令，打包glsl文件为js:
 
 ```js
-npm run buld-glsl
+npm run build-glsl
 ```
 
 ### 怎样加载自己的.nc文件
 
 .nc文件最好为NetCDF version 3形式
+
 文件中必须至少包含以下属性：
 
 - 横向速度矩阵 U (lev, lat, lon)
@@ -252,5 +282,6 @@ npm run buld-glsl
 - 经度维度 lon
 - 纬度维度 lat
 
-可使用`getFileFields()`方法可以读取.nc文件中的属性字段名、维度字段名
+可使用`getFileFields()`方法读取.nc文件中的属性字段名、维度字段名
+
 并配合构造函数`new Particle3D()`中传入的`fields`字段，尝试加载到地球上。

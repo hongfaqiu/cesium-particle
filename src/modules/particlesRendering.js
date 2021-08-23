@@ -62,7 +62,7 @@ export default class ParticlesRendering {
   }
 
   createSegmentsGeometry(userInput) {
-    const repeatVertex = 6;
+    const repeatVertex = 4;
     // 坐标系
     //  z
     //  | /y
@@ -81,30 +81,26 @@ export default class ParticlesRendering {
 
     var normal = []; //法向数组
     // it is not normal itself, but used to control lines drawing
-    const pointToUse = [-1, 0, 1];
+    const pointToUse = [-1, 1];
     const offsetSign = [-1, 1];
     for (var i = 0; i < userInput.maxParticles; i++) {
       normal.push(
         // (point to use, offset sign, not used component)
         -1, -1, 0,
         -1,  1, 0,
-         0, -1, 0,
-         0,  1, 0,
          1, -1, 0,
          1,  1, 0
       )
     }
     normal = new Float32Array(normal);
 
-    var vertexIndexes = []; // 索引,一个粒子矩形由四个三角形组成
+    var vertexIndexes = []; // 索引,一个粒子矩形由两个三角形组成
     for (var i = 0, vertex = 0; i < userInput.maxParticles; i++) {
       vertexIndexes.push(
         // 第一个三角形用的顶点
         vertex + 0, vertex + 1, vertex + 2,
         // 第二个三角形用的顶点
-        vertex + 2, vertex + 1, vertex + 3,
-        vertex + 2, vertex + 4, vertex + 3,
-        vertex + 4, vertex + 3, vertex + 5
+        vertex + 2, vertex + 1, vertex + 3
       )
 
       vertex += repeatVertex;

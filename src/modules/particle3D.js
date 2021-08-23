@@ -6,8 +6,14 @@ import { defaultFields, defaultParticleSystemOptions, defaultColorTable } from '
 
 export default class Particle3D {
   constructor(viewer, {
-    input, type = 'nc', fields = defaultFields, userInput = defaultParticleSystemOptions, colorTable = defaultColorTable, colour = 'speed'}) {
-    var animate = null;
+    input,
+    type = 'nc',
+    fields = defaultFields,
+    userInput = defaultParticleSystemOptions,
+    colorTable = defaultColorTable,
+    colour = 'speed'
+  }) {
+
     const that = this;
     var resized = false;
 
