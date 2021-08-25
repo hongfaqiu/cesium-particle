@@ -6,7 +6,7 @@
 
 本模块改编自[RaymanNg大佬的风场demo](https://github.com/RaymanNg/3D-Wind-Field)。
 
-加载的.nc文件属于NetCDF version 3数据文件。
+加载的.nc文件属于NetCDF version 3数据文件，加载其他.nc文件请看[Q&A](https://github.com/hongfaqiu/cesium-particle#%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%B7%B1%E7%9A%84nc%E6%96%87%E4%BB%B6)。
 
 本例使用的demo.nc文件分辨率28km，请参考这个网站上的数据 [Panoply](https://www.giss.nasa.gov/tools/panoply/)。
 
@@ -15,18 +15,6 @@
 <table>
 <tbody valign=top align=left>
 <tr><th>
-Browsers
-</th><td width=100%>
-Load <code>cesium-particle</code> directly from <a href="https://cdn.skypack.dev">cdn.skypack.dev</a>
-        
-```html
-<script type="module">
-import { Particle3D } from "https://cdn.skypack.dev/cesium-particle";
-</script>
-```
-
-</td></tr>
-<tr><th>
 Node 12+
 </th><td>
 
@@ -34,17 +22,6 @@ Install with <code>npm install cesium-particle</code>, or <code>yarn add cesium-
 
 ```js
 import  { Particle3D } from "cesium-particle";
-```
-
-</td></tr>
-<tr><th>
-Node 10 and below
-</th><td>
-
-Install with <code>npm install cesium-particle</code>, or <code>yarn add cesium-particle</code>
-
-```js
-const  { Particle3D } = require("cesium-particle");
 ```
 
 </td></tr>
@@ -118,7 +95,8 @@ var particleObj2 = new Particle3D(viewer, {
     colorTable: colorTable,
     colour: 'height' // 颜色变化跟随速度,可选值: 'speed'(defalut) or 'height'
   });
-  
+
+// 启动粒子系统
 particleObj.init().then(res => {
   particleObj.show(); // 开始运行粒子系统
 })
@@ -227,6 +205,8 @@ getFileFields(file).then(res => {
 
 [github page](https://hongfaqiu.github.io/cesium-particle-demo/)
 
+[示例数据](https://github.com/hongfaqiu/cesium-particle/tree/master/data)
+
 ### 运行说明
 
 ```js
@@ -285,3 +265,8 @@ npm run build-glsl
 可使用`getFileFields()`方法读取.nc文件中的属性字段名、维度字段名
 
 并配合构造函数`new Particle3D()`中传入的`fields`字段，尝试加载到地球上。
+
+### 为什么移除了原作者绘制矩形时采用的Miter Joint算法
+
+请看[issue](https://github.com/hongfaqiu/cesium-particle/issues/3)
+问题已经定位，后面有机会再尝试解决吧。
