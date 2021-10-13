@@ -72,6 +72,7 @@ export default class Particle3D {
       this.particleSystem = new ParticleSystem(this.scene.context, data,
         this.userInput, this.viewerParameters, this.colour);
       this.addPrimitives();
+      return data;
     } catch (e) {
       throw (e);
     }

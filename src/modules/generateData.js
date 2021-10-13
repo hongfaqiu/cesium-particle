@@ -74,23 +74,22 @@ export default class Vortex {
       min: Math.min(...arrH)
     }
     this.data = data;
+    return data;
   }
 
   generateDimensionData(num, start, step) {
     start *= 100;
     step *= 100;
-    let data = {}
     let arr = [], i = 0;
     while (i++ < num) {
       arr.push(start / 100)
       start += step;
     };
-    data = {
+    return {
       array: new Float32Array(arr.flat()),
       min: Math.min(...arr),
       max: Math.max(...arr)
-    }
-    return data;
+    };
   }
 
   getData() {

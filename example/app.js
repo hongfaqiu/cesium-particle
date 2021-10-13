@@ -6,27 +6,27 @@ import { colorTable } from './options';
 // initialization
 cesium_map.initMap('cesiumContainer');
 
-var fieldsPanel = new FieldsPanel("fieldsPanelContainer");
-var vortexPanel = new VortexPanel("vortexPanelContainer");
-var controlPanel = new ControlPanel("panelContainer", userInput => {
+let particleObj = null, working = false;
+const fieldsPanel = new FieldsPanel("fieldsPanelContainer");
+const vortexPanel = new VortexPanel("vortexPanelContainer");
+const controlPanel = new ControlPanel("panelContainer", userInput => {
   particleObj && particleObj.optionsChange(userInput);
 });
 
-var viewer = cesium_map.getViewer();
+const viewer = cesium_map.getViewer();
 
-var userInput = controlPanel.getUserInput();
+const userInput = controlPanel.getUserInput();
 
 const fileInput = document.getElementById('fileInput');
 const loadBtn = document.getElementById('load');
 const generateDataBtn = document.getElementById('generateData');
 const statechangeBtn = document.getElementById('statechange');
 const removeBtn = document.getElementById('remove');
-var particleObj = null, working = false;
 
 fileInput.onchange = function () {
-  let file = fileInput.files[0];
+  const file = fileInput.files[0];
   file && getFileFields(file).then(res => {
-    let list=document.getElementById("fieldsPanelContainer");
+    let list = document.getElementById("fieldsPanelContainer");
     list.removeChild(list.childNodes[0]);
     fieldsPanel = new FieldsPanel("fieldsPanelContainer", res);
   })
@@ -35,8 +35,8 @@ fileInput.onchange = function () {
 // 加载demo.nc文件按钮
 loadBtn.onclick = function () {
   if (fileInput.files[0] && viewer && !particleObj) {
-    let file = fileInput.files[0];
-    let fields = fieldsPanel.getUserInput();
+    const file = fileInput.files[0];
+    const fields = fieldsPanel.getUserInput();
     particleObj = new Particle3D(viewer, {
       input: file,
       userInput,
@@ -61,9 +61,9 @@ loadBtn.onclick = function () {
 
 // 生成涡旋数据按钮
 generateDataBtn.onclick = function () {
-  let parameter = vortexPanel.getUserInput();
+  const parameter = vortexPanel.getUserInput();
   if (parameter && viewer && !particleObj) {
-    let jsonData = new Vortex(...parameter).getData();
+    const jsonData = new Vortex(...parameter).data;
     particleObj = new Particle3D(viewer, {
       input: jsonData,
       userInput,

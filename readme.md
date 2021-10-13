@@ -35,10 +35,10 @@ import { Particle3D, Vortex } from 'cesium-particle'
 import * as Cesium from 'cesium/Cesium';
 
 // cesiumViewer对象
-var viewer = new Cesium.Viewer(cesiumContainer, viewerOption);
+const viewer = new Cesium.Viewer(cesiumContainer, viewerOption);
 
 // 粒子系统配置
-var systemOptions = {
+const systemOptions = {
   particlesTextureSize: Math.ceil(Math.sqrt(64 * 64)),
   maxParticles: 64 * 64,
   particleHeight: 1000.0,
@@ -51,7 +51,7 @@ var systemOptions = {
 }
 
 // 粒子颜色色带
-var colorTable = [
+const colorTable = [
     [0.015686,
     0.054902,
     0.847059],
@@ -62,9 +62,9 @@ var colorTable = [
 
 // 第一种
 // 加载demo.nc文件
-var file = File("demo.nc"); // 读取文件
+const file = BolbFile("demo.nc"); // 读取文件
  // 从NetCDF3文件生成粒子系统对象
-var particleObj = new Particle3D(viewer, {
+const particleObj = new Particle3D(viewer, {
   input: file,
   fields: {
     lev: 'lev'
@@ -72,9 +72,9 @@ var particleObj = new Particle3D(viewer, {
 });
 
 // 加载uv3z.nc、325china.nc或其他自定义文件
-var file2 = File("uv3z.nc"); 
+const file2 = BolbFile("uv3z.nc"); 
  // 需定义字段名
-var particleObj2 = new Particle3D(viewer, {
+const particleObj2 = new Particle3D(viewer, {
   input: file,
   fields: {
     U: 'water_u',
@@ -85,10 +85,10 @@ var particleObj2 = new Particle3D(viewer, {
 
 // 第二种
 // 构建涡旋模型对象
-var parameter = [ [120, 30, 100], 5, 5, 2000, 0.1, 0.1, 2000]; // [['lon', 'lat', 'lev'], 'radiusX', 'radiusY', 'height', 'dx', 'dy', 'dz']
-var jsonData = new Vortex(...parameter).getData();
+const parameter = [ [120, 30, 100], 5, 5, 2000, 0.1, 0.1, 2000]; // [['lon', 'lat', 'lev'], 'radiusX', 'radiusY', 'height', 'dx', 'dy', 'dz']
+const jsonData = new Vortex(...parameter).getData();
 // 从json数据生成粒子系统对象
-var particleObj2 = new Particle3D(viewer, {
+const particleObj2 = new Particle3D(viewer, {
     input: jsonData,
     type: 'json', // 必填
     userInput: systemOptions,
@@ -139,8 +139,8 @@ defaultFields = {
   lev: '', // 层
 }
 
-let maxParticles = 64 * 64 ; // 必须为平方, 否则会报错
-let particlesTextureSize = Math.ceil(Math.sqrt(maxParticles));
+const maxParticles = 64 * 64 ; // 必须为平方, 否则会报错
+const particlesTextureSize = Math.ceil(Math.sqrt(maxParticles));
 maxParticles = particlesTextureSize * particlesTextureSize;
 
 // 默认的粒子运行参数
@@ -190,7 +190,7 @@ defaultColorTable = [[1.0, 1.0, 1.0]];
 ```js
 import { getFileFields } from 'cesium-particle';
 
-let file = File("uv3z.nc")
+const file = File("uv3z.nc")
 getFileFields(file).then(res => {
   ... 
   /*res: {
@@ -203,7 +203,7 @@ getFileFields(file).then(res => {
 
 ## Demo
 
-[github page](https://hongfaqiu.github.io/cesium-particle-demo/)
+[查看在线Demo](https://cesium-particle.vercel.app/)
 
 [示例数据](https://github.com/hongfaqiu/cesium-particle/tree/master/data)
 
@@ -218,7 +218,7 @@ npm start
 
 | ![10w风场粒子](https://user-images.githubusercontent.com/62411296/125084621-51948380-e0fc-11eb-8883-a8e265470402.png) | ![25w海流粒子](https://user-images.githubusercontent.com/62411296/125084661-5ce7af00-e0fc-11eb-982b-46d42627318a.png) |
 | ------- | ------- |
-| ![中国海海流](https://user-images.githubusercontent.com/62411296/125084828-86a0d600-e0fc-11eb-877e-b79865b82cfe.png) | ![25万个粒子的的涡旋](https://user-images.githubusercontent.com/62411296/125084984-acc67600-e0fc-11eb-81c4-8c265cae62f4.png)|
+| ![中国海海流](https://z3.ax1x.com/2021/09/29/44pHSO.gif) | ![25万个粒子的的涡旋](https://user-images.githubusercontent.com/62411296/125084984-acc67600-e0fc-11eb-81c4-8c265cae62f4.png)|
 
 ## Q&A
 
@@ -269,4 +269,5 @@ npm run build-glsl
 ### 为什么移除了原作者绘制矩形时采用的Miter Joint算法
 
 请看[issue](https://github.com/hongfaqiu/cesium-particle/issues/3)
+
 问题已经定位，后面有机会再尝试解决吧。
