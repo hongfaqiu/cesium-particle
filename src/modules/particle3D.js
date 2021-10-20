@@ -18,19 +18,26 @@ export default class Particle3D {
     var resized = false;
 
     this.moveStartFun = function () {
-      that.scene.primitives.show = false;
+      if (that.primitives) {
+        that.primitives.forEach(primitive => {
+          primitive.show = false;
+        })
+      }
     }
 
     this.moveEndFun = function () {
       that.updateViewerParameters();
       that.particleSystem.applyViewerParameters(that.viewerParameters);
-      that.scene.primitives.show = true;
+      if (that.primitives) {
+        that.primitives.forEach(primitive => {
+          primitive.show = true;
+        })
+      }
     }
 
     this.resizeFun = function () {
       resized = true;
-      that.scene.primitives.show = false;
-      that.scene.primitives.removeAll();
+      that.remove();
     }
 
     this.preRenderFun = function () {
@@ -38,7 +45,11 @@ export default class Particle3D {
         that.particleSystem.canvasResize(that.scene.context);
         resized = false;
         that.addPrimitives();
-        that.scene.primitives.show = true;
+        if (that.primitives) {
+          that.primitives.forEach(primitive => {
+            primitive.show = true;
+          })
+        }
       }
     }
 
@@ -91,13 +102,6 @@ export default class Particle3D {
     for (let primitive of this.primitives) {
       this.scene.primitives.add(primitive);
     }
-   /*  this.scene.primitives.add(this.particleSystem.particlesComputing.primitives.calculateSpeed);
-    this.scene.primitives.add(this.particleSystem.particlesComputing.primitives.updatePosition);
-    this.scene.primitives.add(this.particleSystem.particlesComputing.primitives.postProcessingPosition);
-
-    this.scene.primitives.add(this.particleSystem.particlesRendering.primitives.segments);
-    this.scene.primitives.add(this.particleSystem.particlesRendering.primitives.trails);
-    this.scene.primitives.add(this.particleSystem.particlesRendering.primitives.screen); */
   }
 
   updateViewerParameters() {

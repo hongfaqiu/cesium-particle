@@ -78,6 +78,10 @@ export default class Vortex {
   }
 
   generateDimensionData(num, start, step) {
+    if (start < 0) {
+      // ensure the longitude is in [0, 360]
+      start = 360 + start;
+    }
     start *= 100;
     step *= 100;
     let arr = [], i = 0;
