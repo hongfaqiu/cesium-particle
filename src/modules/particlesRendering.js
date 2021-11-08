@@ -2,7 +2,7 @@ import CustomPrimitive from './customPrimitive'
 import Util from './util'
 import * as Cesium from 'cesium/Cesium'
 
-import { segmentDrawVert, fullscreenVert, screenDrawFrag, segmentDrawFrag, trailDrawFrag } from '../../packages/shader';
+import { segmentDrawVert, fullscreenVert, screenDrawFrag, segmentDrawFrag, trailDrawFrag } from '../shader/shader.min.js';
 
 export default class ParticlesRendering {
   constructor(context, data, userInput, viewerParameters, particlesComputing, colour) {
