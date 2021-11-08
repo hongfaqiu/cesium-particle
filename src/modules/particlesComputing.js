@@ -2,7 +2,7 @@ import CustomPrimitive from './customPrimitive';
 import DataProcess from './dataProcess';
 import Util from './util';
 import * as Cesium from 'cesium/Cesium';
-import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../shader/shader.min.js';
+import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../../packages/shader';
 
 export default class ParticlesComputing {
     constructor(context, data, userInput, viewerParameters) {
@@ -134,7 +134,7 @@ export default class ParticlesComputing {
                 outputTexture: this.particlesTextures.particlesSpeed,
                 preExecute: function () {
                     // swap textures before binding
-                    if (userInput?.dynamic) {
+                    if (userInput !== undefined && userInput.dynamic) {
                       var temp;
                       temp = that.particlesTextures.previousParticlesPosition;
                       that.particlesTextures.previousParticlesPosition = that.particlesTextures.currentParticlesPosition;
