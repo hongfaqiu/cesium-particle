@@ -31,7 +31,6 @@ type JsonData = {
 
 /**
  * Particle system operating parameters
- * @param [particlesTextureSize = 64] - Particle texture size.
  * @param [maxParticles = 64 * 64] - Maximum number of particles.
  * @param [particleHeight = 1000.0] - Particle height.
  * @param [fadeOpacity = 0.996] - Particle trailing transparency.
@@ -44,7 +43,6 @@ type JsonData = {
  * @param [dynamic = true] - Whether to run dynamically.
  */
 type UserInput = {
-  particlesTextureSize?: number;
   maxParticles?: number;
   particleHeight?: number;
   fadeOpacity?: number;
@@ -53,6 +51,18 @@ type UserInput = {
   speedFactor?: number;
   lineWidth?: number;
   dynamic?: boolean;
+}
+
+type OperatingParams = {
+  particlesTextureSize: number;
+  maxParticles: number;
+  particleHeight: number;
+  fadeOpacity: number;
+  dropRate: number;
+  dropRateBump: number;
+  speedFactor: number;
+  lineWidth: number;
+  dynamic: boolean;
 }
 
 type NCFields = {
@@ -82,7 +92,6 @@ type ParticleSystemParams = {
     input: jsonData,
     type: 'json', // 必填
     userInput: {
-      particlesTextureSize: Math.ceil(Math.sqrt(64 * 64)),
       maxParticles: 64 * 64,
       particleHeight: 1000.0,
       fadeOpacity: 0.996,
@@ -157,6 +166,8 @@ export declare class Particle3D {
 
   private removeEventListeners(): void;
 
+  private processUserInput(userInput: UserInput): OperatingParams;
+
   /**
    * Start running the particle system
    */
@@ -168,8 +179,18 @@ export declare class Particle3D {
   hide(): void;
   
   /**
-   * Pause particle system
-   */
+   * Change particle system operating parameters
+   * @param maxParticles - Maximum number of particles.
+   * @param particleHeight - Particle height.
+   * @param fadeOpacity - Particle trailing transparency.
+   * @param dropRate - Particle reset ratet.
+   * @param dropRateBump - The percentage of particle reset rate that increases with speed. The faster the speed, the denser it is,
+
+    Final particle reset rate particledroprate = droprate + dropratebump * speednorm;.
+  * @param speedFactor - Particle relative velocity.
+  * @param lineWidth - Particle line width.
+  * @param dynamic - Whether to run dynamically.
+  */
   optionsChange(options: UserInput): void;
   
   /**

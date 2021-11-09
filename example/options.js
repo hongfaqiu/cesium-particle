@@ -61,7 +61,6 @@ const colorTable = [
 ]
 
 const defaultParticleSystemOptions = {
-  particlesTextureSize: Math.ceil(Math.sqrt(500 * 500)),
   maxParticles: 500 * 500,
   particleHeight: 1000.0,
   fadeOpacity: 0.950, // how fast the particle trails fade on each frame

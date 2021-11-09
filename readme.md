@@ -39,7 +39,6 @@ const viewer = new Cesium.Viewer(cesiumContainer, viewerOption);
 
 // 粒子系统配置
 const systemOptions = {
-  particlesTextureSize: Math.ceil(Math.sqrt(64 * 64)),
   maxParticles: 64 * 64,
   particleHeight: 1000.0,
   fadeOpacity: 0.996,
@@ -139,14 +138,9 @@ defaultFields = {
   lev: '', // 层
 }
 
-const maxParticles = 64 * 64 ; // 必须为平方, 否则会报错
-const particlesTextureSize = Math.ceil(Math.sqrt(maxParticles));
-maxParticles = particlesTextureSize * particlesTextureSize;
-
 // 默认的粒子运行参数
 defaultParticleSystemOptions = { 
-  particlesTextureSize, // 粒子纹理大小
-  maxParticles, // 最大粒子数
+  maxParticles: 64 * 64, // 最大粒子数(会自动取平方数)
   particleHeight: 1000.0, // 粒子高度
   fadeOpacity: 0.996, // 拖尾透明度
   dropRate: 0.003, // 粒子重置率

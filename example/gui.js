@@ -77,10 +77,6 @@ export class ControlPanel {
   }
   
   getUserInput() {
-    // make sure maxParticles is exactly the square of particlesTextureSize
-    let particlesTextureSize = Math.ceil(Math.sqrt(this.options.maxParticles));
-    this.options.particlesTextureSize = particlesTextureSize;
-    this.options.maxParticles = particlesTextureSize * particlesTextureSize;
     return this.options
   }
 }

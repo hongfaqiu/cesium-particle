@@ -13,7 +13,6 @@ const defaultColorTable = [
 ]
 
 const defaultParticleSystemOptions = {
-    particlesTextureSize: Math.ceil(Math.sqrt(64 * 64)),
     maxParticles: 64 * 64,
     particleHeight: 1000.0,
     fadeOpacity: 0.996,

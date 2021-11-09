@@ -81,7 +81,7 @@ export default class Particle3D {
       this.data = data;
       this.updateViewerParameters();
       this.particleSystem = new ParticleSystem(this.scene.context, data,
-        this.userInput, this.viewerParameters, this.colour);
+        this.processUserInput(this.userInput), this.viewerParameters, this.colour);
       this.addPrimitives();
       return data;
     } catch (e) {
@@ -137,8 +137,20 @@ export default class Particle3D {
     window.removeEventListener("resize", this.resizeFun);
   }
 
+  processUserInput(userInput) {
+    // make sure maxParticles is exactly the square of particlesTextureSize
+    const particlesTextureSize = Math.ceil(Math.sqrt(userInput.maxParticles));
+    const maxParticles = particlesTextureSize * particlesTextureSize;
+    return {
+      ...this.userInput,
+      ...userInput,
+      particlesTextureSize,
+      maxParticles
+    }
+  }
+
   optionsChange(userInput) {
-    this.particleSystem.applyUserInput(userInput);
+    this.particleSystem.applyUserInput(this.processUserInput(userInput));
   }
 
   show() {
