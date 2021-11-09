@@ -43,7 +43,7 @@ type JsonData = {
  * @param [lineWidth = 4.0] - Particle line width.
  * @param [dynamic = true] - Whether to run dynamically.
  */
-type UseInput = {
+type UserInput = {
   particlesTextureSize?: number;
   maxParticles?: number;
   particleHeight?: number;
@@ -69,7 +69,7 @@ type ParticleSystemParams = {
   input: JsonData | Blob;
   type?: 'json' | 'file';
   fields?: NCFields;
-  userInput?: UseInput;
+  userInput?: UserInput;
   colorTable?: number[][][];
   colour?: 'speed' | 'height';
 }
@@ -129,7 +129,7 @@ export declare class Particle3D {
   readonly input: JsonData | Blob;
   readonly type: 'json' | 'file';
   readonly fields: NCFields;
-  readonly userInput: UseInput;
+  readonly userInput: UserInput;
   readonly colorTable: number[][][];
   readonly colour: 'speed' | 'height';
   readonly primitives: CustomPrimitive[];
@@ -170,7 +170,7 @@ export declare class Particle3D {
   /**
    * Pause particle system
    */
-  optinsChange(options: UseInput): void;
+  optionsChange(options: UserInput): void;
   
   /**
    * Remove particle systems from CesiumViewer
