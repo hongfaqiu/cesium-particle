@@ -32,12 +32,10 @@ export default (function () {
   
   var loadNetCDF = function (file, userFields) {
 
-    let fields = defaultFields;
-    for (let key in fields) {
-      if (userFields[key]) {
-        fields[key] = userFields[key];
-      }
-    }
+    const fields = {
+      ...defaultFields,
+      ...userFields
+    };
 
     return new Promise(function (resolve, reject) {
       // const { U, V, W, H, lon, lat, lev } = fields;
