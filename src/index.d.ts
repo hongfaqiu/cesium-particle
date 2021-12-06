@@ -66,13 +66,13 @@ type OperatingParams = {
 }
 
 type NCFields = {
-  U: string;
-  V: string;
-  W: string;
-  H: string;
-  lon: string;
-  lat: string;
-  lev: string;
+  U?: string;
+  V?: string;
+  W?: string;
+  H?: string;
+  lon?: string;
+  lat?: string;
+  lev?: string;
 }
 
 type ParticleSystemParams = {
@@ -80,56 +80,56 @@ type ParticleSystemParams = {
   type?: 'json' | 'file';
   fields?: NCFields;
   userInput?: UserInput;
-  colorTable?: number[][][];
+  colorTable?: number[][];
   colour?: 'speed' | 'height';
 }
 
-/**
- * Create a Particle3D Object
- * @example
- * // load a JSON data 
- * new Particle3D(viewer, {
-    input: jsonData,
-    type: 'json', // 必填
-    userInput: {
-      maxParticles: 64 * 64,
-      particleHeight: 1000.0,
-      fadeOpacity: 0.996,
-      dropRate: 0.003,
-      dropRateBump: 0.01,
-      speedFactor: 1.0,
-      lineWidth: 4.0,
-      dynamic: true
-    },
-    colorTable: [
-      [0.015686,
-      0.054902,
-      0.847059],
-      [0.125490,
-      0.313725,
-      1.000000]
-    ],
-    colour: 'height'
-  });
- * @example
- * // load a NC file 
- * new Particle3D(viewer, {
-    input: BolbFile("uv3z.nc"),
-    fields: {
-      U: 'water_u',
-      V: 'water_v'
-    }
-  });
- * @param [viewer] - The cesium Viewer Object.
- * @param [options] - An object with the following properties:
- * @param [options.input] - Allow a NC file or organized particle system data.
- * @param [options.type = 'json'] - The input file's type, 'json' or 'file'.
- * @param [options.fields = defaultFields] - NC file field specification.
- * @param [options.userInput = defaultParticleSystemOptions] - Particle system configuration item.
- * @param [options.colorTable = defaultColorTable] - Particle color ribbon.
- * @param [options.colour = 'speed'] - Particle coloring attribute.
- */
 export declare class Particle3D {
+  /**
+   * Create a Particle3D Object
+   * @example
+   * // load a JSON data 
+   * new Particle3D(viewer, {
+      input: jsonData,
+      type: 'json', // 必填
+      userInput: {
+        maxParticles: 64 * 64,
+        particleHeight: 1000.0,
+        fadeOpacity: 0.996,
+        dropRate: 0.003,
+        dropRateBump: 0.01,
+        speedFactor: 1.0,
+        lineWidth: 4.0,
+        dynamic: true
+      },
+      colorTable: [
+        [0.015686,
+        0.054902,
+        0.847059],
+        [0.125490,
+        0.313725,
+        1.000000]
+      ],
+      colour: 'height'
+    });
+   * @example
+   * // load a NC file 
+   * new Particle3D(viewer, {
+      input: BolbFile("uv3z.nc"),
+      fields: {
+        U: 'water_u',
+        V: 'water_v'
+      }
+    });
+   * @param [viewer] - The cesium Viewer Object.
+   * @param [options] - An object with the following properties:
+   * @param [options.input] - Allow a NC file or organized particle system data.
+   * @param [options.type = 'json'] - The input file's type, 'json' or 'file'.
+   * @param [options.fields = defaultFields] - NC file field specification.
+   * @param [options.userInput = defaultParticleSystemOptions] - Particle system configuration item.
+   * @param [options.colorTable = defaultColorTable] - Particle color ribbon.
+   * @param [options.colour = 'speed'] - Particle coloring attribute.
+   */
   constructor(viewer: Viewer, options: ParticleSystemParams);
 
   readonly viewer: Viewer;
@@ -200,21 +200,21 @@ export declare class Particle3D {
   
 }
 
-/**
- * Create a Vortex Object
- * @example
- * // Create a single-layer vortex model with a length of about 500km, width and height of 2000m. 
- * //There are 50 sampling points in the X and Y directions.
- * new Vortex([120, 30, 100], 5, 5, 2000, 0.1, 0.1, 2000);
- * @param pos The center [lon, lat] of vortex.
- * @param radiusX Length in east-west direction, degree. 
- * @param radiusY Length in sourth-north direction, degree.
- * @param height Vortex's height, metre.
- * @param dx East West sampling interval, in degrees.
- * @param dy North South sampling interval in degrees
- * @param dz Vertical sampling interval, unit: metre.
- */
 export declare class Vortex {
+  /**
+   * Create a Vortex Object
+   * @example
+   * // Create a single-layer vortex model with a length of about 500km, width and height of 2000m. 
+   * //There are 50 sampling points in the X and Y directions.
+   * new Vortex([120, 30, 100], 5, 5, 2000, 0.1, 0.1, 2000);
+   * @param pos The center [lon, lat] of vortex.
+   * @param radiusX Length in east-west direction, degree. 
+   * @param radiusY Length in sourth-north direction, degree.
+   * @param height Vortex's height, metre.
+   * @param dx East West sampling interval, in degrees.
+   * @param dy North South sampling interval in degrees
+   * @param dz Vertical sampling interval, unit: metre.
+   */
   constructor(pos: number[], radiusX: number, radiusY: number, height: number, dx: number, dy: number, dz: number);
 
   /**
