@@ -25,6 +25,48 @@ export class FieldsPanel {
     return this.options;
   }
 }
+
+export class ValueRangePanel {
+  constructor(container) {
+    this.options = {max: 100, min: -100};
+    
+    const that = this;
+
+    let gui = new dat.GUI({ autoPlace: false, closed: true });
+    gui.add(that.options, 'max', -10000, 10000, 0.1).name("最大值");
+    gui.add(that.options, 'min', -10000, 10000, 0.1).name("最小值");
+
+    let ValueRangePanelContainer = document.getElementById(container);
+    gui.domElement.classList.add('valueRangePanel');
+    ValueRangePanelContainer.appendChild(gui.domElement);
+  }
+
+  getUserInput() {
+    return this.options;
+  }
+}
+
+export class OffsetPanel {
+  constructor(container) {
+    this.options = { lon: 0, lat: 0, lev: 0 };
+    
+    const that = this;
+
+    let gui = new dat.GUI({ autoPlace: false, closed: true });
+    gui.add(that.options, 'lon', -360, 360, 0.1).name("经度偏移值");
+    gui.add(that.options, 'lat', -180, 180, 0.1).name("纬度偏移值");
+    gui.add(that.options, 'lev', -10000, 10000, 0.1).name("高度偏移值");
+
+    let OffsetPanelContainer = document.getElementById(container);
+    gui.domElement.classList.add('offsetPanel');
+    OffsetPanelContainer.appendChild(gui.domElement);
+  }
+
+  getUserInput() {
+    return this.options;
+  }
+}
+
 export class VortexPanel {
   constructor(container) {
     this.options = defaultVortexOptions;

@@ -30,7 +30,11 @@ export default (function () {
     return {min, max}
   }
   
-  var loadNetCDF = function (file, userFields) {
+  var loadNetCDF = function (file, {
+    userFields,
+    valueRange,
+    offset,
+  }) {
 
     const fields = {
       ...defaultFields,
@@ -75,11 +79,15 @@ export default (function () {
           try {
             if (fields[key]) {
               data.dimensions[key] = dimensions[fields[key]].size;
-              let array = NetCDF.getDataVariable(fields[key]).flat()
+              let array = NetCDF.getDataVariable(fields[key]).flat().map(item => {
+                if (offset[key]) return item + offset[key];
+                return item;
+              })
+              const minMax = getMaxMin(array);
               data[key] = {};
               data[key].array = new Float32Array(array);
-              data[key].min = getMaxMin(array).min;
-              data[key].max = getMaxMin(array).max;
+              data[key].min = minMax.min;
+              data[key].max = minMax.max;
             }
           } catch(e) {
             reject(e);
@@ -90,13 +98,15 @@ export default (function () {
         ["U", "V", "W", "H"].map(key => {
           try {
             if (fields[key]) {
-              let variables = arrayToMap(NetCDF.variables);
-              let attributes = arrayToMap(variables[fields[key]].attributes);
-              let array = NetCDF.getDataVariable(fields[key]).flat()
+              let array = NetCDF.getDataVariable(fields[key]).flat().map(item => {
+                if (item < valueRange.min || item > valueRange.max) return 0;
+                return item;
+              })
+              const minMax = getMaxMin(array);
               data[key] = {};
               data[key].array = new Float32Array(array);
-              data[key].min = attributes['min'] ? attributes['min'].value : getMaxMin(array).min;
-              data[key].max = attributes['max'] ? attributes['max'].value : getMaxMin(array).max;
+              data[key].min = minMax.min;
+              data[key].max = minMax.max;
             }
           } catch(e) {
             reject(e);
@@ -148,14 +158,23 @@ export default (function () {
     });
   }
 
-  var loadData = async function (input, type, fields, colorTable) {
+  var loadData = async function (input, type, {
+    fields,
+    valueRange,
+    offset,
+    colorTable
+  }) {
     
     if (type === 'json') {
       data = input
     }
     else {
       try {
-        await loadNetCDF(input, fields);
+        await loadNetCDF(input, {
+          fields,
+          valueRange,
+          offset,
+        });
       } catch (e) {
         throw(e)
       }

@@ -79,6 +79,15 @@ type ParticleSystemParams = {
   input: JsonData | Blob;
   type?: 'json' | 'file';
   fields?: NCFields;
+  valueRange?: {
+    min?: number;
+    max?: number;
+  }
+  offset?: {
+    lon?: number;
+    lat?: number;
+    lev?: number;
+  }
   userInput?: UserInput;
   colorTable?: number[][];
   colour?: 'speed' | 'height';
@@ -126,6 +135,8 @@ export declare class Particle3D {
    * @param [options.input] - Allow a NC file or organized particle system data.
    * @param [options.type = 'json'] - The input file's type, 'json' or 'file'.
    * @param [options.fields = defaultFields] - NC file field specification.
+   * @param [options.valueRange = {min: -100, max: 100}] - UVWH dimension values range, out of range will be set to 0.
+   * @param [options.offset = {lon: 0, lat: 0, lev: 0}] - lon/lat/lev dimension values offset.
    * @param [options.userInput = defaultParticleSystemOptions] - Particle system configuration item.
    * @param [options.colorTable = defaultColorTable] - Particle color ribbon.
    * @param [options.colour = 'speed'] - Particle coloring attribute.
@@ -138,6 +149,15 @@ export declare class Particle3D {
   readonly input: JsonData | Blob;
   readonly type: 'json' | 'file';
   readonly fields: NCFields;
+  readonly valueRange: {
+    min?: number;
+    max?: number;
+  }
+  readonly offset: {
+    lon?: number;
+    lat?: number;
+    lev?: number;
+  };;
   readonly userInput: UserInput;
   readonly colorTable: number[][][];
   readonly colour: 'speed' | 'height';

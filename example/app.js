@@ -1,13 +1,15 @@
 import { Particle3D, Vortex, getFileFields } from '../src/index';
 import * as cesium_map from './map';
-import { FieldsPanel, VortexPanel, ControlPanel } from './gui';
+import { FieldsPanel, ValueRangePanel, OffsetPanel, VortexPanel, ControlPanel } from './gui';
 import { colorTable } from './options';
 
 // initialization
 cesium_map.initMap('cesiumContainer');
 
 let particleObj = null, working = false;
-const fieldsPanel = new FieldsPanel("fieldsPanelContainer");
+let fieldsPanel = new FieldsPanel("fieldsPanelContainer");
+const valueRangePanel = new ValueRangePanel("valueRangePanelContainer");
+const offsetPanel = new OffsetPanel("offsetPanelContainer");
 const vortexPanel = new VortexPanel("vortexPanelContainer");
 const controlPanel = new ControlPanel("panelContainer", userInput => {
   particleObj && particleObj.optionsChange(userInput);
@@ -37,13 +39,18 @@ loadBtn.onclick = function () {
   if (fileInput.files[0] && viewer && !particleObj) {
     const file = fileInput.files[0];
     const fields = fieldsPanel.getUserInput();
+    const valueRange = valueRangePanel.getUserInput();
+    const offset = offsetPanel.getUserInput();
     particleObj = new Particle3D(viewer, {
       input: file,
       userInput,
       fields,
+      valueRange,
+      offset,
       colorTable: colorTable
     });
     particleObj.init().then(res => {
+      console.log(particleObj.data)
       particleObj.show();
       statechangeBtn.disabled = false;
       removeBtn.disabled = false;

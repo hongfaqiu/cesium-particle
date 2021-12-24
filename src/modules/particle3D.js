@@ -9,6 +9,8 @@ export default class Particle3D {
     input,
     type = 'nc',
     fields = defaultFields,
+    valueRange = { min: -100, max: 100 },
+    offset = { lon: 0, lat: 0, lev: 0},
     userInput = defaultParticleSystemOptions,
     colorTable = defaultColorTable,
     colour = 'speed'
@@ -61,6 +63,8 @@ export default class Particle3D {
     this.colour = colour;
     this.type = type;
     this.fields = fields;
+    this.offset = offset;
+    this.valueRange = valueRange;
     this.colorTable = colorTable;
     this.primitives = [];
 
@@ -77,7 +81,12 @@ export default class Particle3D {
 
   async init() {
     try {
-      let data = await DataProcess.loadData(this.input, this.type, this.fields, this.colorTable)
+      let data = await DataProcess.loadData(this.input, this.type, {
+        fields: this.fields,
+        valueRange: this.valueRange,
+        offset: this.offset,
+        colorTable: this.colorTable
+      })
       this.data = data;
       this.updateViewerParameters();
       this.particleSystem = new ParticleSystem(this.scene.context, data,

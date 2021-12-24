@@ -109,17 +109,19 @@ particleObj.remove(); // 移除粒子系统
 
 ## API
 
-### ``new Particle3D(viewer, {input, type, fields, userInput, colorTable, colour})``
+### ``new Particle3D(viewer, options)``
 
-新建一个粒子系统对象，传入的参数包括(ceiusmViewer, {.nc矢量场文件或json对象, 传入的数据类型, nc文件字段规定, 粒子系统配置项, 粒子颜色色带, 上色的属性})
+新建一个粒子系统对象，传入的参数包括(ceiusmViewer, {.nc矢量场文件或json对象, 传入的数据类型, nc文件字段规定, UVWH数值范围, 经纬度偏移值, 粒子系统配置项, 粒子颜色色带, 上色的属性})
 
-``配置属性详解:``
+``options配置属性详解:``
 
 | Name       | Type          | Necessarily | Enumeration         | Default                      |
 | ---------- | ------------- | ----------- | ------------------- | ---------------------------- |
 | input      | File / Object | true        |                     |                              |
 | type       | String        |             | 'nc' or 'json'      | 'nc'                         |
 | fields     | Object        |             |                     | defalutFields                |
+| valueRange | Object        |             |                     | { min: -100, max: 100 }      |
+| offset     | Object        |             |                     | { lon: 0, lat: 0, lev: 0 }   |
 | userInput  | Object        |             |                     | defaultParticleSystemOptions |
 | colorTable | Array         |             |                     | defaultColorTable            |
 | colour     | String        |             | 'speed' or 'height' | 'speed'                      |
@@ -253,15 +255,23 @@ npm run build-glsl
 
 - 横向速度矩阵 U (lev, lat, lon)
 - 纵向速度矩阵 V (lev, lat, lon)
-- 经度维度 lon
+- 经度维度 lon(0 - 360)
 - 纬度维度 lat
 
 可使用`getFileFields()`方法读取.nc文件中的属性字段名、维度字段名
 
 并配合构造函数`new Particle3D()`中传入的`fields`字段，尝试加载到地球上。
 
+noData值设为0， 或者加载时配置valueRange属性。
+
+如果经度范围不在(0, 360)，纬度范围不在(-90, 90)，需要配置offset属性。
+
 ### 为什么移除了原作者绘制矩形时采用的Miter Joint算法
 
 请看[issue](https://github.com/hongfaqiu/cesium-particle/issues/3)
 
 问题已经定位，后面有机会再尝试解决吧。
+
+### 一点碎碎念
+
+代码写得比较烂，后期更新时增加了ts类型说明文件，凑活用吧。
