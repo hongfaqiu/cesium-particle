@@ -1,4 +1,4 @@
-import * as Cesium from 'cesium/Cesium'
+import * as Cesium from 'cesium'
 export default class CustomPrimitive {
     constructor(options) {
         this.commandType = options.commandType;

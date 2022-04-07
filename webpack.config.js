@@ -27,7 +27,7 @@ let config = {
     extensions: ['.js', '.json'],
     alias: {
       '@': path.resolve(__dirname, './src'),
-      'cesium': path.resolve(__dirname, cesiumSource)
+      'cesium': path.resolve(__dirname, 'node_modules/cesium')
     },
     fallback: {
       fs: false

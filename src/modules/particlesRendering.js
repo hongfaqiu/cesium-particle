@@ -1,6 +1,6 @@
 import CustomPrimitive from './customPrimitive'
 import Util from './util'
-import * as Cesium from 'cesium/Cesium'
+import * as Cesium from 'cesium'
 
 import { segmentDrawVert, fullscreenVert, screenDrawFrag, segmentDrawFrag, trailDrawFrag } from '../shader/shader.min.js';
 

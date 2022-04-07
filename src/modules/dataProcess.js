@@ -1,5 +1,5 @@
 import netcdfjs from 'netcdfjs'
-import * as Cesium from 'cesium/Cesium'
+import * as Cesium from 'cesium'
 import { defaultFields } from './options'
 
 export default (function () {

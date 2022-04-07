@@ -32,7 +32,7 @@ import  { Particle3D } from "cesium-particle";
 
 ```js
 import { Particle3D, Vortex } from 'cesium-particle'
-import * as Cesium from 'cesium/Cesium';
+import * as Cesium from 'cesium';
 
 // cesiumViewer对象
 const viewer = new Cesium.Viewer(cesiumContainer, viewerOption);
@@ -272,6 +272,10 @@ noData值设为0， 或者加载时配置valueRange属性。
 
 问题已经定位，后面有机会再尝试解决吧。
 
-### 一点碎碎念
+### 其它问题
 
-代码写得比较烂，后期更新时增加了ts类型说明文件，凑活用吧。
+`0.7.0`版本之后，cesium引入方式改为
+
+```js
+  import * as Cesium from 'cesium'
+```

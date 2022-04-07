@@ -1,5 +1,5 @@
-import * as Cesium from 'cesium/Cesium'
-import 'cesium/Widgets/widgets.css';
+import * as Cesium from 'cesium'
+import "cesium/Build/Cesium/Widgets/widgets.css";
 
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4OGQwZTM2MC00NjkzLTRkZTgtYTU5MS0xZTA1NTljYWQyN2UiLCJpZCI6NTUwODUsImlhdCI6MTYyMDM5NjQ3NH0.lu_JBwyngYucPsvbCZt-xzmzgfwEKwcRXiYs5uV8uTM';
 var viewer = null;
@@ -37,6 +37,13 @@ export var initMap = function (cesiumContainer) {
   viewer.scene.skyBox.show = false;
   //显示刷新率和帧率
   viewer.scene.debugShowFramesPerSecond = true;
+  
+  if(Cesium.FeatureDetection.supportsImageRenderingPixelated()){//判断是否支持图像渲染像素化处理
+    viewer.resolutionScale = window.devicePixelRatio;
+  }
+  //开启抗锯齿
+  viewer.scene.fxaa = true;
+  viewer.scene.postProcessStages.fxaa.enabled = true;
 }
 
 export var getViewer = function(){
