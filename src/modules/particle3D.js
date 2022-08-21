@@ -8,7 +8,7 @@ export default class Particle3D {
   constructor(viewer, {
     input,
     type = 'nc',
-    fields = defaultFields,
+    fields,
     valueRange = { min: -100, max: 100 },
     offset = { lon: 0, lat: 0, lev: 0},
     userInput = defaultParticleSystemOptions,
@@ -62,7 +62,10 @@ export default class Particle3D {
     this.input = input;
     this.colour = colour;
     this.type = type;
-    this.fields = fields;
+    this.fields = {
+      ...defaultFields,
+      ...fields
+    };
     this.offset = offset;
     this.valueRange = valueRange;
     this.colorTable = colorTable;

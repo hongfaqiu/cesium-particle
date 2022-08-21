@@ -31,15 +31,10 @@ export default (function () {
   }
   
   var loadNetCDF = function (file, {
-    userFields,
+    fields,
     valueRange,
     offset,
   }) {
-
-    const fields = {
-      ...defaultFields,
-      ...userFields
-    };
 
     return new Promise(function (resolve, reject) {
       // const { U, V, W, H, lon, lat, lev } = fields;

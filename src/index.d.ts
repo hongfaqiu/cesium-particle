@@ -2,12 +2,14 @@ import netcdfjs from 'netcdfjs';
 import { BoundingSphere, Camera, Cartesian2, Scene, Viewer } from 'cesium';
 import CustomPrimitive from './modules/customPrimitive';
 
+/** 棋盘格值枚举 (lev, lat, lon) */
 type DimensionValue = {
   array: Float32Array;
   max: number;
   min: number;
 }
 
+/** 纬度值枚举 */
 type DimensionData = {
   array: Float32Array;
   min: number;
@@ -15,17 +17,25 @@ type DimensionData = {
 }
 
 type JsonData = {
+  /** 三种维度的值的间隔数量 */
   dimensions: {
       lon: number;
       lat: number;
       lev?: number;
   };
+  /** 所有经度值 */
   lon: DimensionData;
+  /** 所有纬度值 */
   lat: DimensionData;
+  /** 所有高度分层 */
   lev?: DimensionData;
+  /** 横向速度 */
   U: DimensionValue;
+  /** 纵向速度 */
   V: DimensionValue;
+  /** 垂直方向速度 */
   W?: DimensionValue;
+  /** 高度值 */
   H?: DimensionValue;
 }
 
