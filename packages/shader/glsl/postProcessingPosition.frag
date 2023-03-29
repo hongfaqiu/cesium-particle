@@ -1,3 +1,6 @@
+#version 300 es
+precision highp float;
+
 uniform sampler2D nextParticlesPosition;
 uniform sampler2D particlesSpeed; // (u, v, w, norm)
 
@@ -14,11 +17,11 @@ uniform vec2 latRange;
 uniform vec2 viewerLonRange;
 uniform vec2 viewerLatRange;
 
-uniform float randomCoefficient; // use to improve the pseudo-random generator
-uniform float dropRate; // drop rate is a chance a particle will restart at random position to avoid degeneration
-uniform float dropRateBump;
+const float randomCoefficient = 0.1; // use to improve the pseudo-random generator
+const float dropRate = 0.1; // drop rate is a chance a particle will restart at random position to avoid degeneration
+const float dropRateBump = 0.1;
 
-varying vec2 v_textureCoordinates;
+in vec2 v_textureCoordinates;
 
 vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
     // ensure the range of longitude and latitude
@@ -38,7 +41,7 @@ vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
 
 vec4 getTextureValue(sampler2D componentTexture, vec3 lonLatLev) {
     vec2 normalizedIndex2D = mapPositionToNormalizedIndex2D(lonLatLev);
-    vec4 result = texture2D(componentTexture, normalizedIndex2D);
+    vec4 result = texture(componentTexture, normalizedIndex2D);
     return result;
 }
 
@@ -62,7 +65,6 @@ vec3 generateRandomParticle(vec2 seed, float lev) {
     float randomLon = mod(rand(seed, lonRange), 360.0);
     float randomLat = rand(-seed, latRange);
     
-    float height = getTextureValue(H, vec3(randomLon, randomLat, lev)).r;
 
     return vec3(randomLon, randomLat, height);
 }
@@ -71,9 +73,11 @@ bool particleOutbound(vec3 particle) {
     return particle.y < viewerLatRange.x || particle.y > viewerLatRange.y || particle.x < viewerLonRange.x || particle.x > viewerLonRange.y;
 }
 
+out vec4 fragColor;
+
 void main() {
-    vec3 nextParticle = texture2D(nextParticlesPosition, v_textureCoordinates).rgb;
-    vec4 nextSpeed = texture2D(particlesSpeed, v_textureCoordinates);
+    vec3 nextParticle = texture(nextParticlesPosition, v_textureCoordinates).rgb;
+    vec4 nextSpeed = texture(particlesSpeed, v_textureCoordinates);
     float speedNorm = nextSpeed.a;
     float particleDropRate = dropRate + dropRateBump * speedNorm;
 
@@ -83,8 +87,8 @@ void main() {
     float randomNumber = rand(seed2, normalRange);
 
     if (randomNumber < particleDropRate || particleOutbound(nextParticle)) {
-        gl_FragColor = vec4(randomParticle, 1.0); // 1.0 means this is a random particle
+        fragColor = vec4(randomParticle, 1.0); // 1.0 means this is a random particle
     } else {
-        gl_FragColor = vec4(nextParticle, 0.0);
+        fragColor = vec4(nextParticle, 0.0);
     }
 }

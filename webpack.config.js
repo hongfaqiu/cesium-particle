@@ -5,6 +5,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const NODE_ENV = process.env.NODE_ENV === 'prd' ? 'prd' : 'dev'
 
 const cesiumSource = 'node_modules/cesium/Source';
@@ -59,6 +60,7 @@ let config = {
     ]
   },
   plugins: [
+    new NodePolyfillPlugin(),
     new HtmlWebpackPlugin({
       hash: true,
       template: './example/index.html',
@@ -78,9 +80,8 @@ let config = {
     new webpack.HotModuleReplacementPlugin(), // 热更新插件
   ],
   devServer: {
-    contentBase: './dist',      // 开发环境的服务目录
-    historyApiFallback: true,
-    inline: true,
+    static: './dist',      // 开发环境的服务目录
+    hot: true,
     port: 9000
   }
 };

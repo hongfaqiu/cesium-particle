@@ -1,17 +1,22 @@
-varying float heightNormalization;
+#version 300 es
+
+in float heightNormalization;
 uniform sampler2D colorTable;
 uniform bool colour;
 
-varying float speedNormalization;
+in float speedNormalization;
+
+out vec4 fragColor;
 
 void main() {
-  if(speedNormalization > 0.0){
+  const float zero = 0.0;
+  if(speedNormalization > zero){
     if(colour){
-      gl_FragColor = texture2D(colorTable, vec2(heightNormalization, 0.0));
+      fragColor = texture(colorTable, vec2(heightNormalization, zero));
     } else {
-      gl_FragColor = texture2D(colorTable, vec2(speedNormalization, 0.0));
+      fragColor = texture(colorTable, vec2(speedNormalization, zero));
     }
   } else {
-    gl_FragColor = vec4(0.0);
+    fragColor = vec4(zero);
   }
 }

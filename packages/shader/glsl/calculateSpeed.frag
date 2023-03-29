@@ -1,3 +1,5 @@
+#version 300 es
+
 // the size of UV textures: width = lon, height = lat*lev
 uniform sampler2D U; // eastward wind 
 uniform sampler2D V; // northward wind
@@ -13,12 +15,9 @@ uniform vec3 interval; // interval of each dimension
 uniform vec2 uSpeedRange; // (min, max);
 uniform vec2 vSpeedRange;
 uniform vec2 wSpeedRange;
-uniform float pixelSize;
-uniform float speedFactor;
+uniform float speedScaleFactor;
 
-float speedScaleFactor = speedFactor * pixelSize;
-
-varying vec2 v_textureCoordinates;
+in vec2 v_textureCoordinates;
 
 vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
     // ensure the range of longitude and latitude
@@ -50,7 +49,7 @@ vec2 mapPositionToNormalizedIndex2D(vec3 lonLatLev) {
 
 float getWindComponent(sampler2D componentTexture, vec3 lonLatLev) {
     vec2 normalizedIndex2D = mapPositionToNormalizedIndex2D(lonLatLev);
-    float result = texture2D(componentTexture, normalizedIndex2D).r;
+    float result = texture(componentTexture, normalizedIndex2D).r;
     return result;
 }
 
@@ -157,14 +156,16 @@ float calculateWindNorm(vec3 speed) {
     return norm;
 }
 
+out vec4 fragColor;
+
 void main() {
     // texture coordinate must be normalized
-    vec3 lonLatLev = texture2D(currentParticlesPosition, v_textureCoordinates).rgb;
+    vec3 lonLatLev = texture(currentParticlesPosition, v_textureCoordinates).rgb;
     vec3 speedOrigin = linearInterpolation(lonLatLev);
     vec3 speed = calculateSpeedByRungeKutta2(lonLatLev);
     vec3 speedInLonLat = convertSpeedUnitToLonLat(lonLatLev, speed);
 
     vec4 particleSpeed = vec4(speedInLonLat, calculateWindNorm(speed / speedScaleFactor));
     // gl_FragColor = particleSpeed;
-    gl_FragColor = vec4(speedInLonLat, calculateWindNorm(speedOrigin));
+    fragColor = vec4(speedInLonLat, calculateWindNorm(speedOrigin));
 }

@@ -2,7 +2,7 @@ import CustomPrimitive from './customPrimitive';
 import DataProcess from './dataProcess';
 import Util from './util';
 import * as Cesium from 'cesium';
-import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../shader/shader.min.js';
+import { CalculateSpeedShader, UpdatePositionShader, PostProcessingPositionShader } from '../../packages/shader/index';
 
 export default class ParticlesComputing {
     constructor(context, data, userInput, viewerParameters) {
@@ -121,12 +121,9 @@ export default class ParticlesComputing {
                     wSpeedRange: function () {
                         return wSpeedRange;
                     },
-                    pixelSize: function () {
-                        return viewerParameters.pixelSize;
+                    speedScaleFactor: function () {
+                        return viewerParameters.pixelSize * userInput.speedFactor;
                     },
-                    speedFactor: function () {
-                        return userInput.speedFactor;
-                    }
                 },
                 fragmentShaderSource: new Cesium.ShaderSource({
                     sources: [CalculateSpeedShader]
@@ -199,12 +196,6 @@ export default class ParticlesComputing {
                     },
                     interval: function () {
                         return interval;
-                    },
-                    U: function () {
-                      return that.windTextures.U;
-                    },
-                    V: function () {
-                        return that.windTextures.V;
                     },
                     H: function () {
                       return that.windTextures.H;

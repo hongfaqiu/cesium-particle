@@ -2,14 +2,13 @@
   "name": "cesium-particle",
   "version": "0.8.2",
   "description": "cesium particle system module",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "start": "cross-env NODE_ENV=dev webpack-dev-server",
     "build-glsl": "webpack --config webpack.glsl.config.js",
     "build-example": "cross-env NODE_ENV=prd webpack --config webpack.config.js",
-    "eschange": "babel src -d lib",
-    "prepublish": "npm run build-glsl && npm run eschange "
+    "prepublish": "npm run build-glsl"
   },
   "repository": {
     "type": "git",
@@ -21,7 +20,7 @@
     "NetCDF"
   ],
   "files": [
-    "lib",
+    "src",
     "README.md"
   ],
   "browserslist": [
@@ -37,18 +36,19 @@
     "@babel/plugin-proposal-function-bind": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "babel-loader": "^8.2.2",
-    "cesium": "^1.83.0",
+    "cesium": "^1.103.0",
     "copy-webpack-plugin": "^8.1.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.4",
     "dat.gui": "^0.7.7",
     "html-webpack-plugin": "^5.3.1",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
-    "webpack": "^5.33.2",
+    "webpack": "^5.69.1",
     "webpack-bundle-analyzer": "^4.4.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
     "webpack-glsl-loader": "^1.0.1"
   },
   "dependencies": {

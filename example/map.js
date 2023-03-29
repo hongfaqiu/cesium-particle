@@ -6,7 +6,7 @@ var viewer = null;
 
 export var initMap = function (cesiumContainer) {
   viewer = new Cesium.Viewer(cesiumContainer, {
-    terrainProvider: Cesium.createWorldTerrain(),
+    // terrainProvider: Cesium.createWorldTerrain(),
     baseLayerPicker: false,   //图层选择器
     animation: false,   //左下角仪表
     fullscreenButton: false,   //全屏按钮

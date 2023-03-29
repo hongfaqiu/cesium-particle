@@ -1,6 +1,9 @@
-attribute vec2 st;
+#version 300 es
+precision highp float;
+
+in vec2 st;
 // it is not normal itself, but used to control lines drawing
-attribute vec3 normal; // (point to use, offset sign, not used component)
+in vec3 normal; // (point to use, offset sign, not used component)
 uniform vec2 hRange;
 uniform vec2 uSpeedRange; // (min, max);
 uniform vec2 vSpeedRange;
@@ -23,8 +26,8 @@ struct adjacentPoints {
     vec4 next;
 };
 
-varying float heightNormalization;
-varying float speedNormalization;
+out float heightNormalization;
+out float speedNormalization;
 vec3 convertCoordinate(vec3 lonLatLev) {
     // WGS84 (lon, lat, lev) -> ECEF (x, y, z)
     // read https://en.wikipedia.org/wiki/Geographic_coordinate_conversion#From_geodetic_to_ECEF_coordinates for detail
@@ -92,13 +95,13 @@ float calculateWindNorm(vec3 speed) {
 void main() {
     vec2 particleIndex = st;
 
-    vec3 previousPosition = texture2D(previousParticlesPosition, particleIndex).rgb;
-    vec3 currentPosition = texture2D(currentParticlesPosition, particleIndex).rgb;
-    vec3 nextPosition = texture2D(postProcessingPosition, particleIndex).rgb;
+    vec3 previousPosition = texture(previousParticlesPosition, particleIndex).rgb;
+    vec3 currentPosition = texture(currentParticlesPosition, particleIndex).rgb;
+    vec3 nextPosition = texture(postProcessingPosition, particleIndex).rgb;
 
-    float isAnyRandomPointUsed = texture2D(postProcessingPosition, particleIndex).a +
-        texture2D(currentParticlesPosition, particleIndex).a +
-        texture2D(previousParticlesPosition, particleIndex).a;
+    float isAnyRandomPointUsed = texture(postProcessingPosition, particleIndex).a +
+        texture(currentParticlesPosition, particleIndex).a +
+        texture(previousParticlesPosition, particleIndex).a;
 
     adjacentPoints projectedCoordinates;
     if (isAnyRandomPointUsed > 0.0) {
@@ -126,5 +129,5 @@ void main() {
 
     heightNormalization = (currentPosition.z - hRange.x) / (hRange.y - hRange.x);
     
-    speedNormalization = texture2D(particlesSpeed, particleIndex).a;
+    speedNormalization = texture(particlesSpeed, particleIndex).a;
 }

@@ -1,7 +1,9 @@
-attribute vec3 position;
-attribute vec2 st;
+#version 300 es
 
-varying vec2 textureCoordinate;
+in vec3 position;
+in vec2 st;
+
+out vec2 textureCoordinate;
 
 void main() {
     textureCoordinate = st;
