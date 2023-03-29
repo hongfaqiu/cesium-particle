@@ -17,17 +17,30 @@ export default (function () {
     };
   }
 
-  const getMaxMin = function (arr) {
-    let min = arr[1], max = arr[1];
-    for (let item of arr) {
-      if (item < min) {
-        min = item;
-      }
-      if (item > max) {
-        max = item;
+  // 获取数组最值
+  const getMaxMin = arr => {
+    let min = Infinity;
+    let max = -Infinity;
+    let hasNumber = false; // 添加变量记录数组是否有数字
+  
+    for (let num of arr) {
+      if (!isNaN(num)) {
+        hasNumber = true; // 如果有数字则更新状态
+  
+        if (num < min) {
+          min = num;
+        }
+        if (num > max) {
+          max = num;
+        }
       }
     }
-    return {min, max}
+  
+    if (!hasNumber) { // 如果数组没有数字则返回 0
+      return { min: 0, max: 0 };
+    }
+  
+    return { min, max };
   }
   
   var loadNetCDF = function (file, {
