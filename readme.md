@@ -12,16 +12,8 @@
 
 ## 使用说明
 
-<table>
-<tbody valign=top align=left>
-<tr><th>
-Node 12+
-</th><td>
-
-Install with <code>npm install cesium-particle</code>, or <code>yarn add cesium-particle</code>
-
-```js
-import  { Particle3D } from "cesium-particle";
+```bash
+npm install cesium-particle
 ```
 
 </td></tr>
@@ -271,6 +263,10 @@ noData值设为0， 或者加载时配置valueRange属性。
 请看[issue](https://github.com/hongfaqiu/cesium-particle/issues/3)
 
 问题已经定位，后面有机会再尝试解决吧。
+
+### WebGL2支持
+
+0.9.0版本支持webgl2
 
 ### 其它问题
 
