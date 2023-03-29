@@ -16,7 +16,7 @@ export default class ParticlesComputing {
             context: context,
             width: data.dimensions.lon,
             height: data.dimensions.lat * data.dimensions.lev,
-            pixelFormat: Cesium.PixelFormat.LUMINANCE,
+            pixelFormat: Cesium.PixelFormat.RED,
             pixelDatatype: Cesium.PixelDatatype.FLOAT,
             flipY: false,
             sampler: new Cesium.Sampler({

@@ -1,9 +1,9 @@
 #version 300 es
 
-in float heightNormalization;
 uniform sampler2D colorTable;
 uniform bool colour;
 
+in float heightNormalization;
 in float speedNormalization;
 
 out vec4 fragColor;
