@@ -1,4 +1,3 @@
-#version 300 es
 
 uniform sampler2D trailsColorTexture;
 uniform sampler2D trailsDepthTexture;

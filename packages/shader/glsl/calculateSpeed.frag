@@ -1,5 +1,3 @@
-#version 300 es
-
 // the size of UV textures: width = lon, height = lat*lev
 uniform sampler2D U; // eastward wind 
 uniform sampler2D V; // northward wind

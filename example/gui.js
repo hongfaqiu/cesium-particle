@@ -6,15 +6,16 @@ export class FieldsPanel {
     this.options = defaultFields;
     
     const that = this;
+    const allFields = [...fields.variables, ...fields.dimensions]
 
     let gui = new dat.GUI({ autoPlace: false, closed: true });
-    gui.add(that.options, 'U', fields.variables).name("横向速度U");
-    gui.add(that.options, 'V', fields.variables).name("纵向速度V");
-    gui.add(that.options, 'W', fields.variables).name("垂向速度W");
-    gui.add(that.options, 'H', fields.variables).name("高度值H");
-    gui.add(that.options, 'lon', fields.dimensions).name("经度lon");
-    gui.add(that.options, 'lat', fields.dimensions).name("纬度lat");
-    gui.add(that.options, 'lev', fields.dimensions).name("高度lev");
+    gui.add(that.options, 'U', allFields).name("横向速度U");
+    gui.add(that.options, 'V', allFields).name("纵向速度V");
+    gui.add(that.options, 'W', allFields).name("垂向速度W");
+    gui.add(that.options, 'H', allFields).name("高度值H");
+    gui.add(that.options, 'lon', allFields).name("经度lon");
+    gui.add(that.options, 'lat', allFields).name("纬度lat");
+    gui.add(that.options, 'lev', allFields).name("高度lev");
 
     let FieldsPanelContainer = document.getElementById(container);
     gui.domElement.classList.add('fieldsPanel');

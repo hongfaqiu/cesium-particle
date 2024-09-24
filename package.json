@@ -1,6 +1,6 @@
 {
   "name": "cesium-particle",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "cesium particle system module",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -36,7 +36,7 @@
     "@babel/plugin-proposal-function-bind": "^7.16.0",
     "@babel/preset-env": "^7.20.2",
     "babel-loader": "^8.2.2",
-    "cesium": "^1.103.0",
+    "cesium": "^1.121.1",
     "copy-webpack-plugin": "^8.1.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.4",

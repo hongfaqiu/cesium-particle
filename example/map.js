@@ -6,7 +6,12 @@ var viewer = null;
 
 export var initMap = function (cesiumContainer) {
   viewer = new Cesium.Viewer(cesiumContainer, {
-    terrainProvider: Cesium.createWorldTerrain(),
+    baseLayer: Cesium.ImageryLayer.fromProviderAsync(
+      Cesium.ArcGisMapServerImageryProvider.fromUrl(
+        'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+      ),
+      {},
+    ),
     baseLayerPicker: false,   //图层选择器
     animation: false,   //左下角仪表
     fullscreenButton: false,   //全屏按钮
@@ -27,17 +32,17 @@ export var initMap = function (cesiumContainer) {
       roll: Cesium.Math.toRadians(0),
     },
   });
-  let imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
-      url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
-  })
   viewer._cesiumWidget._creditContainer.style.display = "none";
-  viewer.imageryLayers.addImageryProvider(imageryProvider);
   viewer.scene.fog.density = 0.0001; // 雾气中水分含量
   viewer.scene.globe.enableLighting = false;
   viewer.scene.skyBox.show = false;
   //显示刷新率和帧率
   viewer.scene.debugShowFramesPerSecond = true;
-  
+  // 加载地形
+  // viewer.scene.terrainProvider = Cesium.createWorldTerrainAsync()
+
+  // 启用深度测试以确保地形正确渲染
+  viewer.scene.globe.depthTestAgainstTerrain = true;
   if(Cesium.FeatureDetection.supportsImageRenderingPixelated()){//判断是否支持图像渲染像素化处理
     viewer.resolutionScale = window.devicePixelRatio;
   }
