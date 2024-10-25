@@ -1,5 +1,7 @@
 # 基于cesium的矢量场可视化gpu加速粒子系统
 
+> ⚠️ **注意**: 本仓库已不再维护，请访问新仓库 [cesium-wind-layer](https://github.com/hongfaqiu/cesium-wind-layer)
+
 ![npm](https://img.shields.io/npm/v/cesium-particle) ![npm](https://img.shields.io/npm/dt/cesium-particle) ![GitHub](https://img.shields.io/github/license/hongfaqiu/cesium-particle)
 
 ## 说明
@@ -233,7 +235,7 @@ module.exports = {
 }
 ```
 
-或者使用打包命令，打包glsl文件为js:
+或者��用打包命令，打包glsl文件为js:
 
 ```js
 npm run build-glsl
